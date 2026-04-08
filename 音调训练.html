@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音调训练游戏 - 上海小螺号</title>
+  <link rel="icon" href="小螺号logo.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --primary: #B8860B;
+      --primary-light: #D4A843;
+      --warm-cream: #FBF8F3;
+      --card-bg: #FFFFFF;
+      --text-dark: #2D2A26;
+      --text-body: #5A554D;
+      --text-light: #8A847A;
+      --accent-coral: #E8846B;
+      --accent-sage: #7A9E7E;
+      --gold-gradient: linear-gradient(135deg, #D4A843 0%, #B8860B 50%, #8B6508 100%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      background: var(--warm-cream);
+      color: var(--text-body);
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 16px 0;
+      background: rgba(251,248,243,0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 20px rgba(45,42,38,0.06);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px; font-weight: 700;
+      font-size: 16px; color: var(--text-dark);
+    }
+    .nav-logo img { width: 32px; height: 32px; border-radius: 8px; }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 20px; border-radius: 50px;
+      background: var(--gold-gradient); color: #fff;
+      font-size: 13px; font-weight: 600;
+      transition: all 0.3s;
+    }
+    .nav-back:hover { transform: translateY(-2px); }
+
+    /* Container */
+    .container {
+      max-width: 1100px; margin: 0 auto; padding: 100px 24px 40px;
+    }
+
+    /* Header */
+    .page-header { text-align: center; margin-bottom: 30px; }
+    .page-header h1 { font-size: 32px; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+    .page-header p { font-size: 16px; color: var(--text-light); }
+
+    /* Game Card */
+    .game-card {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 20px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+      .game-card { grid-template-columns: 1fr; }
+    }
+
+    /* Canvas Area */
+    .canvas-container {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    #gameCanvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Side Panel */
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Theme Selection */
+    .theme-section {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border-radius: 16px;
+      padding: 16px;
+      color: white;
+    }
+    .theme-section h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+    .theme-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .theme-btn {
+      padding: 10px 8px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    .theme-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.02);
+    }
+    .theme-btn.active {
+      background: rgba(255,255,255,0.95);
+      color: #f5576c;
+      border-color: white;
+    }
+    .theme-btn .theme-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+
+    /* Mode Selection */
+    .mode-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 16px;
+      color: white;
+    }
+    .mode-section h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+    .mode-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mode-btn {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+    }
+    .mode-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(4px);
+    }
+    .mode-btn.active {
+      background: rgba(255,255,255,0.9);
+      color: #667eea;
+      border-color: white;
+    }
+    .mode-btn .mode-desc {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+
+    /* Stats */
+    .stats-section {
+      background: var(--warm-cream);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { font-size: 13px; color: var(--text-light); }
+    .stat-value { font-size: 18px; font-weight: 700; color: var(--text-dark); }
+    .stat-value.score { color: var(--accent-sage); }
+    .stat-value.pitch { color: var(--primary); font-family: monospace; }
+
+    /* Mic Button */
+    .mic-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 50px;
+      background: var(--gold-gradient);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 6px 24px rgba(184,134,11,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .mic-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(184,134,11,0.4); }
+    .mic-btn.listening {
+      background: var(--accent-sage);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 24px rgba(122,158,126,0.3); }
+      50% { box-shadow: 0 6px 40px rgba(122,158,126,0.6); }
+    }
+
+    /* Records */
+    .records-section {
+      background: var(--warm-cream);
+      border-radius: 16px;
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .records-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .records-header h4 {
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+    .clear-btn {
+      padding: 4px 12px;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid var(--text-light);
+      color: var(--text-light);
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .clear-btn:hover { border-color: var(--accent-coral); color: var(--accent-coral); }
+    .records-list { display: flex; flex-direction: column; gap: 6px; }
+    .record-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: white;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .record-item .theme-tag {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .record-item .score-val { font-weight: 700; color: var(--accent-sage); }
+    .record-item .date { color: var(--text-light); }
+    .no-records { text-align: center; padding: 20px; color: var(--text-light); font-size: 13px; }
+
+    /* Footer */
+    .footer { text-align: center; padding: 30px 0; margin-top: 40px; }
+    .footer p { font-size: 13px; color: var(--text-light); }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="小螺号logo.svg" alt="小螺号">上海小螺号
+    </a>
+    <a href="常用工具.html" class="nav-back">← 返回</a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="page-header">
+    <h1>🎵 音调训练游戏</h1>
+    <p>发出高低音调，操控角色撞击目标得分！</p>
+  </div>
+
+  <div class="game-card">
+    <div class="canvas-container">
+      <canvas id="gameCanvas" width="800" height="500"></canvas>
+    </div>
+
+    <div class="side-panel">
+      <!-- Theme Selection -->
+      <div class="theme-section">
+        <h3>🎨 皮肤主题</h3>
+        <div class="theme-buttons">
+          <button class="theme-btn active" data-theme="plane" id="themePlane">
+            <span class="theme-icon">✈️</span>
+            飞机
+          </button>
+          <button class="theme-btn" data-theme="pacman" id="themePacman">
+            <span class="theme-icon">👾</span>
+            吃豆人
+          </button>
+          <button class="theme-btn" data-theme="ship" id="themeShip">
+            <span class="theme-icon">🚢</span>
+            轮船
+          </button>
+          <button class="theme-btn" data-theme="monkey" id="themeMonkey">
+            <span class="theme-icon">🐵</span>
+            孙悟空
+          </button>
+          <button class="theme-btn" data-theme="car" id="themeCar">
+            <span class="theme-icon">🚗</span>
+            汽车
+          </button>
+        </div>
+      </div>
+
+      <!-- Mode Selection -->
+      <div class="mode-section">
+        <h3>🎮 训练模式</h3>
+        <div class="mode-buttons">
+          <button class="mode-btn active" data-mode="increase" id="modeIncrease">
+            📈 提升音调
+            <div class="mode-desc">角色在底部，目标在上方</div>
+          </button>
+          <button class="mode-btn" data-mode="decrease" id="modeDecrease">
+            📉 降低音调
+            <div class="mode-desc">角色在上方，目标在底部</div>
+          </button>
+          <button class="mode-btn" data-mode="change" id="modeChange">
+            🔄 音调变化
+            <div class="mode-desc">随机目标分布</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-section">
+        <div class="stat-row">
+          <span class="stat-label">当前得分</span>
+          <span class="stat-value score" id="scoreDisplay">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">音调</span>
+          <span class="stat-value pitch" id="pitchDisplay">-- Hz</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">击中目标</span>
+          <span class="stat-value" id="hitsDisplay">0</span>
+        </div>
+      </div>
+
+      <!-- Mic Button -->
+      <button class="mic-btn" id="micBtn">
+        🎤 开始训练
+      </button>
+
+      <!-- Records -->
+      <div class="records-section">
+        <div class="records-header">
+          <h4>📊 练习记录</h4>
+          <button class="clear-btn" id="clearBtn">清空</button>
+        </div>
+        <div class="records-list" id="recordsList">
+          <div class="no-records">暂无记录</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer"><p>© 2026 上海小螺号能力开发中心</p></footer>
+
+<script>
+// ==================== Theme Definitions ====================
+const THEMES = {
+  plane: {
+    name: '飞机',
+    playerName: '飞机',
+    targetName: '云朵',
+    bgColors: ['#1a1a3e', '#4a6fa5', '#87CEEB'],
+    zoneLabels: ['🎵 高音区', '🎵 中音区', '🎵 低音区'],
+    drawPlayer: (ctx, x, y, size, tilt) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(tilt);
+      // Body
+      ctx.fillStyle = '#FF6B6B';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, size * 0.5, size * 0.2, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // Wing
+      ctx.fillStyle = '#EE5A5A';
+      ctx.beginPath();
+      ctx.ellipse(-size * 0.1, 0, size * 0.25, size * 0.35, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // Cockpit
+      ctx.fillStyle = '#4ECDC4';
+      ctx.beginPath();
+      ctx.ellipse(size * 0.25, -size * 0.05, size * 0.12, size * 0.08, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // Tail
+      ctx.fillStyle = '#FF6B6B';
+      ctx.beginPath();
+      ctx.moveTo(-size * 0.5, 0);
+      ctx.lineTo(-size * 0.6, -size * 0.25);
+      ctx.lineTo(-size * 0.4, 0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    },
+    drawTarget: (ctx, x, y, size) => {
+      ctx.save();
+      ctx.globalAlpha = 0.9;
+      // Cloud puffs
+      const puffs = [
+        { x: 0, y: 0, r: size * 0.35 },
+        { x: -size * 0.25, y: size * 0.1, r: size * 0.28 },
+        { x: size * 0.25, y: size * 0.1, r: size * 0.28 },
+        { x: -size * 0.15, y: -size * 0.15, r: size * 0.25 },
+        { x: size * 0.15, y: -size * 0.15, r: size * 0.25 }
+      ];
+      puffs.forEach(puff => {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.arc(x + puff.x, y + puff.y, puff.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.restore();
+    },
+    drawBgElement: (ctx, el, width, height) => {
+      if (el.type === 'star') {
+        const alpha = 0.5 + Math.sin(el.twinkle) * 0.5;
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.beginPath();
+        ctx.arc(el.x, el.y, el.size, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (el.type === 'bgCloud') {
+        ctx.fillStyle = `rgba(255,255,255,${el.opacity})`;
+        ctx.beginPath();
+        ctx.arc(el.x, el.y, el.size, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (el.type === 'wave') {
+        ctx.fillStyle = `rgba(255,255,255,${el.opacity})`;
+        ctx.beginPath();
+        ctx.arc(el.x, el.y, el.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  },
+  pacman: {
+    name: '吃豆人',
+    playerName: '吃豆人',
+    targetName: '金豆',
+    bgColors: ['#0f0f23', '#1a1a3e', '#2d2d5a'],
+    zoneLabels: ['🎵 高音区', '🎵 中音区', '🎵 低音区'],
+    drawPlayer: (ctx, x, y, size, tilt) => {
+      ctx.save();
+      ctx.translate(x, y);
+      const mouthAngle = 0.3 + Math.sin(Date.now() * 0.01) * 0.2;
+      ctx.fillStyle = '#FFFF00';
+      ctx.beginPath();
+      ctx.arc(0, 0, size * 0.4, mouthAngle, Math.PI * 2 - mouthAngle);
+      ctx.lineTo(0, 0);
+      ctx.closePath();
+      ctx.fill();
+      // Eye
+      ctx.fillStyle = '#000';
+      ctx.beginPath();
+      ctx.arc(size * 0.1, -size * 0.15, size * 0.08, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    },
+    drawTarget: (ctx, x, y, size) => {
+      ctx.save();
+      ctx.fillStyle = '#FFD700';
+      ctx.beginPath();
+      ctx.arc(x, y, size * 0.25, 0, Math.PI * 2);
+      ctx.fill();
+      // Shine
+      ctx.fillStyle = '#FFFACD';
+      ctx.beginPath();
+      ctx.arc(x - size * 0.05, y - size * 0.05, size * 0.08, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    },
+    drawBgElement: (ctx, el, width, height) => {
+      if (el.type === 'star') {
+        ctx.fillStyle = `rgba(255,255,100,${0.3 + Math.sin(el.twinkle) * 0.2})`;
+        ctx.beginPath();
+        ctx.arc(el.x, el.y, el.size * 0.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  },
+  ship: {
+    name: '轮船',
+    playerName: '轮船',
+    targetName: '海浪',
+    bgColors: ['#1a3a5c', '#2d5a7b', '#4a8db7'],
+    zoneLabels: ['🎵 高音区', '🎵 中音区', '🎵 低音区'],
+    drawPlayer: (ctx, x, y, size, tilt) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(tilt * 0.3);
+      // Hull
+      ctx.fillStyle = '#8B4513';
+      ctx.beginPath();
+      ctx.moveTo(-size * 0.5, size * 0.1);
+      ctx.quadraticCurveTo(-size * 0.6, size * 0.3, -size * 0.3, size * 0.3);
+      ctx.lineTo(size * 0.4, size * 0.3);
+      ctx.quadraticCurveTo(size * 0.6, size * 0.3, size * 0.5, size * 0.1);
+      ctx.closePath();
+      ctx.fill();
+      // Deck
+      ctx.fillStyle = '#A0522D';
+      ctx.fillRect(-size * 0.35, -size * 0.1, size * 0.7, size * 0.2);
+      // Cabin
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(-size * 0.2, -size * 0.35, size * 0.4, size * 0.25);
+      // Smokestack
+      ctx.fillStyle = '#333';
+      ctx.fillRect(-size * 0.05, -size * 0.55, size * 0.1, size * 0.2);
+      // Smoke
+      ctx.fillStyle = 'rgba(200,200,200,0.6)';
+      ctx.beginPath();
+      ctx.arc(-size * 0.05 + Math.sin(Date.now() * 0.005) * 5, -size * 0.7, size * 0.12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    },
+    drawTarget: (ctx, x, y, size) => {
+      ctx.save();
+      const waveOffset = Math.sin(Date.now() * 0.003 + x * 0.01) * 5;
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.beginPath();
+      ctx.moveTo(x - size * 0.5, y + waveOffset);
+      ctx.quadraticCurveTo(x - size * 0.25, y - size * 0.3 + waveOffset, x, y + waveOffset);
+      ctx.quadraticCurveTo(x + size * 0.25, y + size * 0.3 + waveOffset, x + size * 0.5, y + waveOffset);
+      ctx.quadraticCurveTo(x + size * 0.25, y + size * 0.15 + waveOffset, x, y + waveOffset);
+      ctx.quadraticCurveTo(x - size * 0.25, y - size * 0.15 + waveOffset, x - size * 0.5, y + waveOffset);
+      ctx.fill();
+      ctx.restore();
+    },
+    drawBgElement: (ctx, el, width, height) => {
+      if (el.type === 'wave') {
+        const offset = Math.sin(Date.now() * 0.002 + el.x * 0.01) * 3;
+        ctx.fillStyle = `rgba(255,255,255,${el.opacity * 0.3})`;
+        ctx.beginPath();
+        ctx.arc(el.x, el.y + offset, el.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  },
+  monkey: {
+    name: '孙悟空',
+    playerName: '孙悟空',
+    targetName: '妖怪',
+    bgColors: ['#2d1f3d', '#4a3462', '#6b4d8a'],
+    zoneLabels: ['🎵 高音区', '🎵 中音区', '🎵 低音区'],
+    drawPlayer: (ctx, x, y, size, tilt) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(tilt * 0.5);
+      // Body
+      ctx.fillStyle = '#D2691E';
+      ctx.beginPath();
+      ctx.ellipse(0, size * 0.1, size * 0.25, size * 0.3, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // Face
+      ctx.fillStyle = '#FFDAB9';
+      ctx.beginPath();
+      ctx.arc(0, -size * 0.2, size * 0.22, 0, Math.PI * 2);
+      ctx.fill();
+      // Eyes
+      ctx.fillStyle = '#000';
+      ctx.beginPath();
+      ctx.arc(-size * 0.08, -size * 0.25, size * 0.04, 0, Math.PI * 2);
+      ctx.arc(size * 0.08, -size * 0.25, size * 0.04, 0, Math.PI * 2);
+      ctx.fill();
+      // Golden crown
+      ctx.fillStyle = '#FFD700';
+      ctx.beginPath();
+      ctx.moveTo(-size * 0.2, -size * 0.35);
+      ctx.lineTo(-size * 0.15, -size * 0.5);
+      ctx.lineTo(-size * 0.05, -size * 0.4);
+      ctx.lineTo(0, -size * 0.55);
+      ctx.lineTo(size * 0.05, -size * 0.4);
+      ctx.lineTo(size * 0.15, -size * 0.5);
+      ctx.lineTo(size * 0.2, -size * 0.35);
+      ctx.closePath();
+      ctx.fill();
+      // Staff
+      ctx.fillStyle = '#8B4513';
+      ctx.fillRect(size * 0.25, -size * 0.4, size * 0.05, size * 0.8);
+      ctx.restore();
+    },
+    drawTarget: (ctx, x, y, size) => {
+      ctx.save();
+      // Monster body
+      ctx.fillStyle = '#228B22';
+      ctx.beginPath();
+      ctx.ellipse(x, y, size * 0.35, size * 0.4, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // Eyes
+      ctx.fillStyle = '#FF0000';
+      ctx.beginPath();
+      ctx.arc(x - size * 0.12, y - size * 0.1, size * 0.08, 0, Math.PI * 2);
+      ctx.arc(x + size * 0.12, y - size * 0.1, size * 0.08, 0, Math.PI * 2);
+      ctx.fill();
+      // Horns
+      ctx.fillStyle = '#8B0000';
+      ctx.beginPath();
+      ctx.moveTo(x - size * 0.25, y - size * 0.25);
+      ctx.lineTo(x - size * 0.35, y - size * 0.5);
+      ctx.lineTo(x - size * 0.15, y - size * 0.3);
+      ctx.closePath();
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(x + size * 0.25, y - size * 0.25);
+      ctx.lineTo(x + size * 0.35, y - size * 0.5);
+      ctx.lineTo(x + size * 0.15, y - size * 0.3);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    },
+    drawBgElement: (ctx, el, width, height) => {
+      if (el.type === 'cloud') {
+        ctx.fillStyle = `rgba(100,50,150,${el.opacity * 0.3})`;
+        ctx.beginPath();
+        ctx.arc(el.x, el.y, el.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  },
+  car: {
+    name: '汽车',
+    playerName: '汽车',
+    targetName: '大树',
+    bgColors: ['#2d4a2d', '#3d6b3d', '#5a8a5a'],
+    zoneLabels: ['🎵 高音区', '🎵 中音区', '🎵 低音区'],
+    drawPlayer: (ctx, x, y, size, tilt) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(tilt * 0.2);
+      // Car body
+      ctx.fillStyle = '#E74C3C';
+      ctx.beginPath();
+      ctx.roundRect(-size * 0.4, -size * 0.1, size * 0.8, size * 0.3, 5);
+      ctx.fill();
+      // Car top
+      ctx.fillStyle = '#C0392B';
+      ctx.beginPath();
+      ctx.roundRect(-size * 0.2, -size * 0.3, size * 0.4, size * 0.2, 3);
+      ctx.fill();
+      // Windows
+      ctx.fillStyle = '#85C1E9';
+      ctx.fillRect(-size * 0.15, -size * 0.28, size * 0.12, size * 0.15);
+      ctx.fillRect(size * 0.03, -size * 0.28, size * 0.12, size * 0.15);
+      // Wheels
+      ctx.fillStyle = '#2C3E50';
+      ctx.beginPath();
+      ctx.arc(-size * 0.25, size * 0.15, size * 0.1, 0, Math.PI * 2);
+      ctx.arc(size * 0.25, size * 0.15, size * 0.1, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    },
+    drawTarget: (ctx, x, y, size) => {
+      ctx.save();
+      // Tree trunk
+      ctx.fillStyle = '#8B4513';
+      ctx.fillRect(x - size * 0.08, y, size * 0.16, size * 0.4);
+      // Tree foliage
+      ctx.fillStyle = '#228B22';
+      ctx.beginPath();
+      ctx.arc(x, y - size * 0.1, size * 0.35, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#2E8B2E';
+      ctx.beginPath();
+      ctx.arc(x - size * 0.2, y + size * 0.1, size * 0.25, 0, Math.PI * 2);
+      ctx.arc(x + size * 0.2, y + size * 0.1, size * 0.25, 0, Math.PI * 2);
+      ctx.fill();
+      // Highlight
+      ctx.fillStyle = '#3CB371';
+      ctx.beginPath();
+      ctx.arc(x - size * 0.1, y - size * 0.2, size * 0.12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    },
+    drawBgElement: (ctx, el, width, height) => {
+      if (el.type === 'leaf') {
+        ctx.fillStyle = `rgba(50,150,50,${el.opacity * 0.4})`;
+        ctx.beginPath();
+        ctx.arc(el.x, el.y, el.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+};
+
+// ==================== PitchDetector Module ====================
+class PitchDetector {
+  constructor() {
+    this.audioCtx = null;
+    this.analyser = null;
+    this.microphone = null;
+    this.stream = null;
+    this.bufferLength = 4096;
+    this.dataArray = null;
+    this.isListeningFlag = false;
+    this.pitch = -1;
+    this._pitchCallback = null;
+    this.rafId = null;
+    this.lastDetectMs = 0;
+    this.detectionIntervalMs = 80;
+    this._loop = this._loop.bind(this);
+  }
+
+  async start() {
+    if (this.isListeningFlag) return;
+    try {
+      if (!this.audioCtx) {
+        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (this.audioCtx.state === 'suspended') {
+          await this.audioCtx.resume();
+        }
+      }
+      if (!this.analyser) {
+        this.analyser = this.audioCtx.createAnalyser();
+        this.analyser.fftSize = this.bufferLength;
+        this.dataArray = new Float32Array(this.bufferLength);
+      }
+      if (!this.stream) {
+        this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        this.microphone = this.audioCtx.createMediaStreamSource(this.stream);
+        this.microphone.connect(this.analyser);
+      }
+      this.isListeningFlag = true;
+      this.pitch = -1;
+      this.lastDetectMs = 0;
+      this.rafId = requestAnimationFrame(this._loop);
+    } catch (err) {
+      this.isListeningFlag = false;
+      console.error('PitchDetector error:', err);
+      throw err;
+    }
+  }
+
+  stop() {
+    this.isListeningFlag = false;
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+    if (this.microphone) {
+      try { this.microphone.disconnect(); } catch(e) {}
+      this.microphone = null;
+    }
+    if (this.stream) {
+      this.stream.getTracks().forEach(t => t.stop());
+      this.stream = null;
+    }
+    if (this.audioCtx) {
+      try { this.audioCtx.suspend(); } catch(e) {}
+    }
+  }
+
+  onPitch(callback) {
+    this._pitchCallback = callback;
+  }
+
+  getPitch() {
+    return this.pitch;
+  }
+
+  isListening() {
+    return this.isListeningFlag;
+  }
+
+  _loop() {
+    const now = performance.now();
+    if (now - this.lastDetectMs >= this.detectionIntervalMs) {
+      this.lastDetectMs = now;
+      if (this.analyser && this.dataArray && this.audioCtx) {
+        this.analyser.getFloatTimeDomainData(this.dataArray);
+        let detected = autoCorrelate(this.dataArray, this.audioCtx.sampleRate);
+        if (detected > 60 && detected < 1200) {
+          this.pitch = detected;
+        } else {
+          this.pitch = -1;
+        }
+        if (this._pitchCallback) this._pitchCallback(this.pitch);
+      }
+    }
+    if (this.isListeningFlag) {
+      this.rafId = requestAnimationFrame(this._loop);
+    }
+  }
+}
+
+function autoCorrelate(buf, sampleRate) {
+  const SIZE = buf.length;
+  if (SIZE === 0) return -1;
+  let rms = 0;
+  for (let i = 0; i < SIZE; i++) rms += buf[i] * buf[i];
+  rms = Math.sqrt(rms / SIZE);
+  if (rms < 0.01) return -1;
+  let r1 = 0, r2 = SIZE - 1, thres = 0.2;
+  for (let i = 0; i < SIZE / 2; i++) {
+    if (Math.abs(buf[i]) < thres) { r1 = i; break; }
+  }
+  for (let i = 1; i < SIZE / 2; i++) {
+    if (Math.abs(buf[SIZE - i]) < thres) { r2 = SIZE - i; break; }
+  }
+  buf = buf.slice(r1, r2);
+  const newSize = buf.length;
+  if (newSize <= 0) return -1;
+  const c = new Array(newSize).fill(0);
+  for (let i = 0; i < newSize; i++) {
+    for (let j = 0; j < newSize - i; j++) {
+      c[i] += buf[j] * buf[j + i];
+    }
+  }
+  let d = 0;
+  while (d < newSize && c[d] > d) d++;
+  let maxval = -1, maxpos = -1;
+  for (let i = d; i < newSize; i++) {
+    if (c[i] > maxval) { maxval = c[i]; maxpos = i; }
+  }
+  if (maxpos <= 0) return -1;
+  return sampleRate / maxpos;
+}
+
+// ==================== Game Classes ====================
+
+class ZoneManager {
+  constructor(height) {
+    this.height = height;
+    this.zones = {
+      top: { yMin: 0, yMax: height * 0.33, name: '高', color: '#ff6b6b' },
+      middle: { yMin: height * 0.33, yMax: height * 0.66, name: '中', color: '#feca57' },
+      bottom: { yMin: height * 0.66, yMax: height, name: '低', color: '#48dbfb' }
+    };
+  }
+
+  getZoneForPitch(pitchHz) {
+    if (pitchHz < 0) return 'middle';
+    // 进一步优化：降低高音触发阈值
+    // 100-180Hz = 低音区
+    // 180-280Hz = 中音区  
+    // 280Hz+ = 高音区（更容易上去）
+    if (pitchHz < 180) return 'bottom';
+    if (pitchHz < 280) return 'middle';
+    return 'top';
+  }
+
+  getZoneCenterY(zoneName) {
+    const zone = this.zones[zoneName];
+    return (zone.yMin + zone.yMax) / 2;
+  }
+
+  getRandomZone() {
+    const names = ['top', 'middle', 'bottom'];
+    return names[Math.floor(Math.random() * names.length)];
+  }
+}
+
+class Player {
+  constructor(x, y, theme) {
+    this.x = x;
+    this.y = y;
+    this.targetY = y;
+    this.size = 60;
+    this.easing = 0.12; // 提高响应速度
+    this.velocity = 0;
+    this.tilt = 0;
+    this.theme = theme;
+  }
+
+  setTargetY(targetY) {
+    this.targetY = targetY;
+  }
+
+  update() {
+    const diff = this.targetY - this.y;
+    // 使用弹性缓动，大幅提升上升响应
+    this.velocity += diff * 0.25;
+    this.velocity *= 0.75; // 阻尼
+    this.y += this.velocity;
+    // 倾斜角度更大，上升时更明显
+    this.tilt = Math.max(-0.5, Math.min(0.4, -this.velocity * 0.08));
+  }
+
+  draw(ctx) {
+    const theme = THEMES[this.theme];
+    theme.drawPlayer(ctx, this.x, this.y, this.size, this.tilt);
+  }
+
+  getBounds() {
+    return {
+      x: this.x - this.size * 0.4,
+      y: this.y - this.size * 0.4,
+      width: this.size * 0.8,
+      height: this.size * 0.8
+    };
+  }
+}
+
+class Target {
+  constructor(x, y, zone, theme) {
+    this.x = x;
+    this.y = y;
+    this.zone = zone;
+    // 小目标 40-55，大目标 70-90
+    const isSmall = Math.random() < 0.5;
+    this.size = isSmall ? 40 + Math.random() * 15 : 70 + Math.random() * 20;
+    this.isSmall = isSmall;
+    this.speed = 1.5 + Math.random() * 1;
+    this.hit = false;
+    this.theme = theme;
+  }
+
+  getScore() {
+    return this.isSmall ? 1 : 10;
+  }
+
+  update() {
+    this.x -= this.speed;
+  }
+
+  draw(ctx) {
+    if (this.hit) return;
+    const theme = THEMES[this.theme];
+    theme.drawTarget(ctx, this.x, this.y, this.size);
+  }
+
+  isOffScreen() {
+    return this.x + this.size < 0;
+  }
+
+  getBounds() {
+    return {
+      x: this.x - this.size * 0.4,
+      y: this.y - this.size * 0.4,
+      width: this.size * 0.8,
+      height: this.size * 0.8
+    };
+  }
+}
+
+// ==================== Game Engine ====================
+class PitchTrainingGame {
+  constructor() {
+    this.canvas = document.getElementById('gameCanvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.width = 800;
+    this.height = 500;
+
+    // Game state
+    this.state = 'idle';
+    this.mode = 'increase';
+    this.theme = 'plane';
+    this.score = 0;
+    this.hits = 0;
+
+    // Entities
+    this.zoneManager = new ZoneManager(this.height);
+    this.player = null;
+    this.targets = [];
+
+    // Pitch detection
+    this.pitchDetector = new PitchDetector();
+    this.currentPitch = -1;
+
+    // Timing
+    this.lastTargetSpawn = 0;
+    this.targetSpawnInterval = 2000;
+    this.lastFrameTime = 0;
+
+    // Background elements
+    this.bgElements = [];
+
+    // UI Elements
+    this.scoreDisplay = document.getElementById('scoreDisplay');
+    this.pitchDisplay = document.getElementById('pitchDisplay');
+    this.hitsDisplay = document.getElementById('hitsDisplay');
+    this.micBtn = document.getElementById('micBtn');
+    this.recordsList = document.getElementById('recordsList');
+
+    // Records
+    this.records = this.loadRecords();
+
+    this.init();
+  }
+
+  init() {
+    this.setupPlayer();
+    this.generateBgElements();
+    this.bindEvents();
+    this.updateRecordsDisplay();
+    this.gameLoop();
+  }
+
+  setupPlayer() {
+    const startZone = this.getPlayerStartZone();
+    const startY = this.zoneManager.getZoneCenterY(startZone);
+    this.player = new Player(100, startY, this.theme);
+  }
+
+  getPlayerStartZone() {
+    switch(this.mode) {
+      case 'increase': return 'bottom';
+      case 'decrease': return 'top';
+      default: return 'middle';
+    }
+  }
+
+  generateBgElements() {
+    this.bgElements = [];
+    const theme = THEMES[this.theme];
+    
+    if (this.theme === 'plane') {
+      // Stars
+      for (let i = 0; i < 50; i++) {
+        this.bgElements.push({
+          type: 'star',
+          x: Math.random() * this.width,
+          y: Math.random() * this.height * 0.6,
+          size: Math.random() * 2 + 1,
+          twinkle: Math.random() * Math.PI * 2,
+          speed: 0.2
+        });
+      }
+      // Background clouds
+      for (let i = 0; i < 5; i++) {
+        this.bgElements.push({
+          type: 'bgCloud',
+          x: Math.random() * this.width,
+          y: Math.random() * this.height * 0.5,
+          size: 30 + Math.random() * 40,
+          opacity: 0.3,
+          speed: 0.5
+        });
+      }
+    } else if (this.theme === 'pacman') {
+      for (let i = 0; i < 30; i++) {
+        this.bgElements.push({
+          type: 'star',
+          x: Math.random() * this.width,
+          y: Math.random() * this.height,
+          size: Math.random() * 3 + 1,
+          twinkle: Math.random() * Math.PI * 2,
+          speed: 0.3
+        });
+      }
+    } else if (this.theme === 'ship') {
+      for (let i = 0; i < 15; i++) {
+        this.bgElements.push({
+          type: 'wave',
+          x: Math.random() * this.width,
+          y: Math.random() * this.height,
+          size: 20 + Math.random() * 30,
+          opacity: 0.4,
+          speed: 0.4
+        });
+      }
+    } else if (this.theme === 'monkey') {
+      for (let i = 0; i < 10; i++) {
+        this.bgElements.push({
+          type: 'cloud',
+          x: Math.random() * this.width,
+          y: Math.random() * this.height,
+          size: 40 + Math.random() * 50,
+          opacity: 0.3,
+          speed: 0.3
+        });
+      }
+    } else if (this.theme === 'car') {
+      for (let i = 0; i < 20; i++) {
+        this.bgElements.push({
+          type: 'leaf',
+          x: Math.random() * this.width,
+          y: Math.random() * this.height,
+          size: 10 + Math.random() * 20,
+          opacity: 0.5,
+          speed: 0.3
+        });
+      }
+    }
+  }
+
+  bindEvents() {
+    // Theme buttons
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.theme = btn.dataset.theme;
+        this.player.theme = this.theme;
+        this.generateBgElements();
+        this.resetGame();
+      });
+    });
+
+    // Mode buttons
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.mode = btn.dataset.mode;
+        this.resetGame();
+      });
+    });
+
+    // Mic button
+    this.micBtn.addEventListener('click', () => this.toggleMic());
+
+    // Clear records
+    document.getElementById('clearBtn').addEventListener('click', () => this.clearRecords());
+
+    // Pitch callback
+    this.pitchDetector.onPitch((pitch) => {
+      this.currentPitch = pitch;
+      if (pitch > 0) {
+        this.pitchDisplay.textContent = Math.round(pitch) + ' Hz';
+      } else {
+        this.pitchDisplay.textContent = '-- Hz';
+      }
+    });
+  }
+
+  async toggleMic() {
+    if (this.pitchDetector.isListening()) {
+      this.pitchDetector.stop();
+      this.micBtn.classList.remove('listening');
+      this.micBtn.innerHTML = '🎤 开始训练';
+      if (this.state === 'playing') {
+        this.state = 'paused';
+      }
+    } else {
+      try {
+        await this.pitchDetector.start();
+        this.micBtn.classList.add('listening');
+        this.micBtn.innerHTML = '⏹️ 停止';
+        if (this.state === 'idle') {
+          this.state = 'playing';
+        }
+      } catch (err) {
+        alert('无法访问麦克风：' + err.message);
+      }
+    }
+  }
+
+  resetGame() {
+    this.score = 0;
+    this.hits = 0;
+    this.targets = [];
+    this.setupPlayer();
+    this.updateUI();
+  }
+
+  spawnTarget() {
+    let zone;
+    switch(this.mode) {
+      case 'increase':
+        zone = Math.random() < 0.8 ? 'top' : this.zoneManager.getRandomZone();
+        break;
+      case 'decrease':
+        zone = Math.random() < 0.8 ? 'bottom' : this.zoneManager.getRandomZone();
+        break;
+      default:
+        zone = this.zoneManager.getRandomZone();
+    }
+
+    const y = this.zoneManager.getZoneCenterY(zone);
+    const target = new Target(this.width + 100, y, zone, this.theme);
+    this.targets.push(target);
+  }
+
+  checkCollision(a, b) {
+    return a.x < b.x + b.width &&
+           a.x + a.width > b.x &&
+           a.y < b.y + b.height &&
+           a.y + a.height > b.y;
+  }
+
+  updateUI() {
+    this.scoreDisplay.textContent = this.score;
+    this.hitsDisplay.textContent = this.hits;
+  }
+
+  saveRecord() {
+    const record = {
+      theme: this.theme,
+      mode: this.mode,
+      score: Math.round(this.score),
+      date: new Date().toLocaleString('zh-CN', {
+        month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      })
+    };
+    this.records.unshift(record);
+    if (this.records.length > 20) this.records.pop();
+    localStorage.setItem('pitchTrainingRecords', JSON.stringify(this.records));
+    this.updateRecordsDisplay();
+  }
+
+  loadRecords() {
+    try {
+      return JSON.parse(localStorage.getItem('pitchTrainingRecords')) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  updateRecordsDisplay() {
+    if (this.records.length === 0) {
+      this.recordsList.innerHTML = '<div class="no-records">暂无记录</div>';
+      return;
+    }
+    const themeColors = {
+      plane: '#667eea',
+      pacman: '#f093fb',
+      ship: '#4a8db7',
+      monkey: '#9b59b6',
+      car: '#27ae60'
+    };
+    const themeNames = {
+      plane: '飞机',
+      pacman: '吃豆人',
+      ship: '轮船',
+      monkey: '孙悟空',
+      car: '汽车'
+    };
+    
+    this.recordsList.innerHTML = this.records.slice(0, 10).map((r, i) => {
+      return `
+        <div class="record-item">
+          <span class="theme-tag" style="background:${themeColors[r.theme] || '#667eea'};color:white;">${themeNames[r.theme] || r.theme}</span>
+          <span class="score-val">${r.score}分</span>
+          <span class="date">${r.date}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  clearRecords() {
+    if (confirm('确定清空所有记录？')) {
+      this.records = [];
+      localStorage.removeItem('pitchTrainingRecords');
+      this.updateRecordsDisplay();
+    }
+  }
+
+  update(deltaTime) {
+    if (this.state !== 'playing') return;
+
+    // Update player based on pitch
+    const targetZone = this.zoneManager.getZoneForPitch(this.currentPitch);
+    const targetY = this.zoneManager.getZoneCenterY(targetZone);
+    this.player.setTargetY(targetY);
+    this.player.update();
+
+    // Spawn targets
+    const now = performance.now();
+    if (now - this.lastTargetSpawn > this.targetSpawnInterval) {
+      this.spawnTarget();
+      this.lastTargetSpawn = now;
+      this.targetSpawnInterval = Math.max(800, this.targetSpawnInterval - 20);
+    }
+
+    // Update targets
+    const playerBounds = this.player.getBounds();
+    for (let i = this.targets.length - 1; i >= 0; i--) {
+      const target = this.targets[i];
+      target.update();
+
+      // Check collision
+      if (!target.hit && this.checkCollision(playerBounds, target.getBounds())) {
+        target.hit = true;
+        this.hits++;
+        this.score += target.getScore();
+        this.updateUI();
+      }
+
+      // Remove off-screen or hit targets
+      if (target.isOffScreen() || target.hit) {
+        this.targets.splice(i, 1);
+      }
+    }
+
+    // Update background elements
+    this.bgElements.forEach(el => {
+      el.x -= el.speed;
+      if (el.x + el.size < 0) el.x = this.width + el.size;
+      if (el.type === 'star') {
+        el.twinkle += 0.05;
+      }
+    });
+
+    // Passive score increase
+    this.score += deltaTime * 0.01;
+    this.updateUI();
+  }
+
+  drawBackground() {
+    const theme = THEMES[this.theme];
+    const gradient = this.ctx.createLinearGradient(0, 0, 0, this.height);
+    gradient.addColorStop(0, theme.bgColors[0]);
+    gradient.addColorStop(0.5, theme.bgColors[1]);
+    gradient.addColorStop(1, theme.bgColors[2]);
+    this.ctx.fillStyle = gradient;
+    this.ctx.fillRect(0, 0, this.width, this.height);
+
+    // Background elements
+    this.bgElements.forEach(el => {
+      theme.drawBgElement(this.ctx, el, this.width, this.height);
+    });
+
+    // Zone dividers
+    this.ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    this.ctx.setLineDash([10, 10]);
+    this.ctx.beginPath();
+    this.ctx.moveTo(0, this.height * 0.33);
+    this.ctx.lineTo(this.width, this.height * 0.33);
+    this.ctx.moveTo(0, this.height * 0.66);
+    this.ctx.lineTo(this.width, this.height * 0.66);
+    this.ctx.stroke();
+    this.ctx.setLineDash([]);
+
+    // Zone labels
+    this.ctx.font = '14px sans-serif';
+    this.ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    theme.zoneLabels.forEach((label, i) => {
+      const y = i === 0 ? 30 : i === 1 ? this.height * 0.5 : this.height - 30;
+      this.ctx.fillText(label, this.width - 80, y);
+    });
+  }
+
+  render() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.drawBackground();
+
+    // Draw targets
+    this.targets.forEach(target => target.draw(this.ctx));
+
+    // Draw player
+    this.player.draw(this.ctx);
+
+    // Draw target zone indicator (shows where player will go based on pitch)
+    const targetZone = this.zoneManager.getZoneForPitch(this.currentPitch);
+    const zoneY = this.zoneManager.getZoneCenterY(targetZone);
+    const zoneColors = { top: '#ff6b6b', middle: '#feca57', bottom: '#48dbfb' };
+    
+    // Draw indicator line
+    this.ctx.strokeStyle = zoneColors[targetZone];
+    this.ctx.lineWidth = 3;
+    this.ctx.setLineDash([5, 5]);
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.player.x + 40, zoneY);
+    this.ctx.lineTo(this.width - 20, zoneY);
+    this.ctx.stroke();
+    this.ctx.setLineDash([]);
+
+    // Zone indicator label
+    this.ctx.fillStyle = zoneColors[targetZone];
+    this.ctx.font = 'bold 14px sans-serif';
+    const zoneNames = { top: '↑ 高音区', middle: '→ 中音区', bottom: '↓ 低音区' };
+    this.ctx.fillText(zoneNames[targetZone], this.player.x + 45, zoneY - 10);
+
+    // Draw pitch indicator bar
+    if (this.currentPitch > 0) {
+      const barHeight = 10;
+      const barY = this.height - 30;
+      const barWidth = 200;
+      const barX = 20;
+
+      this.ctx.fillStyle = 'rgba(0,0,0,0.3)';
+      this.ctx.fillRect(barX, barY, barWidth, barHeight);
+
+      const fillWidth = Math.min(barWidth, (this.currentPitch / 400) * barWidth);
+      const fillGradient = this.ctx.createLinearGradient(barX, 0, barX + barWidth, 0);
+      fillGradient.addColorStop(0, '#48dbfb');
+      fillGradient.addColorStop(0.5, '#feca57');
+      fillGradient.addColorStop(1, '#ff6b6b');
+      this.ctx.fillStyle = fillGradient;
+      this.ctx.fillRect(barX, barY, fillWidth, barHeight);
+
+      this.ctx.fillStyle = 'white';
+      this.ctx.font = '12px sans-serif';
+      this.ctx.fillText('音调', barX, barY - 5);
+    }
+  }
+
+  gameLoop(timestamp = 0) {
+    const deltaTime = timestamp - this.lastFrameTime;
+    this.lastFrameTime = timestamp;
+
+    this.update(deltaTime);
+    this.render();
+
+    requestAnimationFrame((t) => this.gameLoop(t));
+  }
+}
+
+// ==================== Initialize Game ====================
+let game;
+window.addEventListener('DOMContentLoaded', () => {
+  game = new PitchTrainingGame();
+});
+</script>
+</body>
+</html>
