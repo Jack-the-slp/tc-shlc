@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>上海小螺号能力开发中心 - 专注听觉言语语言康复</title>
-<meta name="description" content="上海小螺号能力开发中心，深耕听觉言语语言康复16年，提供一对一言语康复、听觉康复、语言康复等专业服务。已帮助1000+学员成功康复。">
+<meta name="description" content="上海小螺号能力开发中心，深耕听觉言语语言康复16年，提供一对一言语康复、听觉康复、语言康复等专业服务。累计服务1000+学员。">
 <meta name="keywords" content="言语康复,听觉康复,语言康复,构音训练,上海康复中心,小螺号">
 <meta name="robots" content="index, follow">
+<meta name="theme-color" content="#B8860B">
 <link rel="canonical" href="https://xiaolouhao.com/">
 <link rel="icon" href="小螺号logo.svg" type="image/svg+xml">
 
@@ -14,6 +15,7 @@
 <meta property="og:title" content="上海小螺号能力开发中心 - 专注听觉言语语言康复">
 <meta property="og:description" content="深耕听觉言语语言康复16年，1000+成功案例，一对一专业言语康复服务">
 <meta property="og:image" content="https://xiaolouhao.com/og-image.jpg">
+<meta property="og:image:alt" content="上海小螺号能力开发中心">
 <meta property="og:url" content="https://xiaolouhao.com/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="zh_CN">
@@ -37,7 +39,7 @@
     "addressLocality": "上海市",
     "addressCountry": "CN"
   },
-  "telephone": "+86-21-XXXXXXXX",
+  "telephone": "+86-18018633288",
   "openingHours": "Mo-Fr 09:00-18:00",
   "areaServed": {
     "@type": "City",
@@ -659,6 +661,80 @@ ul { list-style: none; }
 .contact-card p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.8; }
 .contact-card .highlight-text { color: var(--primary-light); font-weight: 600; }
 
+.contact-form-wrap {
+  margin-top: 40px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 28px;
+  position: relative;
+  z-index: 1;
+}
+.contact-form-wrap h4 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.contact-form-wrap p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 18px;
+}
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 12px;
+}
+.contact-form input,
+.contact-form select {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.contact-form input::placeholder { color: rgba(255,255,255,0.45); }
+.contact-form button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--gold-gradient);
+  cursor: pointer;
+}
+
+.floating-cta {
+  position: fixed;
+  right: 20px;
+  bottom: 95px;
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.floating-cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 124px;
+  padding: 11px 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text-dark);
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(184,134,11,0.2);
+}
+.floating-cta a.primary {
+  background: var(--gold-gradient);
+  color: #fff;
+  border: 0;
+}
+
 .qr-section {
   margin: 16px auto 0;
 }
@@ -772,6 +848,12 @@ button:focus-visible {
   .process-steps::before { display: none; }
 
   .contact-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+  .contact-form {
+    grid-template-columns: 1fr 1fr;
+  }
+  .contact-form button {
+    grid-column: span 2;
+  }
 
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
   .stat-item:nth-child(2)::after { display: none; }
@@ -794,6 +876,21 @@ button:focus-visible {
 
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .stat-item::after { display: none; }
+  .floating-cta {
+    right: 14px;
+    bottom: 88px;
+  }
+  .floating-cta a {
+    min-width: 108px;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
+  .contact-form button {
+    grid-column: auto;
+  }
 }
 
 @media (max-width: 480px) {
@@ -861,8 +958,14 @@ button:focus-visible {
           用科学方法和温暖陪伴，帮助孩子找到属于自己的声音。
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="btn-primary" aria-label="预约免费咨询">预约免费咨询 →</a>
+          <a href="#contact-form" class="btn-primary" aria-label="立即预约评估">立即预约评估 →</a>
           <a href="#services" class="btn-outline" aria-label="了解课程详情">了解课程</a>
+        </div>
+        <div style="margin-top:18px; color:var(--text-light); font-size:14px; line-height:1.8;">
+          首次沟通可快速了解：
+          <strong style="color:var(--text-dark);">适配年龄</strong> /
+          <strong style="color:var(--text-dark);">评估流程</strong> /
+          <strong style="color:var(--text-dark);">训练频次建议</strong>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -875,7 +978,7 @@ button:focus-visible {
           <div class="hero-float-card card-1">
             <div class="hero-float-icon gold" aria-hidden="true">🏅</div>
             <div>
-              <div class="label">成功帮助</div>
+              <div class="label">累计服务</div>
               <div class="value">1000+ 学员</div>
             </div>
           </div>
@@ -903,7 +1006,7 @@ button:focus-visible {
       </div>
       <div class="stat-item fade-up">
         <div class="stat-number" aria-label="超过1000名">1000<span aria-hidden="true">+</span></div>
-        <div class="stat-label">成功康复学员</div>
+        <div class="stat-label">累计服务学员</div>
       </div>
       <div class="stat-item fade-up">
         <div class="stat-number" aria-label="超过28000小时">28000<span aria-hidden="true">+</span></div>
@@ -1066,7 +1169,7 @@ button:focus-visible {
         </div>
         <div class="teacher-hl">
           <div class="hl-num">1000<span>+</span></div>
-          <div class="hl-label">成功案例</div>
+            <div class="hl-label">服务案例</div>
         </div>
         <div class="teacher-hl">
           <div class="hl-num">28000<span>+</span></div>
@@ -1256,14 +1359,39 @@ button:focus-visible {
         <h4>微信公众号</h4>
         <p>搜索关注</p>
         <p class="highlight-text">爱在小螺号</p>
+        <p style="margin-top:12px; font-size:13px;">微信号：<span class="highlight-text" id="wechatId">TCSHLC</span></p>
+        <button type="button" class="btn-outline" id="copyWechatBtn" style="margin-top:10px; padding:8px 14px; font-size:13px;">复制微信号</button>
       </div>
       <div class="contact-card fade-up">
         <div class="contact-icon" aria-hidden="true">📍</div>
-        <h4>到店咨询</h4>
+        <h4>电话咨询</h4>
         <p>上海市</p>
-        <p class="highlight-text">欢迎预约到店体验</p>
-        <p style="margin-top:12px; font-size:13px;">18018633288</p>
+        <p class="highlight-text"><a href="tel:18018633288" style="text-decoration:underline;">18018633288</a></p>
+        <p style="margin-top:12px; font-size:13px;">点击号码可直接拨打</p>
       </div>
+    </div>
+
+    <div class="contact-form-wrap fade-up" id="contact-form">
+      <h4>预约评估登记</h4>
+      <p>提交后我们会尽快联系你，沟通孩子情况与评估建议。</p>
+      <form class="contact-form" name="contact" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="b3939b89-2eb8-4ec2-9909-5bc5a6021a28">
+        <input type="hidden" name="subject" value="新的预约咨询 - 小螺号">
+        <input type="text" name="parent_name" placeholder="家长称呼" required>
+        <input type="tel" name="phone" placeholder="联系电话" required>
+        <select name="age" aria-label="孩子年龄段" required>
+          <option value="">孩子年龄段</option>
+          <option>0-3岁</option>
+          <option>4-6岁</option>
+          <option>7-12岁</option>
+          <option>13岁以上</option>
+          <option>成人</option>
+        </select>
+        <button type="submit">提交预约</button>
+      </form>
+      <p style="margin-top:12px; margin-bottom:0; font-size:12px; color:rgba(255,255,255,0.55);">
+        提示：提交后我们会尽快联系您。
+      </p>
     </div>
   </div>
 </section>
@@ -1283,6 +1411,11 @@ button:focus-visible {
 <!-- ========== BACK TO TOP ========== -->
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0})" aria-label="回到顶部" title="点击回到页面顶部">↑</button>
 
+<div class="floating-cta" aria-label="快捷咨询入口">
+  <a class="primary" href="#contact-form">预约评估</a>
+  <a href="tel:18018633288">电话咨询</a>
+</div>
+
 
 <!-- ========== JAVASCRIPT ========== -->
 <script>
@@ -1298,12 +1431,6 @@ button:focus-visible {
     var scrollY = window.scrollY;
     navbar.classList.toggle('scrolled', scrollY > 50);
     backTop.classList.toggle('visible', scrollY > 600);
-
-    // Update ARIA for mobile toggle
-    var mobileToggle = document.querySelector('.mobile-toggle');
-    if (mobileToggle) {
-      mobileToggle.setAttribute('aria-expanded', scrollY > 50 ? 'false' : 'false');
-    }
   }
 
   window.addEventListener('scroll', function() {
