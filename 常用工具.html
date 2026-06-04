@@ -90,6 +90,96 @@ img { max-width: 100%; display: block; }
   font-size: 18px; color: var(--text-light); max-width: 600px; margin: 0 auto;
 }
 
+/* Support */
+.support-section {
+  padding: 0 0 54px;
+}
+.support-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: center;
+  padding: 34px;
+  border-radius: 12px;
+  color: #fff;
+  background:
+    linear-gradient(135deg, #1d514b 0%, #2F7D72 72%),
+    radial-gradient(circle at 88% 0%, rgba(212,168,67,0.36), transparent 40%);
+  box-shadow: var(--shadow-lg);
+}
+.support-kicker {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.84);
+  font-size: 12px;
+  font-weight: 700;
+}
+.support-panel h2 {
+  margin-top: 14px;
+  color: #fff;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.18;
+}
+.support-panel p {
+  max-width: 680px;
+  margin-top: 14px;
+  color: rgba(255,255,255,0.78);
+  font-size: 15px;
+  line-height: 1.85;
+}
+.support-progress {
+  margin-top: 22px;
+}
+.support-progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: rgba(255,255,255,0.86);
+  font-size: 13px;
+  font-weight: 700;
+}
+.support-progress-track {
+  height: 10px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+}
+.support-progress-fill {
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--gold-gradient);
+}
+.support-qr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.support-qr {
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.96);
+  color: var(--text-dark);
+}
+.support-qr img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(45,42,38,0.08);
+}
+.support-qr strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  text-align: center;
+}
+
 /* Tools Grid */
 .tools-section {
   padding: 60px 0 100px;
@@ -174,10 +264,14 @@ img { max-width: 100%; display: block; }
 /* Responsive */
 @media (max-width: 960px) {
   .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  .support-panel { grid-template-columns: 1fr; }
+  .support-qr-grid { max-width: 420px; }
 }
 @media (max-width: 600px) {
   .tools-grid { grid-template-columns: 1fr; }
   .tool-card { padding: 32px 24px; }
+  .support-panel { padding: 22px; }
+  .support-qr-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -200,6 +294,41 @@ img { max-width: 100%; display: block; }
     <div class="hero-badge">常用工具</div>
     <h1>康复训练<span class="highlight">专业工具</span></h1>
     <p>科学系统的训练工具，帮助孩子高效提升各项言语语言能力</p>
+  </div>
+</section>
+
+<!-- Support -->
+<section class="support-section" id="support">
+  <div class="container">
+    <div class="support-panel">
+      <div>
+        <span class="support-kicker">支持免费工具</span>
+        <h2>让这些康复训练工具持续更新</h2>
+        <p>
+          常用工具会继续免费开放。捐赠用于网站维护、工具更新、训练材料整理和家庭康复内容制作。
+          如果这些工具帮到了你，可以扫码小额支持。
+        </p>
+        <div class="support-progress" aria-label="本月工具维护支持进度">
+          <div class="support-progress-row">
+            <span>本月维护支持</span>
+            <span>目标进度 42%</span>
+          </div>
+          <div class="support-progress-track">
+            <div class="support-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+      <div class="support-qr-grid" aria-label="捐赠二维码">
+        <div class="support-qr">
+          <img src="images/payment-wechat.jpg" alt="微信捐赠二维码">
+          <strong>微信支持</strong>
+        </div>
+        <div class="support-qr">
+          <img src="images/payment-alipay.jpg" alt="支付宝捐赠二维码">
+          <strong>支付宝支持</strong>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -269,6 +398,14 @@ img { max-width: 100%; display: block; }
         <div class="tool-icon">🎯</div>
         <h3>注意力训练</h3>
         <p>专注力、听觉注意力、视觉注意力训练，提升注意稳定性与分配能力</p>
+        <span class="tool-badge" style="background: var(--gold-gradient); color: #fff;">开始训练 →</span>
+      </a>
+
+      <!-- 音调感知训练 -->
+      <a class="tool-card" href="pitch_tracker.html">
+        <div class="tool-icon">🎤</div>
+        <h3>音调感知训练</h3>
+        <p>实时追踪声音音调，训练音高感知能力</p>
         <span class="tool-badge" style="background: var(--gold-gradient); color: #fff;">开始训练 →</span>
       </a>
 

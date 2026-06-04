@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="小螺号logo.svg" type="image/svg+xml">
+    <title>🎤 小螺号音调感知训练器</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e1e2f;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        h1 {
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+        canvas {
+            border: 1px solid #444;
+            border-radius: 12px;
+            background: #12121c;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            display: block;
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        button {
+            padding: 12px 28px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            background: #3f51b5;
+            color: white;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(63,81,181,0.4);
+        }
+        button:hover {
+            background: #5c6bc0;
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        button.stop {
+            background: #e53935;
+            box-shadow: 0 4px 12px rgba(229,57,53,0.4);
+        }
+        button.stop:hover {
+            background: #ef5350;
+        }
+        .freq-display {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffb74d;
+            background: #2a2a3c;
+            padding: 10px 24px;
+            border-radius: 40px;
+            min-width: 140px;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+        .note {
+            margin-top: 20px;
+            font-size: 0.85em;
+            color: #888;
+            max-width: 600px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <img src="小螺号logo.svg" width="60" height="60" style="vertical-align:middle; margin-right:10px;">
+    <h1 style="display:inline; vertical-align:middle;">小螺号音调感知训练器</h1>
+    <p class="subtitle">实时麦克风音高可视化（线上升 = 音调升高）</p>
+
+    <canvas id="pitchCanvas" width="1200" height="400"></canvas>
+
+    <div class="controls">
+        <button id="startBtn">▶ 开始监听</button>
+        <button id="stopBtn" class="stop" disabled>⏹️ 停止</button>
+        <div class="freq-display" id="freqDisplay">-- Hz</div>
+    </div>
+    <div class="note">
+        💡 请对着麦克风哼唱或说话。曲线向上表示音调升高，向下表示降低。<br>
+        ⚠️ 浏览器需要 HTTPS 或 localhost 才能使用麦克风。
+    </div>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('pitchCanvas');
+            const ctx = canvas.getContext('2d');
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const freqDisplay = document.getElementById('freqDisplay');
+
+            let audioContext = null;
+            let mediaStream = null;
+            let sourceNode = null;
+            let analyserNode = null;
+            let animationId = null;
+            let isRunning = false;
+
+            const BUFFER_SIZE = 2048;
+            let audioBuffer = new Float32Array(BUFFER_SIZE);
+
+            const MAX_POINTS = 800;
+            let pitchHistory = [];
+            const MIN_FREQ = 50;
+            const MAX_FREQ = 600;
+            const SILENCE_THRESHOLD = 0.01;
+            let lastValidPitch = 200;
+
+            async function initAudio() {
+                if (audioContext) {
+                    if (audioContext.state === 'suspended') {
+                        await audioContext.resume();
+                    }
+                    return;
+                }
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            async function startListening() {
+                try {
+                    await initAudio();
+
+                    mediaStream = await navigator.mediaDevices.getUserMedia({
+                        audio: {
+                            echoCancellation: false,
+                            noiseSuppression: false,
+                            autoGainControl: false
+                        }
+                    });
+
+                    sourceNode = audioContext.createMediaStreamSource(mediaStream);
+                    analyserNode = audioContext.createAnalyser();
+                    analyserNode.fftSize = BUFFER_SIZE;
+
+                    sourceNode.connect(analyserNode);
+
+                    isRunning = true;
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+
+                    detectPitchLoop();
+
+                } catch (err) {
+                    console.error(err);
+                    alert('无法获取麦克风权限: ' + err.message);
+                }
+            }
+
+            function stopListening() {
+                if (!isRunning) return;
+
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+
+                if (sourceNode) {
+                    sourceNode.disconnect();
+                    sourceNode = null;
+                }
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => track.stop());
+                    mediaStream = null;
+                }
+
+                isRunning = false;
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                freqDisplay.textContent = '-- Hz';
+
+                pitchHistory = [];
+                drawCanvas();
+            }
+
+            function autoCorrelation(buffer, lag) {
+                let sum = 0;
+                for (let i = 0; i < buffer.length - lag; i++) {
+                    sum += buffer[i] * buffer[i + lag];
+                }
+                return sum;
+            }
+
+            function detectPitch(floatTimeData, sampleRate) {
+                let sumSquares = 0;
+                for (let i = 0; i < floatTimeData.length; i++) {
+                    sumSquares += floatTimeData[i] * floatTimeData[i];
+                }
+                const rms = Math.sqrt(sumSquares / floatTimeData.length);
+                if (rms < SILENCE_THRESHOLD) {
+                    return -1;
+                }
+
+                const n = floatTimeData.length;
+                const maxLag = Math.floor(sampleRate / MIN_FREQ);
+                const minLag = Math.floor(sampleRate / MAX_FREQ);
+
+                let bestCorrelation = -1;
+                let bestLag = -1;
+
+                for (let lag = minLag; lag <= maxLag; lag++) {
+                    let correlation = 0;
+                    for (let i = 0; i < n - lag; i++) {
+                        correlation += floatTimeData[i] * floatTimeData[i + lag];
+                    }
+                    if (correlation > bestCorrelation) {
+                        bestCorrelation = correlation;
+                        bestLag = lag;
+                    }
+                }
+
+                if (bestLag > minLag && bestLag < maxLag) {
+                    const prev = autoCorrelation(floatTimeData, bestLag - 1);
+                    const curr = bestCorrelation;
+                    const next = autoCorrelation(floatTimeData, bestLag + 1);
+                    const delta = 0.5 * (prev - next) / (prev - 2 * curr + next);
+                    const fineLag = bestLag + delta;
+                    const frequency = sampleRate / fineLag;
+                    return frequency;
+                } else if (bestLag > 0) {
+                    return sampleRate / bestLag;
+                }
+
+                return -1;
+            }
+
+            function detectPitchLoop() {
+                if (!isRunning) return;
+
+                analyserNode.getFloatTimeDomainData(audioBuffer);
+
+                const frequency = detectPitch(audioBuffer, audioContext.sampleRate);
+
+                if (frequency > 0) {
+                    freqDisplay.textContent = frequency.toFixed(1) + ' Hz';
+                    lastValidPitch = frequency;
+                    const clampedFreq = Math.min(MAX_FREQ, Math.max(MIN_FREQ, frequency));
+                    pitchHistory.push(clampedFreq);
+                } else {
+                    freqDisplay.textContent = '-- Hz';
+                    pitchHistory.push(null);
+                }
+
+                if (pitchHistory.length > MAX_POINTS) {
+                    pitchHistory.shift();
+                }
+
+                drawCanvas();
+
+                animationId = requestAnimationFrame(detectPitchLoop);
+            }
+
+            function drawCanvas() {
+                const width = canvas.width;
+                const height = canvas.height;
+
+                ctx.clearRect(0, 0, width, height);
+
+                drawGrid(width, height);
+
+                if (pitchHistory.length === 0) return;
+
+                ctx.beginPath();
+                ctx.strokeStyle = '#4cafef';
+                ctx.lineWidth = 2.5;
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+
+                let isDrawing = false;
+
+                for (let i = 0; i < pitchHistory.length; i++) {
+                    const freq = pitchHistory[i];
+                    if (freq === null) {
+                        if (isDrawing) {
+                            ctx.stroke();
+                            ctx.beginPath();
+                            isDrawing = false;
+                        }
+                        continue;
+                    }
+
+                    const normalized = (freq - MIN_FREQ) / (MAX_FREQ - MIN_FREQ);
+                    const y = height - (normalized * height * 0.9 + 10);
+
+                    const x = (i / (MAX_POINTS - 1)) * width;
+
+                    if (!isDrawing) {
+                        ctx.moveTo(x, y);
+                        isDrawing = true;
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+
+                if (isDrawing) {
+                    ctx.stroke();
+                }
+
+                const lastFreq = pitchHistory[pitchHistory.length - 1];
+                if (lastFreq !== null && lastFreq !== undefined) {
+                    const normalized = (lastFreq - MIN_FREQ) / (MAX_FREQ - MIN_FREQ);
+                    const y = height - (normalized * height * 0.9 + 10);
+                    const x = ((pitchHistory.length - 1) / (MAX_POINTS - 1)) * width;
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, 6, 0, 2 * Math.PI);
+                    ctx.fillStyle = '#ffb74d';
+                    ctx.shadowColor = '#ffb74d';
+                    ctx.shadowBlur = 10;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                    ctx.shadowColor = 'transparent';
+                }
+            }
+
+            function drawGrid(width, height) {
+                ctx.strokeStyle = '#2a2a3c';
+                ctx.lineWidth = 1;
+                ctx.font = '11px "Segoe UI"';
+                ctx.fillStyle = '#888';
+
+                const marginTop = 10;
+                const marginBottom = 10;
+                const plotHeight = height - marginTop - marginBottom;
+
+                const freqSteps = [100, 200, 300, 400, 500, 600, 800, 1000];
+                freqSteps.forEach(f => {
+                    if (f < MIN_FREQ || f > MAX_FREQ) return;
+                    const normalized = (f - MIN_FREQ) / (MAX_FREQ - MIN_FREQ);
+                    const y = height - marginBottom - normalized * plotHeight;
+
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(width, y);
+                    ctx.strokeStyle = '#3a3a4e';
+                    ctx.stroke();
+
+                    ctx.fillText(f + ' Hz', 5, y - 3);
+                });
+
+                for (let i = 0; i <= 5; i++) {
+                    const x = (i / 5) * width;
+                    ctx.beginPath();
+                    ctx.moveTo(x, marginTop);
+                    ctx.lineTo(x, height - marginBottom);
+                    ctx.strokeStyle = '#2a2a3c';
+                    ctx.stroke();
+                }
+            }
+
+            startBtn.addEventListener('click', startListening);
+            stopBtn.addEventListener('click', stopListening);
+
+            window.addEventListener('beforeunload', () => {
+                stopListening();
+                if (audioContext) {
+                    audioContext.close();
+                    audioContext = null;
+                }
+            });
+
+            drawCanvas();
+        })();
+</script>
+</body>
+</html>
