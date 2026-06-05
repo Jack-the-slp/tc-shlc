@@ -120,19 +120,55 @@ main {
   margin: 0 auto;
   padding: 48px 24px 72px;
 }
+.service-page-nav {
+  position: sticky;
+  top: 72px;
+  z-index: 12;
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  border: 1px solid rgba(91,155,213,0.12);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.05);
+  backdrop-filter: blur(10px);
+}
+.service-page-nav a {
+  min-height: 42px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: 999px;
+  color: var(--body);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.service-page-nav a:first-child {
+  color: #fff;
+  background: var(--primary-gradient);
+  box-shadow: 0 6px 18px rgba(255,122,50,0.22);
+}
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.58fr);
-  gap: 28px;
-  align-items: start;
+  display: block;
 }
 .hero > *,
 .order-section > * {
   min-width: 0;
 }
+#intro,
+#history,
+#order,
+#payment {
+  scroll-margin-top: 128px;
+}
 .detail-panel,
 .order-panel,
-.service-focus-card {
+.story-panel {
   border: 1px solid var(--line);
   border-radius: 28px;
   background: var(--soft-gradient);
@@ -183,9 +219,9 @@ h1 {
 }
 .insight-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  max-width: 680px;
+  max-width: 760px;
   margin-top: 28px;
 }
 .insight-card {
@@ -233,88 +269,113 @@ h1 {
   border-radius: 999px;
   background: var(--primary);
 }
-.service-focus-card {
-  position: sticky;
-  top: 96px;
-  align-self: start;
-  overflow: hidden;
-  padding: 28px;
-  background: linear-gradient(145deg, #FFFFFF, #FFF8F3);
-}
-.service-focus-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 8px;
-  background: var(--primary-gradient);
-}
-.focus-eyebrow {
-  color: var(--primary-dark);
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-.focus-title {
-  margin-top: 10px;
-  font-size: 1.8rem;
-  line-height: 1.4;
-  font-weight: 700;
-}
-.focus-copy {
-  margin-top: 12px;
-  color: var(--body);
-  font-size: 1rem;
-  line-height: 1.7;
-}
-.focus-tags {
+.hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
-}
-.focus-tags span {
-  min-height: 34px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 12px;
-  border-radius: 999px;
-  color: var(--primary-dark);
-  background: rgba(255,122,50,0.08);
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-.focus-actions {
-  display: grid;
   gap: 10px;
   margin-top: 22px;
 }
-.focus-actions a {
-  min-height: 52px;
+.hero-actions a {
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0 14px;
   border-radius: 999px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
-.focus-primary {
+.hero-primary {
   color: #fff;
   background: var(--primary-gradient);
   box-shadow: 0 6px 25px rgba(255,122,50,0.35);
 }
-.focus-secondary {
+.hero-secondary {
   color: var(--ink);
   border: 1px solid rgba(91,155,213,0.12);
   background: rgba(255,255,255,0.9);
 }
+.story-section {
+  margin-top: 28px;
+}
+.story-panel {
+  padding: 32px;
+}
+.section-heading {
+  max-width: 760px;
+  margin-bottom: 24px;
+}
+.section-heading span {
+  color: var(--primary-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.section-heading h2 {
+  margin-top: 6px;
+  font-size: 1.8rem;
+  line-height: 1.4;
+  font-weight: 700;
+}
+.section-heading p {
+  margin-top: 8px;
+  color: var(--body);
+}
+.chat-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.chat-proof-card {
+  min-height: 280px;
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(91,155,213,0.12);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.chat-shot {
+  min-height: 190px;
+  padding: 14px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #F5FFF8 0%, #FFFFFF 100%);
+  border: 1px solid rgba(123,201,111,0.18);
+}
+.chat-bubble {
+  max-width: 86%;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 16px 16px 16px 4px;
+  background: #FFFFFF;
+  color: var(--body);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.chat-bubble.parent {
+  margin-left: auto;
+  border-radius: 16px 16px 4px 16px;
+  color: #24623D;
+  background: #E7F8EA;
+}
+.chat-proof-card figcaption {
+  margin-top: 12px;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+}
+.chat-proof-card p {
+  margin-top: 4px;
+  color: var(--body);
+  font-size: 0.9rem;
+}
 .order-section {
   margin-top: 28px;
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.58fr);
-  gap: 28px;
-  align-items: start;
+  display: block;
 }
 .order-panel {
   overflow: hidden;
+  max-width: 1040px;
+  margin: 0 auto;
 }
 .order-head {
   padding: 32px;
@@ -363,6 +424,11 @@ h1 {
 }
 .order-form {
   padding: 32px;
+}
+.reservation-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
 }
 .selected-box {
   padding: 18px;
@@ -420,7 +486,7 @@ textarea:focus {
 .pay-box {
   position: relative;
   overflow: hidden;
-  margin-top: 22px;
+  margin-top: 0;
   padding: 20px;
   border-radius: 24px;
   border: 1px solid rgba(91,155,213,0.12);
@@ -458,13 +524,13 @@ textarea:focus {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 170px minmax(0, 1fr);
-  gap: 18px;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 24px;
   align-items: center;
   margin-top: 16px;
 }
 .payment-qr {
-  width: 170px;
+  width: 220px;
   aspect-ratio: 1;
   display: none;
   object-fit: cover;
@@ -489,8 +555,8 @@ textarea:focus {
 }
 .consult-card {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 16px;
   align-items: center;
   margin-top: 16px;
   padding: 12px;
@@ -499,7 +565,7 @@ textarea:focus {
   background: var(--paper);
 }
 .consult-card img {
-  width: 96px;
+  width: 112px;
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 16px;
@@ -532,41 +598,17 @@ textarea:focus {
   margin-top: 12px;
   color: var(--muted);
   font-size: 0.9rem;
-}
-.process-panel {
-  padding: 32px;
-}
-.process-panel h2 {
-  font-size: 1.8rem;
-  line-height: 1.4;
-  font-weight: 700;
-}
-.process-list {
-  display: grid;
-  gap: 16px;
-  margin-top: 20px;
-}
-.process-item {
-  padding: 18px;
-  border-radius: 22px;
-  border: 1px solid rgba(91,155,213,0.12);
-  background: #fff;
-}
-.process-item strong {
-  display: block;
-  font-size: 1rem;
-  font-weight: 700;
-}
-.process-item span {
-  display: block;
-  margin-top: 4px;
-  color: var(--body);
-  font-size: 0.95rem;
+  grid-column: 1 / -1;
 }
 @media (max-width: 960px) {
   .hero,
-  .order-section {
+  .order-section,
+  .chat-gallery,
+  .reservation-layout {
     grid-template-columns: 1fr;
+  }
+  .order-section {
+    display: block;
   }
 }
 @media (max-width: 640px) {
@@ -606,10 +648,15 @@ textarea:focus {
     max-width: 100%;
     overflow: visible;
   }
+  .service-page-nav {
+    top: 66px;
+    margin: 0 0 18px;
+    border-radius: 22px;
+  }
   .hero,
   .order-section,
   .detail-panel,
-  .service-focus-card,
+  .story-panel,
   .order-panel {
     width: 100%;
     max-width: 100%;
@@ -617,8 +664,7 @@ textarea:focus {
   .detail-panel,
   .order-form,
   .order-head,
-  .process-panel,
-  .service-focus-card {
+  .story-panel {
     padding: 24px;
   }
   .detail-panel {
@@ -633,13 +679,13 @@ textarea:focus {
   .summary,
   .insight-card li,
   .insight-card span,
-  .focus-copy,
-  .process-item span {
+  .chat-proof-card p {
     overflow-wrap: anywhere;
   }
   .insight-grid,
   .field-grid,
-  .payment-grid {
+  .payment-grid,
+  .reservation-layout {
     grid-template-columns: 1fr;
   }
   .payment-qr {
@@ -665,50 +711,85 @@ textarea:focus {
 
 <main>
   <div class="container">
-    <section class="hero" aria-labelledby="serviceTitle">
+    <nav class="service-page-nav" aria-label="服务页面导航">
+      <a href="#intro">服务介绍</a>
+      <a href="#history">往届群聊</a>
+      <a href="#order">宝宝信息</a>
+      <a href="#payment">扫码付款</a>
+    </nav>
+
+    <section class="hero" id="intro" aria-labelledby="serviceTitle">
       <article class="detail-panel" id="detailPanel">
         <div class="kicker" id="serviceKicker">儿童家庭 · 老师直接带练</div>
         <h1 id="serviceTitle">一对一康复训练</h1>
         <p class="summary" id="serviceSummary">
           当孩子不是缺练习材料，而是需要有人看见当前表现、判断目标顺序、当场示范怎么练，一对一训练会更合适。
         </p>
+        <div class="hero-actions">
+          <a class="hero-primary" href="#order">填写宝宝信息预约</a>
+          <a class="hero-secondary" href="#history">看看往届群聊</a>
+        </div>
         <div class="insight-grid" aria-label="服务详情">
           <div class="insight-card">
-            <strong>现在最常见的卡点</strong>
-            <ul id="servicePain"></ul>
+            <strong>这是什么</strong>
+            <span id="serviceWhat">面向需要老师直接看孩子表现、制定训练目标并带练的家庭。</span>
           </div>
           <div class="insight-card">
-            <strong>我们怎么帮你推进</strong>
-            <ul id="serviceSolution"></ul>
+            <strong>我们能提供什么服务</strong>
+            <ul id="serviceOffer"></ul>
           </div>
           <div class="insight-card">
-            <strong>你会得到什么</strong>
-            <ul id="serviceOutcome"></ul>
-          </div>
-          <div class="insight-card">
-            <strong>适合谁来下单</strong>
-            <span id="serviceFit">适合需要老师直接带练、目标需要随孩子表现调整的儿童家庭。</span>
+            <strong id="serviceEffectHeading">家长能得到什么效果</strong>
+            <ul id="serviceEffect"></ul>
           </div>
         </div>
       </article>
+    </section>
 
-      <aside class="service-focus-card" aria-label="当前服务">
-        <span class="focus-eyebrow">当前服务详情</span>
-        <h2 class="focus-title" id="focusTitle">一对一康复训练</h2>
-        <p class="focus-copy" id="focusSummary">只展示你从首页选择的这个服务，确认合适后再预约下单。</p>
-        <div class="focus-tags" id="serviceTags" aria-label="服务标签"></div>
-        <div class="focus-actions">
-          <a class="focus-primary" href="#order">预约这个服务</a>
-          <a class="focus-secondary" href="index.html#services">返回服务项目</a>
+    <section class="story-section" id="history" aria-labelledby="historyTitle">
+      <article class="story-panel">
+        <div class="section-heading">
+          <span>往届伴学群</span>
+          <h2 id="historyTitle">把每天练习变成看得见的进步</h2>
+          <p>这里放往届群聊和家长反馈的展示区。真实截图准备好后，可以直接替换为图片。</p>
         </div>
-      </aside>
+        <div class="chat-gallery" aria-label="往届群聊展示">
+          <figure class="chat-proof-card">
+            <div class="chat-shot">
+              <div class="chat-bubble">今天按老师说的等了 5 秒，孩子主动说完整了一点。</div>
+              <div class="chat-bubble parent">我把练习视频发群里了，帮我看看提示是不是太多。</div>
+              <div class="chat-bubble">可以再少一点提示，明天先保留等待时间。</div>
+            </div>
+            <figcaption>家庭练习反馈</figcaption>
+            <p>家长把练习情况发到群里，老师给出下一次调整方向。</p>
+          </figure>
+          <figure class="chat-proof-card">
+            <div class="chat-shot">
+              <div class="chat-bubble parent">今天吃饭时也试了一下，孩子愿意多说两个词。</div>
+              <div class="chat-bubble">这个场景很好，明天继续用同一个句式泛化。</div>
+              <div class="chat-bubble parent">明白了，我晚上再记录一次。</div>
+            </div>
+            <figcaption>生活场景泛化</figcaption>
+            <p>把训练目标放进吃饭、游戏、绘本和日常沟通里。</p>
+          </figure>
+          <figure class="chat-proof-card">
+            <div class="chat-shot">
+              <div class="chat-bubble">本周先不加新目标，把主动表达稳定下来。</div>
+              <div class="chat-bubble parent">这样我就知道每天重点看什么了。</div>
+              <div class="chat-bubble">对，先看主动次数和提示减少情况。</div>
+            </div>
+            <figcaption>阶段目标清晰</figcaption>
+            <p>家长知道这一周练什么、看什么、什么时候该调整。</p>
+          </figure>
+        </div>
+      </article>
     </section>
 
     <section class="order-section" id="order" aria-labelledby="orderTitle">
       <article class="order-panel">
         <div class="order-head">
-          <h2 id="orderTitle">预约与下单</h2>
-          <p>先留下你的情况和服务选择。已确认购买的用户可扫码付款并备注订单号，老师会通过微信核对安排。</p>
+          <h2 id="orderTitle">填写宝宝信息来预约</h2>
+          <p>先写孩子情况和联系方式。提交后老师会核对服务是否匹配，再确认时间、付款和下一步练习重点。</p>
           <div class="order-id-row">
             <span class="order-id" id="orderId">XLH-000000</span>
             <button class="copy-order-btn" type="button" id="copyOrderBtn">复制订单号</button>
@@ -724,66 +805,46 @@ textarea:focus {
             <span>当前选择</span>
             <strong id="selectedServiceName">一对一康复训练</strong>
           </div>
-          <div class="field-grid">
-            <input type="text" name="name" placeholder="姓名 / 宝宝昵称" required>
-            <input type="tel" name="phone" placeholder="联系电话" required>
-            <select name="service_period" id="servicePeriodSelect" required>
-              <option value="先咨询确认">先咨询确认</option>
-              <option value="阶段训练包">阶段训练包</option>
-              <option value="家庭伴学">家庭伴学</option>
-              <option value="成长营报名">成长营报名</option>
-              <option value="案例督导">案例督导</option>
-            </select>
-            <input type="text" name="paid_amount" placeholder="付款金额（未付款可填待确认）" required>
-            <textarea name="case_note" placeholder="写下你最想解决的问题：孩子表现、家庭练习卡点、康复师个案难点，或希望老师重点看的地方"></textarea>
-          </div>
-          <div class="pay-box">
-            <div class="pay-tabs" role="group" aria-label="选择付款方式">
-              <button class="pay-tab active" type="button" data-pay="wechat">微信支付</button>
-              <button class="pay-tab" type="button" data-pay="alipay">支付宝</button>
+          <div class="reservation-layout">
+            <div class="field-grid">
+              <input type="text" name="name" placeholder="宝宝昵称 / 家长称呼" required>
+              <input type="tel" name="phone" placeholder="家长联系电话" required>
+              <select name="service_period" id="servicePeriodSelect" required>
+                <option value="先咨询确认">先咨询确认</option>
+                <option value="阶段训练包">阶段训练包</option>
+                <option value="家庭伴学">家庭伴学</option>
+                <option value="成长营报名">成长营报名</option>
+                <option value="案例督导">案例督导</option>
+              </select>
+              <input type="text" name="paid_amount" placeholder="付款金额（未付款可填待确认）" required>
+              <textarea name="case_note" placeholder="写下宝宝年龄、听力或语言情况、家里最卡的练习问题，以及希望老师重点看的地方"></textarea>
             </div>
-            <div class="payment-grid">
-              <img class="payment-qr active" data-pay-qr="wechat" src="images/payment-wechat.jpg" alt="微信支付收款二维码">
-              <img class="payment-qr" data-pay-qr="alipay" src="images/payment-alipay.jpg" alt="支付宝收款二维码">
-              <div class="payment-copy">
-                <h3 id="paymentTitle">微信扫码付款</h3>
-                <p>付款备注：姓名 + 订单号。提交订单后，也可以添加微信发送订单号和付款截图。</p>
-                <div class="consult-card">
-                  <img src="images/wechat-consult.jpg" alt="微信咨询二维码">
-                  <span>
-                    <strong>扫码咨询 / 确认订单</strong>
-                    <span>付款前后都可以添加微信确认服务时间。</span>
-                  </span>
+            <div class="pay-box" id="payment">
+              <div class="pay-tabs" role="group" aria-label="选择付款方式">
+                <button class="pay-tab active" type="button" data-pay="wechat">微信支付</button>
+                <button class="pay-tab" type="button" data-pay="alipay">支付宝</button>
+              </div>
+              <div class="payment-grid">
+                <img class="payment-qr active" data-pay-qr="wechat" src="images/payment-wechat.jpg" alt="微信支付收款二维码">
+                <img class="payment-qr" data-pay-qr="alipay" src="images/payment-alipay.jpg" alt="支付宝收款二维码">
+                <div class="payment-copy">
+                  <h3 id="paymentTitle">微信扫码付款</h3>
+                  <p>付款备注：宝宝昵称 + 订单号。提交预约后，也可以添加微信发送订单号和付款截图。</p>
+                  <div class="consult-card">
+                    <img src="images/wechat-consult.jpg" alt="微信咨询二维码">
+                    <span>
+                      <strong>扫码咨询 / 确认订单</strong>
+                      <span>付款前后都可以添加微信确认服务时间和练习安排。</span>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
+            <p class="note">目前为人工核对安排：提交后我们会结合宝宝情况确认服务方式、时间和下一步训练重点。</p>
           </div>
           <button class="submit-btn" type="submit">提交预约信息</button>
-          <p class="note">目前为人工核对安排：提交后我们会结合你的情况确认服务方式、时间和下一步训练重点。</p>
         </form>
       </article>
-
-      <aside class="order-panel process-panel">
-        <h2>从问题到安排</h2>
-        <div class="process-list">
-          <div class="process-item">
-            <strong>1. 选一个最接近的服务</strong>
-            <span>不用完全确定，先按当前最明显的卡点选择。</span>
-          </div>
-          <div class="process-item">
-            <strong>2. 写清楚当前问题</strong>
-            <span>孩子表现、家庭练习、个案推进，都可以直接写。</span>
-          </div>
-          <div class="process-item">
-            <strong>3. 老师核对服务安排</strong>
-            <span>确认适合的服务方式、训练重点和沟通时间。</span>
-          </div>
-          <div class="process-item">
-            <strong>4. 扫码付款并微信确认</strong>
-            <span>已确认购买后付款，备注订单号，方便快速核对。</span>
-          </div>
-        </div>
-      </aside>
     </section>
   </div>
 </main>
@@ -798,6 +859,8 @@ textarea:focus {
       kicker: '儿童家庭 · 老师直接带练',
       title: '一对一康复训练',
       summary: '当孩子不是缺练习材料，而是需要有人看见当前表现、判断目标顺序、当场示范怎么练，一对一训练会更合适。',
+      what: '老师直接看孩子表现，制定阶段训练目标，并在训练中带练、示范和调整。适合发音不清、语言表达落后，或听觉康复后需要语言训练的孩子。',
+      effectHeading: '孩子和家长能得到什么效果',
       pain: [
         '发音不清，家长知道有问题，但不知道先练哪个音。',
         '语言表达落后，课堂能跟一点，回家就不知道怎么延续。',
@@ -822,6 +885,19 @@ textarea:focus {
       kicker: '儿童家长 · 家庭练习落地',
       title: '家长伴学营',
       summary: '很多家庭不是不愿意练，而是不知道每天练什么、练到什么程度、怎么把课堂目标放进生活里。',
+      what: '家长伴学营不是让孩子再多上一节课，而是把老师的训练目标翻译成家里每天能做的练习。家长知道今天练什么、怎么提示、怎么观察孩子有没有变化。',
+      offer: [
+        '根据孩子当前目标拆出家庭练习任务。',
+        '家长在群里反馈视频或文字，老师给出调整建议。',
+        '把课堂目标放进吃饭、游戏、绘本、日常沟通里。'
+      ],
+      effectHeading: '家长能得到什么效果',
+      effect: [
+        '每天知道怎么练，不再靠感觉重复。',
+        '能看懂孩子细小变化，知道什么时候该减少提示或加难度。',
+        '家庭练习和课堂训练接上，孩子更容易把能力用到生活里。'
+      ],
+      historyTitle: '往届伴学群反馈',
       pain: [
         '孩子在机构能配合，回家练习就断掉。',
         '家长不知道怎么观察孩子有没有进步。',
@@ -846,6 +922,8 @@ textarea:focus {
       kicker: '康复师 · 系统学习',
       title: '康复师成长营',
       summary: '成长营重点不是堆资料，而是帮助康复师建立判断框架：为什么选这个目标，为什么这样推进，遇到变化怎么调整。',
+      what: '面向新入行或想系统梳理训练逻辑的康复师，用课程、案例和讨论建立更稳定的临床判断框架。',
+      effectHeading: '康复师能得到什么支持',
       pain: [
         '会做活动，但目标选择和顺序不够稳定。',
         '面对构音、语言、听觉问题时，判断依据不够清楚。',
@@ -870,6 +948,8 @@ textarea:focus {
       kicker: '康复师 · 真实个案督导',
       title: '康复师案例服务',
       summary: '当你手里已经有个案，但目标卡住、训练推不动、家长沟通反复时，需要的不是泛泛建议，而是围绕真实个案拆具体路径。',
+      what: '围绕康复师正在跟进的真实个案，拆解当前表现、目标优先级、训练推进和家长沟通卡点。',
+      effectHeading: '康复师能得到什么支持',
       pain: [
         '个案目标很多，不知道先抓哪个。',
         '训练做了一段时间，进步不明显，不知道问题在哪里。',
@@ -894,6 +974,8 @@ textarea:focus {
       kicker: '评估后 · 先理清路径',
       title: '阶段陪伴服务',
       summary: '如果你还不确定该选哪种服务，先把当前问题、阶段目标和优先顺序理清楚，再决定后续训练安排。',
+      what: '适合还没确定服务选择的家庭或康复师，先把当前问题、目标顺序和下一步安排理清楚。',
+      effectHeading: '你会得到什么支持',
       pain: [
         '看过评估或训练建议，但不知道下一步先做什么。',
         '孩子问题不止一个，家长担心选错方向。',
@@ -931,30 +1013,17 @@ textarea:focus {
     });
   }
 
-  function setTags(id, items) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.innerHTML = '';
-    (items || []).forEach(function(text) {
-      var tag = document.createElement('span');
-      tag.textContent = text;
-      el.appendChild(tag);
-    });
-  }
-
   function selectService(key, updateUrl) {
     var item = serviceData[key] || serviceData.oneToOne;
     document.documentElement.style.setProperty('--service-accent', item.accent);
     setText('serviceKicker', item.kicker);
     setText('serviceTitle', item.title);
     setText('serviceSummary', item.summary);
-    setList('servicePain', item.pain);
-    setList('serviceSolution', item.solution);
-    setList('serviceOutcome', item.outcome);
-    setText('serviceFit', item.fit);
-    setText('focusTitle', item.title);
-    setText('focusSummary', item.fit);
-    setTags('serviceTags', item.tags);
+    setText('serviceWhat', item.what || item.summary);
+    setList('serviceOffer', item.offer || item.solution);
+    setText('serviceEffectHeading', item.effectHeading || '你会得到什么效果');
+    setList('serviceEffect', item.effect || item.outcome);
+    setText('historyTitle', item.historyTitle || '往届服务反馈');
     setText('selectedServiceName', item.title);
     setText('paymentTitle', '微信扫码付款');
     document.title = item.title + ' - 服务详情与下单 - 上海小螺号能力开发中心';
