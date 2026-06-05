@@ -674,6 +674,7 @@ body::after {
 }
 .service-hero-card {
   position: relative;
+  display: block;
   min-height: 560px;
   overflow: hidden;
   border-radius: 8px;
@@ -681,6 +682,8 @@ body::after {
   background: #1E1C1A;
   box-shadow: 0 28px 70px rgba(30,28,26,0.16);
   isolation: isolate;
+  color: inherit;
+  text-decoration: none;
 }
 .service-hero-card::after {
   content: '';
@@ -820,6 +823,8 @@ button.service-action-secondary {
   background: rgba(255,255,255,0.86);
   box-shadow: 0 14px 36px rgba(30,28,26,0.07);
   transition: var(--transition-fast);
+  color: inherit;
+  text-decoration: none;
 }
 .service-track-card::before {
   content: '';
@@ -834,6 +839,11 @@ button.service-action-secondary {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--track-accent, var(--primary)) 42%, transparent);
   box-shadow: 0 20px 46px rgba(30,28,26,0.11);
+}
+.service-hero-card:focus-visible,
+.service-track-card:focus-visible {
+  outline: 3px solid rgba(242,210,123,0.78);
+  outline-offset: 4px;
 }
 .service-track-index {
   width: 54px;
@@ -2410,8 +2420,6 @@ button:focus-visible {
       <a href="#tools">常用工具</a>
       <a href="#about">关于我们</a>
       <a href="#services">服务项目</a>
-      <a href="#order">自助下单</a>
-      <a href="#support">捐赠支持</a>
       <a href="#teacher">名师团队</a>
       <a href="#articles">科普专栏</a>
       <a href="#contact" class="nav-cta">联系我们</a>
@@ -2435,8 +2443,6 @@ button:focus-visible {
   <a href="#tools" onclick="toggleMenu()">常用工具</a>
   <a href="#about" onclick="toggleMenu()">关于我们</a>
   <a href="#services" onclick="toggleMenu()">服务项目</a>
-  <a href="#order" onclick="toggleMenu()">自助下单</a>
-  <a href="#support" onclick="toggleMenu()">捐赠支持</a>
   <a href="#teacher" onclick="toggleMenu()">名师团队</a>
   <a href="#articles" onclick="toggleMenu()">科普专栏</a>
   <a href="#contact" onclick="toggleMenu()">联系我们</a>
@@ -2632,10 +2638,10 @@ button:focus-visible {
     <div class="section-header fade-up">
       <div class="section-label" id="services-heading">服务项目</div>
       <h2 class="section-title">选择适合你的康复服务</h2>
-      <p class="section-subtitle">四类服务入口清晰区分，点开卡片看详情，再按训练包、营期或月度服务下单。</p>
+      <p class="section-subtitle">首页只展示服务入口。点击卡片进入对应子页面，看详情、扫码付款并提交订单。</p>
     </div>
     <div class="services-showcase">
-      <article class="service-hero-card fade-up" data-service-card="oneToOne" tabindex="0" aria-label="查看一对一康复训练详情">
+      <a class="service-hero-card fade-up" href="服务下单.html?service=oneToOne" data-service-card="oneToOne" aria-label="进入一对一康复训练详情和下单页面">
         <img class="service-hero-image" src="images/home-services-core.png" alt="李老师一对一言语康复课程场景" loading="lazy">
         <div class="service-hero-content">
           <div>
@@ -2661,230 +2667,64 @@ button:focus-visible {
             </div>
           </div>
           <div class="service-actions">
-            <button type="button" class="service-action-primary" data-detail-service="oneToOne">查看详情</button>
-            <button type="button" class="service-action-secondary" data-order-service="oneToOne">立即下单</button>
+            <span class="service-action-primary">查看详情</span>
+            <span class="service-action-secondary">去子页面下单</span>
           </div>
         </div>
-      </article>
+      </a>
 
       <div class="service-track" aria-label="配套康复服务">
-        <article class="service-track-card fade-up" style="--track-accent:#7A9E7E;" data-service-card="parentCamp" tabindex="0" aria-label="查看家长伴学营详情">
+        <a class="service-track-card fade-up" href="服务下单.html?service=parentCamp" style="--track-accent:#7A9E7E;" data-service-card="parentCamp" aria-label="进入家长伴学营详情和下单页面">
           <div class="service-track-index">02</div>
           <div>
             <h3>家长伴学营</h3>
             <p>把专业训练目标翻译成家长每天能执行的家庭练习，适合月度持续指导。</p>
             <span class="service-track-tag">家庭康复伴学</span>
             <div class="service-track-actions">
-              <button type="button" class="service-mini-action" data-detail-service="parentCamp">查看详情</button>
-              <button type="button" class="service-mini-action" data-order-service="parentCamp">订购服务</button>
+              <span class="service-mini-action">查看详情</span>
+              <span class="service-mini-action">订购服务</span>
             </div>
           </div>
-        </article>
+        </a>
 
-        <article class="service-track-card fade-up" style="--track-accent:#C4786C;" data-service-card="therapistCamp" tabindex="0" aria-label="查看康复师成长营详情">
+        <a class="service-track-card fade-up" href="服务下单.html?service=therapistCamp" style="--track-accent:#C4786C;" data-service-card="therapistCamp" aria-label="进入康复师成长营详情和下单页面">
           <div class="service-track-index">03</div>
           <div>
             <h3>康复师成长营</h3>
             <p>面向康复师和机构青年老师，系统搭建构音、语言、听觉康复训练判断框架。</p>
             <span class="service-track-tag">康复师成长计划</span>
             <div class="service-track-actions">
-              <button type="button" class="service-mini-action" data-detail-service="therapistCamp">查看详情</button>
-              <button type="button" class="service-mini-action" data-order-service="therapistCamp">报名营期</button>
+              <span class="service-mini-action">查看详情</span>
+              <span class="service-mini-action">报名营期</span>
             </div>
           </div>
-        </article>
+        </a>
 
-        <article class="service-track-card fade-up" style="--track-accent:#4F79A8;" data-service-card="caseService" tabindex="0" aria-label="查看康复师案例服务详情">
+        <a class="service-track-card fade-up" href="服务下单.html?service=caseService" style="--track-accent:#4F79A8;" data-service-card="caseService" aria-label="进入康复师案例服务详情和下单页面">
           <div class="service-track-index">04</div>
           <div>
             <h3>康复师案例服务</h3>
             <p>围绕真实个案拆解目标、训练推进和家长沟通卡点，适合按次咨询或月度督导。</p>
             <span class="service-track-tag">案例督导</span>
             <div class="service-track-actions">
-              <button type="button" class="service-mini-action" data-detail-service="caseService">查看详情</button>
-              <button type="button" class="service-mini-action" data-order-service="caseService">预约督导</button>
+              <span class="service-mini-action">查看详情</span>
+              <span class="service-mini-action">预约督导</span>
             </div>
           </div>
-        </article>
+        </a>
 
-        <article class="service-track-card fade-up" style="--track-accent:#B8860B;" data-service-card="supportPlan" tabindex="0" aria-label="查看阶段陪伴服务详情">
+        <a class="service-track-card fade-up" href="服务下单.html?service=supportPlan" style="--track-accent:#B8860B;" data-service-card="supportPlan" aria-label="进入阶段陪伴服务详情和下单页面">
           <div class="service-track-index">05</div>
           <div>
             <h3>阶段陪伴服务</h3>
             <p>用于承接评估后的短期训练陪跑，适合先明确目标、再决定课时或营期的家庭。</p>
             <span class="service-track-tag">训练陪跑计划</span>
             <div class="service-track-actions">
-              <button type="button" class="service-mini-action" data-detail-service="supportPlan">查看详情</button>
-              <button type="button" class="service-mini-action" data-order-service="supportPlan">先咨询</button>
+              <span class="service-mini-action">查看详情</span>
+              <span class="service-mini-action">先咨询</span>
             </div>
           </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="service-detail-panel fade-up" id="serviceDetail" style="--detail-accent:#B8860B;" aria-live="polite">
-      <div>
-        <div class="service-detail-kicker" id="serviceDetailKicker">儿童家庭 · 个别化训练</div>
-        <h3 class="service-detail-title" id="serviceDetailTitle">一对一康复训练</h3>
-        <p class="service-detail-summary" id="serviceDetailSummary">
-          老师直接看孩子表现，制定训练目标，带练并调整。适合孩子需要老师直接带练的训练阶段。
-        </p>
-        <div class="service-detail-actions">
-          <button type="button" class="service-detail-primary" id="serviceDetailOrder">选择这个服务</button>
-          <a class="service-detail-secondary" href="#contact">先扫码咨询</a>
-        </div>
-      </div>
-      <div class="service-detail-grid" aria-label="服务详情">
-        <div class="service-detail-item">
-          <strong>面向</strong>
-          <span id="serviceDetailAudience">儿童家庭</span>
-        </div>
-        <div class="service-detail-item">
-          <strong>形式</strong>
-          <span id="serviceDetailFormat">线上或线下个别化训练</span>
-        </div>
-        <div class="service-detail-item">
-          <strong>适合</strong>
-          <span id="serviceDetailFit">孩子需要老师直接带练，比如发音不清、语言表达落后、听觉康复后需要语言训练。</span>
-        </div>
-        <div class="service-detail-item">
-          <strong>付费逻辑</strong>
-          <span id="serviceDetailPayment">按课时、按阶段训练包购买。</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== ORDER ========== -->
-<section class="order-section section-padding" id="order" role="region" aria-labelledby="order-heading">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-label" id="order-heading">自助下单</div>
-      <h2 class="section-title">选择服务后扫码付款</h2>
-      <p class="section-subtitle">先提交订单信息，再用微信或支付宝扫码付款。付款备注订单号，方便人工核对。</p>
-    </div>
-    <div class="order-layout">
-      <div class="order-service-list fade-up" aria-label="可订购服务">
-        <button type="button" class="order-service-card active" style="--order-accent:#B8860B;" data-order-option="oneToOne">
-          <span class="order-service-index">01</span>
-          <span>
-            <span class="order-card-title">一对一康复训练</span>
-            <span class="order-card-copy">适合孩子需要老师直接带练，按课时或阶段训练包购买。</span>
-            <span class="order-service-meta"><span>儿童家庭</span><span>训练包</span></span>
-          </span>
-        </button>
-        <button type="button" class="order-service-card" style="--order-accent:#7A9E7E;" data-order-option="parentCamp">
-          <span class="order-service-index">02</span>
-          <span>
-            <span class="order-card-title">家长伴学营</span>
-            <span class="order-card-copy">适合已有训练但家长不知道在家怎么练，按月度持续服务订购。</span>
-            <span class="order-service-meta"><span>家长</span><span>月度服务</span></span>
-          </span>
-        </button>
-        <button type="button" class="order-service-card" style="--order-accent:#C4786C;" data-order-option="therapistCamp">
-          <span class="order-service-index">03</span>
-          <span>
-            <span class="order-card-title">康复师成长营</span>
-            <span class="order-card-copy">适合康复师和机构青年老师，按 4 周、8 周、12 周营期报名。</span>
-            <span class="order-service-meta"><span>康复师</span><span>营期报名</span></span>
-          </span>
-        </button>
-        <button type="button" class="order-service-card" style="--order-accent:#4F79A8;" data-order-option="caseService">
-          <span class="order-service-index">04</span>
-          <span>
-            <span class="order-card-title">康复师案例服务</span>
-            <span class="order-card-copy">适合已有个案但遇到临床推进卡点，按次咨询或月度案例督导。</span>
-            <span class="order-service-meta"><span>真实个案</span><span>案例督导</span></span>
-          </span>
-        </button>
-      </div>
-
-      <aside class="order-panel fade-up" aria-label="订单信息和付款二维码">
-        <div class="order-panel-head">
-          <h3>订单确认</h3>
-          <p>提交后我们会收到你的订单信息。扫码付款时请备注订单号，或付款后扫码添加微信确认。</p>
-          <div class="order-id-row">
-            <span class="order-id" id="orderId">XLH-000000</span>
-            <button type="button" class="copy-order-btn" id="copyOrderBtn">复制订单号</button>
-          </div>
-        </div>
-        <form class="order-form" id="orderForm" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="b3939b89-2eb8-4ec2-9909-5bc5a6021a28">
-          <input type="hidden" name="subject" value="新的自助下单 - 小螺号">
-          <input type="hidden" name="order_id" id="orderIdInput">
-          <input type="hidden" name="selected_service" id="selectedServiceInput" value="一对一康复训练">
-          <input type="hidden" name="payment_method" id="paymentMethodInput" value="微信支付">
-          <div class="order-selected">
-            <span>当前选择</span>
-            <strong id="selectedServiceName">一对一康复训练</strong>
-          </div>
-          <div class="order-form-grid">
-            <input type="text" name="name" placeholder="姓名 / 宝宝昵称" required>
-            <input type="tel" name="phone" placeholder="联系电话" required>
-            <select name="service_period" aria-label="服务包选择" id="servicePeriodSelect" required>
-              <option value="阶段训练包">阶段训练包</option>
-              <option value="单次咨询">单次咨询</option>
-              <option value="月度服务">月度服务</option>
-              <option value="营期报名">营期报名</option>
-            </select>
-            <input type="text" name="paid_amount" placeholder="付款金额 / 已确认金额" required>
-            <textarea name="case_note" placeholder="简单写一下孩子情况、康复师个案卡点，或你想购买的服务周期"></textarea>
-          </div>
-          <div class="order-pay-box">
-            <div class="pay-tabs" role="group" aria-label="选择付款方式">
-              <button type="button" class="pay-tab active" data-pay="wechat">微信支付</button>
-              <button type="button" class="pay-tab" data-pay="alipay">支付宝</button>
-            </div>
-            <div class="payment-qr-grid">
-              <img class="payment-qr active" data-pay-qr="wechat" src="images/payment-wechat.jpg" alt="微信支付收款二维码">
-              <img class="payment-qr" data-pay-qr="alipay" src="images/payment-alipay.jpg" alt="支付宝收款二维码">
-              <div class="payment-instructions">
-                <h4 id="paymentTitle">微信扫码付款</h4>
-                <p>付款备注：姓名 + 订单号。付款后可直接提交本表单，或扫码添加微信确认服务时间。</p>
-                <div class="consult-inline">
-                  <img src="images/wechat-consult.jpg" alt="微信咨询二维码">
-                  <span>
-                    <strong>扫码咨询 / 确认订单</strong>
-                    <span>付款前后都可以添加微信，发送订单号和付款截图。</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button class="order-submit" type="submit">提交订单信息</button>
-          <p class="order-note">目前为人工核对收款：订单提交不代表自动开通服务，我们确认付款和服务安排后会联系你。</p>
-        </form>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ========== SUPPORT ========== -->
-<section class="support-section section-padding" id="support" role="region" aria-labelledby="support-heading">
-  <div class="container">
-    <div class="support-panel fade-up">
-      <div>
-        <div class="section-label" id="support-heading" style="color:rgba(255,255,255,0.82);">捐赠支持</div>
-        <h2>支持免费训练工具继续更新</h2>
-        <p>
-          常用工具会保持免费开放。捐赠用于维护网站、更新训练工具、补充家庭康复材料。
-          你可以像支持知识库一样小额支持，也可以直接扫码咨询具体服务。
-        </p>
-        <div class="support-progress" aria-label="本月维护支持进度">
-          <div class="support-progress-row">
-            <span>本月维护支持</span>
-            <span>目标进度 42%</span>
-          </div>
-          <div class="support-progress-track">
-            <div class="support-progress-fill"></div>
-          </div>
-        </div>
-      </div>
-      <div class="support-qr-card">
-        <img src="images/payment-wechat.jpg" alt="微信捐赠二维码">
-        <strong>微信扫码支持</strong>
-        <span>如需支付宝，可在下单区切换支付宝二维码。</span>
+        </a>
       </div>
     </div>
   </div>
@@ -3294,7 +3134,6 @@ button:focus-visible {
 
 <div class="floating-cta" aria-label="快捷咨询入口">
   <a class="primary" href="#tools">常用工具</a>
-  <a href="#order">自助下单</a>
   <a href="#contact">微信咨询</a>
 </div>
 
@@ -3384,187 +3223,6 @@ button:focus-visible {
     }, { threshold: 0.5 });
     statsObserver.observe(statsSection);
   }
-
-  // ===== SERVICE DETAILS + ORDER FLOW =====
-  var serviceData = {
-    oneToOne: {
-      accent: '#B8860B',
-      kicker: '儿童家庭 · 个别化训练',
-      title: '一对一康复训练',
-      summary: '老师直接看孩子表现，制定训练目标，课堂带练并随时调整。适合发音不清、语言表达落后、听觉康复后需要语言训练的孩子。',
-      audience: '儿童家庭',
-      format: '线上或线下个别化训练',
-      fit: '孩子需要老师直接带练，比如发音不清、语言表达落后、听觉康复后需要语言训练。',
-      payment: '按课时、按阶段训练包购买。',
-      period: '阶段训练包'
-    },
-    parentCamp: {
-      accent: '#7A9E7E',
-      kicker: '儿童家长 · 家庭康复指导',
-      title: '家长伴学营',
-      summary: '把专业训练目标翻译成家长每天能执行的家庭练习，帮助家长知道在家怎么练、怎么观察、怎么泛化。',
-      audience: '儿童家长',
-      format: '家庭康复指导、月度答疑和练习反馈',
-      fit: '孩子已有训练，但家长不知道在家怎么练、怎么观察、怎么把课堂目标泛化到生活。',
-      payment: '最适合做月度持续服务。',
-      period: '月度服务'
-    },
-    therapistCamp: {
-      accent: '#C4786C',
-      kicker: '康复师 · 系统学习',
-      title: '康复师成长营',
-      summary: '不是卖资料，而是帮助康复师建立判断框架，系统梳理构音、语言、听觉康复训练逻辑。',
-      audience: '康复师、机构青年老师',
-      format: '系统学习、理论搭建、案例讨论',
-      fit: '新入行或想系统梳理构音、语言、听觉康复训练逻辑的康复师。',
-      payment: '按营期报名，比如 4 周、8 周、12 周。',
-      period: '营期报名'
-    },
-    caseService: {
-      accent: '#4F79A8',
-      kicker: '康复师 · 真实个案督导',
-      title: '康复师案例服务',
-      summary: '围绕真实个案解决具体临床卡点，拆解目标选择、训练推进、家长沟通和复盘路径。',
-      audience: '康复师',
-      format: '真实案例拆解、日常指导、复盘',
-      fit: '已经有个案，但目标选择、训练推进、家长沟通遇到卡点的康复师。',
-      payment: '按次咨询或月度案例督导。',
-      period: '单次咨询'
-    },
-    supportPlan: {
-      accent: '#B8860B',
-      kicker: '评估后 · 阶段陪伴服务',
-      title: '阶段陪伴服务',
-      summary: '用于承接评估后的训练陪跑，先明确阶段目标，再选择课时包、伴学营或案例督导。',
-      audience: '儿童家庭、康复师',
-      format: '阶段目标梳理、持续指导、训练陪跑',
-      fit: '还不确定买哪种服务，或者需要先把训练目标和服务周期理清楚。',
-      payment: '先咨询确认，再选择训练包、月度服务或营期。',
-      period: '月度服务'
-    }
-  };
-
-  var currentServiceKey = 'oneToOne';
-
-  function setText(id, text) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = text;
-  }
-
-  function selectServiceDetail(key, shouldScroll) {
-    var item = serviceData[key] || serviceData.oneToOne;
-    currentServiceKey = key;
-    var panel = document.getElementById('serviceDetail');
-    if (panel) panel.style.setProperty('--detail-accent', item.accent);
-    setText('serviceDetailKicker', item.kicker);
-    setText('serviceDetailTitle', item.title);
-    setText('serviceDetailSummary', item.summary);
-    setText('serviceDetailAudience', item.audience);
-    setText('serviceDetailFormat', item.format);
-    setText('serviceDetailFit', item.fit);
-    setText('serviceDetailPayment', item.payment);
-
-    document.querySelectorAll('[data-service-card]').forEach(function(card) {
-      card.classList.toggle('active', card.getAttribute('data-service-card') === key);
-    });
-
-    if (shouldScroll && panel) {
-      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }
-
-  function selectOrderService(key, shouldScroll) {
-    var item = serviceData[key] || serviceData.oneToOne;
-    currentServiceKey = key;
-    setText('selectedServiceName', item.title);
-    var selectedInput = document.getElementById('selectedServiceInput');
-    if (selectedInput) selectedInput.value = item.title;
-    var periodSelect = document.getElementById('servicePeriodSelect');
-    if (periodSelect) periodSelect.value = item.period;
-
-    document.querySelectorAll('[data-order-option]').forEach(function(card) {
-      card.classList.toggle('active', card.getAttribute('data-order-option') === key);
-    });
-
-    if (shouldScroll) {
-      var order = document.getElementById('order');
-      if (order) order.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  function generateOrderId() {
-    var now = new Date();
-    var date = String(now.getFullYear()).slice(2) +
-      String(now.getMonth() + 1).padStart(2, '0') +
-      String(now.getDate()).padStart(2, '0');
-    var random = Math.floor(Math.random() * 9000 + 1000);
-    return 'XLH-' + date + '-' + random;
-  }
-
-  var orderId = generateOrderId();
-  setText('orderId', orderId);
-  var orderIdInput = document.getElementById('orderIdInput');
-  if (orderIdInput) orderIdInput.value = orderId;
-
-  document.querySelectorAll('[data-service-card]').forEach(function(card) {
-    card.addEventListener('click', function(e) {
-      if (e.target.closest('button, a')) return;
-      selectServiceDetail(card.getAttribute('data-service-card'), true);
-    });
-    card.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        selectServiceDetail(card.getAttribute('data-service-card'), true);
-      }
-    });
-  });
-
-  document.querySelectorAll('[data-detail-service]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      selectServiceDetail(btn.getAttribute('data-detail-service'), true);
-    });
-  });
-
-  document.querySelectorAll('[data-order-service], [data-order-option]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      selectOrderService(btn.getAttribute('data-order-service') || btn.getAttribute('data-order-option'), true);
-    });
-  });
-
-  var detailOrderBtn = document.getElementById('serviceDetailOrder');
-  if (detailOrderBtn) {
-    detailOrderBtn.addEventListener('click', function() {
-      selectOrderService(currentServiceKey, true);
-    });
-  }
-
-  var copyOrderBtn = document.getElementById('copyOrderBtn');
-  if (copyOrderBtn) {
-    copyOrderBtn.addEventListener('click', function() {
-      navigator.clipboard.writeText(orderId).then(function() {
-        copyOrderBtn.textContent = '已复制';
-        setTimeout(function() { copyOrderBtn.textContent = '复制订单号'; }, 1800);
-      }).catch(function() {
-        alert('订单号：' + orderId);
-      });
-    });
-  }
-
-  document.querySelectorAll('.pay-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var pay = tab.getAttribute('data-pay');
-      document.querySelectorAll('.pay-tab').forEach(function(item) {
-        item.classList.toggle('active', item === tab);
-      });
-      document.querySelectorAll('[data-pay-qr]').forEach(function(qr) {
-        qr.classList.toggle('active', qr.getAttribute('data-pay-qr') === pay);
-      });
-      var label = pay === 'alipay' ? '支付宝' : '微信支付';
-      setText('paymentTitle', label + '扫码付款');
-      var methodInput = document.getElementById('paymentMethodInput');
-      if (methodInput) methodInput.value = label;
-    });
-  });
 
   // ===== BACK TO TOP =====
   var backTopBtn = document.getElementById('backTop');

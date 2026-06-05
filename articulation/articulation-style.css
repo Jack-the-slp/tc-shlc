@@ -1,0 +1,268 @@
+:root {
+    --rehab-ink: #173b37;
+    --rehab-teal: #286b63;
+    --rehab-teal-soft: #e3efeb;
+    --rehab-gold: #c99628;
+    --rehab-paper: #f5f8f4;
+    --rehab-line: #dbe7e1;
+}
+
+body {
+    background: var(--rehab-paper);
+    color: #243a37;
+}
+
+.sidebar {
+    width: 232px;
+    background: var(--rehab-ink);
+    box-shadow: 4px 0 18px rgba(19, 53, 49, 0.16);
+}
+
+.sidebar .logo-area {
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar .logo {
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 6px;
+    font-size: 0;
+    line-height: 0;
+    border-radius: 12px;
+    background: url("../小螺号logo.svg") center/contain no-repeat;
+}
+.sidebar .brand { font-size: 17px; }
+.sidebar .sub-brand { color: #d3e7e2; }
+.nav-item { border-left-width: 2px; }
+
+.nav-item:hover,
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.11);
+    border-left-color: #e7bc59;
+}
+
+.exercise-back-link {
+    display: inline-flex;
+    margin-top: 12px;
+    color: #d3e7e2;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.exercise-back-link:hover { color: #ffffff; }
+
+.main-content {
+    margin-left: 232px;
+    padding: 28px clamp(18px, 4vw, 54px);
+}
+
+.header {
+    margin: 0 auto 22px;
+    padding: 12px 10px 16px;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.header h1 {
+    color: var(--rehab-ink);
+    font-size: clamp(24px, 3vw, 32px);
+}
+
+.header .subtitle { color: #6e817e; }
+
+.header .phoneme-badge {
+    min-width: 96px;
+    padding: 8px 26px 9px;
+    margin-top: 14px;
+    border-radius: 8px;
+    background: var(--rehab-gold);
+    box-shadow: none;
+}
+
+.section-title {
+    max-width: 760px;
+    margin: 0 auto 14px;
+    padding: 10px 14px;
+    border: 1px solid var(--rehab-line);
+    border-radius: 8px;
+    background: #ffffff;
+    color: var(--rehab-teal);
+    box-shadow: none;
+}
+
+.cards-container {
+    min-height: 350px;
+    gap: 18px;
+    margin: 12px 0 18px;
+}
+
+.card {
+    min-width: min(320px, 100%);
+    max-width: 460px;
+    padding: 34px 42px;
+    border: 1px solid var(--rehab-line);
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(39, 87, 80, 0.08);
+}
+
+.card::before {
+    height: 4px;
+    background: var(--rehab-gold);
+}
+
+.card:hover {
+    box-shadow: 0 16px 34px rgba(39, 87, 80, 0.14);
+}
+
+.card .emoji { font-size: 64px; }
+.card .word { color: #203633; }
+.card .pinyin { color: var(--rehab-teal); }
+
+.card .play-btn {
+    border-radius: 8px;
+    background: var(--rehab-teal);
+}
+
+.card .play-btn:hover { background: var(--rehab-ink); }
+
+.pagination button {
+    border-color: var(--rehab-teal);
+    border-radius: 8px;
+    color: var(--rehab-teal);
+}
+
+.pagination button:hover:not(:disabled) {
+    background: var(--rehab-teal);
+}
+
+.progress-bar { background: #d8e5e0; }
+.progress-bar .progress { background: var(--rehab-gold); }
+
+@media (max-width: 900px) {
+    body { display: block; }
+
+    .sidebar {
+        width: 100%;
+        height: 68px;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 0;
+        overflow: visible;
+        box-shadow: 0 -4px 18px rgba(19, 53, 49, 0.16);
+    }
+
+    .sidebar .logo-area,
+    .sidebar .logo-area + .nav-section + .nav-section {
+        display: none;
+    }
+
+    .sidebar .logo-area + .nav-section {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        height: 68px;
+        margin: 0;
+    }
+
+    .sidebar .logo-area + .nav-section .nav-section-title {
+        display: none;
+    }
+
+    .sidebar .logo-area + .nav-section .nav-item {
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+        padding: 6px 3px;
+        border-top: 2px solid transparent;
+        border-left: 0;
+        font-size: 11px;
+    }
+
+    .sidebar .logo-area + .nav-section .nav-item.active {
+        border-top-color: #e7bc59;
+    }
+
+    .sidebar .logo-area + .nav-section .nav-item span:not(.nav-emoji) {
+        display: block;
+    }
+
+    .sidebar .logo-area + .nav-section .nav-item .nav-emoji {
+        font-size: 18px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 14px 14px 88px;
+    }
+
+    .header {
+        margin-bottom: 8px;
+        padding-top: 6px;
+    }
+
+    .header h1 { font-size: 22px; }
+    .header .subtitle { font-size: 13px; }
+
+    .header .phoneme-badge {
+        min-width: 76px;
+        padding: 5px 20px;
+        margin-top: 10px;
+        font-size: 29px;
+    }
+
+    .section-title {
+        margin-bottom: 8px;
+        padding: 8px 10px;
+        font-size: 17px;
+    }
+
+    .cards-container {
+        min-height: 0;
+        gap: 10px;
+        margin: 8px 0 12px;
+    }
+
+    .card,
+    .card.sentence-card {
+        width: 100%;
+        min-width: 0;
+        padding: 18px 14px;
+    }
+
+    .card .emoji {
+        margin-bottom: 5px;
+        font-size: 42px;
+    }
+
+    .card .word {
+        margin-bottom: 5px;
+        font-size: 34px;
+    }
+
+    .card .pinyin {
+        margin-bottom: 10px;
+        font-size: 17px;
+    }
+
+    .card.sentence-card .word { font-size: 21px; }
+    .card.sentence-card .pinyin { font-size: 14px; }
+
+    .card .play-btn {
+        padding: 9px 16px;
+        font-size: 13px;
+    }
+
+    .pagination {
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .pagination button {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .progress-bar { margin-top: 14px; }
+}

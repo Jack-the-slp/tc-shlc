@@ -3,1346 +3,2185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>口部运动训练 - 上海小螺号</title>
+  <title>口部运动训练 - 上海小螺号能力开发中心</title>
   <link rel="icon" href="小螺号logo.svg" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #FFF9F5;
-      --bg-gradient: linear-gradient(135deg, #FFF9F5 0%, #FFF0E8 100%);
-      --card: #FFFFFF;
-      --primary: #FF9B85;
-      --primary-light: #FFBAA8;
-      --primary-dark: #E57565;
-      --secondary: #B8A9C9;
-      --secondary-light: #D4C9E2;
-      --accent: #FFD93D;
-      --success: #7ED6A8;
-      --success-dark: #5BC48A;
-      --text: #4A4A4A;
-      --text-light: #9A9A9A;
-      --blush: #FFCDC0;
-      --shadow: 0 12px 40px rgba(255, 138, 117, 0.18);
-      --shadow-sm: 0 4px 20px rgba(0,0,0,0.06);
-      --shadow-hover: 0 8px 30px rgba(255, 138, 117, 0.25);
-      --radius: 28px;
-      --radius-sm: 20px;
-      --radius-xs: 12px;
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --canvas: #f6faf8;
+      --canvas-strong: #edf5f1;
+      --surface: #ffffff;
+      --surface-soft: #f7fbf8;
+      --ink: #243036;
+      --text: #4e5f66;
+      --muted: #7b8c92;
+      --line: #dce8e3;
+      --primary: #2f7d72;
+      --primary-dark: #1f5f57;
+      --coral: #d97062;
+      --amber: #b98227;
+      --sage: #789966;
+      --blue: #4f79a8;
+      --warning: #f3d184;
+      --shadow: 0 18px 50px rgba(36, 48, 54, 0.1);
+      --shadow-soft: 0 10px 28px rgba(36, 48, 54, 0.08);
+      --radius: 8px;
+      --nav-height: 72px;
+    }
 
     body {
-      font-family: 'Nunito', -apple-system, sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text);
       min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Floating decorations */
-    .decoration {
-      position: fixed;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.5;
-    }
-    .deco-1 {
-      top: 15%;
-      left: 5%;
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #FFE4E0 0%, #FFD0C8 100%);
-      border-radius: 50%;
-      animation: float 6s ease-in-out infinite;
-    }
-    .deco-2 {
-      top: 60%;
-      right: 3%;
-      width: 120px;
-      height: 120px;
-      background: linear-gradient(135deg, #E8D5F0 0%, #D4C9E2 100%);
-      border-radius: 50%;
-      animation: float 8s ease-in-out infinite reverse;
-    }
-    .deco-3 {
-      bottom: 20%;
-      left: 8%;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #C8E8FF 0%, #A8D8F0 100%);
-      border-radius: 50%;
-      animation: float 7s ease-in-out infinite 1s;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(5deg); }
-    }
-
-    /* Navbar */
-    .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 14px 0;
-      background: rgba(255,249,245,0.92);
-      backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(255,138,117,0.12);
-    }
-    .nav-inner {
-      max-width: 1300px; margin: 0 auto; padding: 0 32px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 12px; font-weight: 900;
-      font-size: 20px; color: var(--primary-dark);
-      letter-spacing: -0.5px;
-    }
-    .nav-logo img { width: 40px; height: 40px; border-radius: 12px; box-shadow: var(--shadow-sm); }
-    .nav-logo span { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .nav-back {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 24px; border-radius: 50px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white; font-size: 14px; font-weight: 700;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      box-shadow: 0 4px 16px rgba(255,138,117,0.35);
-    }
-    .nav-back:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,138,117,0.5); }
-    .nav-back svg { width: 16px; height: 16px; }
-
-    /* Main Layout */
-    .main {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 100px 32px 48px;
-      display: grid;
-      grid-template-columns: 380px 1fr;
-      gap: 36px;
-      min-height: calc(100vh - 160px);
-      position: relative;
-      z-index: 1;
-    }
-
-    @media (max-width: 1000px) {
-      .main { grid-template-columns: 1fr; max-width: 600px; }
-    }
-
-    /* Sidebar */
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    /* Header Card */
-    .header-card {
-      background: linear-gradient(145deg, #FFBAA8 0%, #FF9B85 40%, #E57565 100%);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 12px 40px rgba(255,138,117,0.35);
-    }
-    .header-card::before {
-      content: '';
-      position: absolute;
-      top: -60%;
-      right: -40%;
-      width: 280px;
-      height: 280px;
-      background: rgba(255,255,255,0.12);
-      border-radius: 50%;
-    }
-    .header-card::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -20%;
-      width: 150px;
-      height: 150px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 50%;
-    }
-    .header-content { position: relative; z-index: 1; }
-    .header-card h1 {
-      font-size: 32px;
-      font-weight: 900;
-      margin-bottom: 8px;
-      letter-spacing: -0.5px;
-    }
-    .header-card p {
-      font-size: 15px;
-      opacity: 0.92;
-      font-weight: 600;
-    }
-    .header-face {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 90px;
-      height: 90px;
-    }
-    .header-face .face {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(180deg, #FFE4C9 0%, #FFDAB3 100%);
-      border-radius: 50% 50% 45% 45%;
-      position: relative;
-      animation: headerBounce 2s ease-in-out infinite;
-    }
-    @keyframes headerBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-    .header-face .eye {
-      position: absolute;
-      width: 14px;
-      height: 16px;
-      background: #4A4A4A;
-      border-radius: 50%;
-      top: 32px;
-    }
-    .header-face .eye-l { left: 22px; }
-    .header-face .eye-r { right: 22px; }
-    .header-face .eye::before {
-      content: '';
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      background: white;
-      border-radius: 50%;
-      top: 3px;
-      left: 3px;
-    }
-    .header-face .mouth {
-      position: absolute;
-      bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 30px;
-      height: 15px;
-      background: var(--primary-dark);
-      border-radius: 0 0 20px 20px;
-    }
-
-    /* Exercise List Card */
-    .exercise-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(255,138,117,0.08);
-    }
-    .exercise-card h3 {
-      font-size: 13px;
-      color: var(--text-light);
-      margin-bottom: 18px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 700;
-    }
-    .exercise-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .exercise-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 18px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid transparent;
-      background: #FAFAFA;
-    }
-    .exercise-item:hover {
-      background: rgba(255,138,117,0.06);
-      transform: translateX(4px);
-    }
-    .exercise-item.active {
-      background: linear-gradient(135deg, rgba(255,155,133,0.12) 0%, rgba(229,117,101,0.08) 100%);
-      border-color: var(--primary);
-      box-shadow: 0 4px 20px rgba(255,138,117,0.15);
-    }
-    .exercise-item.done {
-      opacity: 0.75;
-    }
-    .exercise-item.done.active {
-      opacity: 1;
-    }
-    .exercise-item .icon-wrap {
-      width: 50px;
-      height: 50px;
-      border-radius: var(--radius-xs);
-      background: linear-gradient(135deg, #FFF5F3 0%, #FFE8E4 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.3s;
-    }
-    .exercise-item.active .icon-wrap {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      box-shadow: 0 4px 16px rgba(255,138,117,0.4);
-    }
-    .exercise-item .icon-wrap svg {
-      width: 28px;
-      height: 28px;
-    }
-    .exercise-item .info { flex: 1; }
-    .exercise-item .name {
-      font-size: 15px;
-      font-weight: 800;
       color: var(--text);
-      margin-bottom: 3px;
-    }
-    .exercise-item .desc {
-      font-size: 12px;
-      color: var(--text-light);
-      font-weight: 600;
-    }
-    .exercise-item .check {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #EEE;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-    .exercise-item.done .check {
-      background: var(--success);
-      box-shadow: 0 2px 10px rgba(126,214,168,0.4);
-    }
-    .exercise-item.done .check svg { width: 16px; height: 16px; stroke: white; }
-
-    /* Main Stage */
-    .stage {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      line-height: 1.7;
+      background:
+        linear-gradient(90deg, rgba(47, 125, 114, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(47, 125, 114, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, var(--canvas) 0%, var(--canvas-strong) 100%);
+      background-size: 28px 28px, 28px 28px, auto;
     }
 
-    /* Animation Card */
-    .animation-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 40px 32px;
-      box-shadow: var(--shadow);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255,138,117,0.08);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.48) 45%, rgba(255, 255, 255, 0.72) 100%);
     }
-    .animation-card::before {
-      content: '';
-      position: absolute;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .navbar {
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      height: 6px;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, var(--success) 100%);
+      z-index: 20;
+      height: var(--nav-height);
+      background: rgba(246, 250, 248, 0.92);
+      border-bottom: 1px solid rgba(47, 125, 114, 0.12);
+      backdrop-filter: blur(18px);
     }
 
-    /* Cute Character */
-    .character-container {
-      position: relative;
-      margin-bottom: 20px;
-    }
-    .character {
-      width: 220px;
-      height: 220px;
-      position: relative;
-      animation: characterIdle 3s ease-in-out infinite;
-    }
-    @keyframes characterIdle {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-8px) scale(1.02); }
-    }
-    .character-face {
-      width: 100%;
+    .nav-inner {
+      max-width: 1260px;
       height: 100%;
-      background: linear-gradient(180deg, #FFE9D4 0%, #FFDCC4 100%);
-      border-radius: 50% 50% 48% 48%;
-      position: relative;
-      box-shadow: 
-        inset 0 -25px 50px rgba(0,0,0,0.04),
-        inset 0 25px 40px rgba(255,255,255,0.5),
-        0 25px 60px rgba(255,138,117,0.2);
-    }
-    /* Ears */
-    .ear {
-      position: absolute;
-      width: 55px;
-      height: 55px;
-      background: linear-gradient(180deg, #FFE9D4 0%, #FFDCC4 100%);
-      border-radius: 50%;
-      top: 8px;
-      box-shadow: inset 0 -8px 20px rgba(0,0,0,0.05);
-    }
-    .ear-left { left: -18px; }
-    .ear-right { right: -18px; }
-    .ear-inner {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(180deg, #FFDDD0 0%, #FFCDC0 100%);
-      border-radius: 50%;
-      top: 12px;
-      left: 12px;
-    }
-    /* Eyes */
-    .eyes {
-      position: absolute;
-      top: 60px;
-      left: 50%;
-      transform: translateX(-50%);
+      margin: 0 auto;
+      padding: 0 24px;
       display: flex;
-      gap: 55px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
-    .eye {
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .nav-logo img {
       width: 38px;
-      height: 44px;
-      background: linear-gradient(180deg, #3A3A3A 0%, #2A2A2A 100%);
-      border-radius: 50%;
-      position: relative;
-      animation: blink 4s infinite;
-      box-shadow: inset 0 -4px 8px rgba(0,0,0,0.2);
-    }
-    .eye::before {
-      content: '';
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: white;
-      border-radius: 50%;
-      top: 8px;
-      left: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .eye::after {
-      content: '';
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: white;
-      border-radius: 50%;
-      top: 22px;
-      left: 20px;
-      opacity: 0.6;
-    }
-    @keyframes blink {
-      0%, 92%, 100% { transform: scaleY(1); }
-      96% { transform: scaleY(0.05); }
-    }
-    /* Blush */
-    .blush {
-      position: absolute;
-      width: 45px;
-      height: 28px;
-      background: radial-gradient(ellipse, rgba(255,160,140,0.5) 0%, rgba(255,180,160,0.2) 70%, transparent 100%);
-      border-radius: 50%;
-      top: 105px;
-    }
-    .blush-left { left: 18px; }
-    .blush-right { right: 18px; }
-    /* Mouth */
-    .mouth {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .mouth-shape {
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 38px;
+      border-radius: 8px;
+      box-shadow: var(--shadow-soft);
+      flex: 0 0 auto;
     }
 
-    /* Mouth States */
-    .mouth-closed {
-      width: 60px;
-      height: 8px;
-      background: linear-gradient(180deg, #E57565 0%, #D4655A 100%);
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(229,117,101,0.3);
-    }
-    .mouth-open {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(180deg, #8B2942 0%, #6B1932 100%);
-      border-radius: 50%;
-      box-shadow: inset 0 10px 20px rgba(0,0,0,0.3), 0 4px 12px rgba(107,25,50,0.3);
-      animation: mouthOpen 0.8s ease-in-out infinite;
-    }
-    @keyframes mouthOpen {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
-    .mouth-open::after {
-      content: '';
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 35px;
-      height: 18px;
-      background: #FF6B8A;
-      border-radius: 0 0 20px 20px;
-    }
-    .mouth-smile {
-      width: 80px;
-      height: 35px;
-      background: linear-gradient(180deg, #E57565 0%, #D4655A 100%);
-      border-radius: 0 0 50px 50px;
-      box-shadow: 0 4px 12px rgba(229,117,101,0.3);
-    }
-    .mouth-tongue {
-      width: 70px;
-      height: 40px;
-      background: linear-gradient(180deg, #E57565 0%, #D4655A 100%);
-      border-radius: 0 0 45px 45px;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(229,117,101,0.3);
-    }
-    .mouth-tongue::after {
-      content: '';
-      position: absolute;
-      bottom: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 35px;
-      height: 22px;
-      background: linear-gradient(180deg, #FF9B9B 0%, #FF7B7B 100%);
-      border-radius: 0 0 22px 22px;
-      animation: tongueWiggle 0.6s ease-in-out infinite;
-    }
-    @keyframes tongueWiggle {
-      0%, 100% { transform: translateX(-50%) rotate(-3deg); }
-      50% { transform: translateX(-50%) rotate(3deg); }
-    }
-    .mouth-puff {
-      width: 90px;
-      height: 45px;
-      background: linear-gradient(180deg, #E57565 0%, #D4655A 100%);
-      border-radius: 50%;
-      box-shadow: 0 4px 16px rgba(229,117,101,0.35);
-      animation: cheekPuff 1.2s ease-in-out infinite;
-    }
-    @keyframes cheekPuff {
-      0%, 100% { transform: scale(1); }
-      30% { transform: scale(1.12); }
-      60% { transform: scale(1.05); }
-    }
-
-    /* Cheeks puff animation */
-    .cheek-puff .blush {
-      animation: cheeksInflate 1.2s ease-in-out infinite;
-    }
-    @keyframes cheeksInflate {
-      0%, 100% { transform: scale(1); }
-      30% { transform: scale(1.3) translateY(-3px); }
-    }
-
-    /* Exercise Label */
-    .exercise-label {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      padding: 12px 28px;
-      border-radius: 50px;
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 20px rgba(255,138,117,0.35);
-      letter-spacing: 0.5px;
-    }
-    .exercise-desc-text {
-      font-size: 15px;
-      color: var(--text-light);
-      margin-bottom: 28px;
-      font-weight: 600;
-    }
-
-    /* Timer Ring */
-    .timer-wrap {
-      position: relative;
-      width: 160px;
-      height: 160px;
-      margin-bottom: 24px;
-    }
-    .timer-bg-circle {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #FFF5F3 0%, #FFE8E4 100%);
-      border-radius: 50%;
-      box-shadow: inset 0 4px 20px rgba(0,0,0,0.05), 0 4px 20px rgba(255,138,117,0.1);
-    }
-    .timer-ring {
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg);
-    }
-    .timer-bg {
-      fill: none;
-      stroke: #FFE0D8;
-      stroke-width: 12;
-    }
-    .timer-progress {
-      fill: none;
-      stroke: url(#timerGradient);
-      stroke-width: 12;
-      stroke-linecap: round;
-      stroke-dasharray: 440;
-      stroke-dashoffset: 0;
-      transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      filter: drop-shadow(0 2px 6px rgba(255,138,117,0.4));
-    }
-    .timer-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .timer-icon {
-      width: 36px;
-      height: 36px;
-      margin-bottom: 4px;
-    }
-    .timer-time {
-      font-size: 36px;
-      font-weight: 900;
-      color: var(--text);
-      letter-spacing: -1px;
-      font-variant-numeric: tabular-nums;
-    }
-    .timer-label {
-      font-size: 11px;
-      color: var(--text-light);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Controls */
-    .controls {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-    .btn {
-      padding: 16px 36px;
-      border-radius: 50px;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-      border: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      letter-spacing: 0.3px;
-    }
-    .btn svg { width: 20px; height: 20px; }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      box-shadow: 0 8px 28px rgba(255,138,117,0.4);
-    }
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 36px rgba(255,138,117,0.5);
-    }
-    .btn-primary:active {
-      transform: translateY(-1px);
-    }
-    .btn-primary.running {
-      background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
-      box-shadow: 0 8px 28px rgba(126,214,168,0.45);
-    }
-    .btn-secondary {
-      background: var(--card);
-      color: var(--text);
-      border: 2px solid #EEE;
-      box-shadow: var(--shadow-sm);
-    }
-    .btn-secondary:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-      transform: translateY(-2px);
-    }
-
-    /* Progress Card */
-    .progress-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 24px 28px;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(255,138,117,0.08);
-    }
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .progress-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .progress-title svg { width: 20px; height: 20px; }
-    .progress-count {
-      font-size: 14px;
-      color: var(--text-light);
-      font-weight: 700;
-    }
-    .progress-bar {
-      height: 14px;
-      background: linear-gradient(135deg, #FFE8E4 0%, #FFF0ED 100%);
-      border-radius: 7px;
+    .nav-logo span {
       overflow: hidden;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%);
-      border-radius: 7px;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-    }
-    .progress-fill::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 8px;
-      right: 8px;
-      height: 4px;
-      background: rgba(255,255,255,0.4);
-      border-radius: 2px;
-    }
-    .progress-dots {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 16px;
-      padding: 0 4px;
-    }
-    .p-dot {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #FFF5F3 0%, #FFE8E4 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      border: 2px solid transparent;
-    }
-    .p-dot svg { width: 20px; height: 20px; }
-    .p-dot.done {
-      background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
-      transform: scale(1.1);
-      box-shadow: 0 4px 14px rgba(126,214,168,0.4);
-    }
-    .p-dot.current {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      animation: pulseDot 1.2s ease-in-out infinite;
-      box-shadow: 0 4px 16px rgba(255,138,117,0.4);
-    }
-    @keyframes pulseDot {
-      0%, 100% { transform: scale(1); box-shadow: 0 4px 16px rgba(255,138,117,0.4); }
-      50% { transform: scale(1.12); box-shadow: 0 6px 24px rgba(255,138,117,0.55); }
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    /* Records Card */
-    .records-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 24px 28px;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(255,138,117,0.08);
-    }
-    .records-header {
-      display: flex;
-      justify-content: space-between;
+    .nav-back {
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 18px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 8px 22px rgba(47, 125, 114, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-back:hover {
+      transform: translateY(-1px);
+      background: var(--primary-dark);
+      box-shadow: 0 10px 28px rgba(47, 125, 114, 0.28);
+    }
+
+    .nav-back svg,
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .app {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 104px 24px 42px;
+    }
+
+    .app-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
       margin-bottom: 18px;
     }
-    .records-header h3 {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
-      display: flex;
+
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
-    .records-header h3 svg { width: 22px; height: 22px; }
-    .clear-btn {
-      padding: 8px 16px;
-      border-radius: 20px;
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--coral);
+    }
+
+    h1 {
+      color: var(--ink);
+      font-size: 34px;
+      line-height: 1.2;
+      font-weight: 850;
+      margin-bottom: 8px;
+    }
+
+    .app-head p {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .daily-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 112px);
+      gap: 8px;
+    }
+
+    .daily-stat {
+      min-height: 74px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .daily-stat strong {
+      display: block;
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .daily-stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr) 304px;
+      align-items: start;
+      gap: 16px;
+    }
+
+    .panel,
+    .trainer {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .panel-title,
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .panel-title small,
+    .section-title small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      margin: 14px 0 16px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-soft);
+    }
+
+    .segment-btn,
+    .filter-btn {
+      min-height: 36px;
+      border: 0;
+      border-radius: 6px;
+      color: var(--muted);
       background: transparent;
-      border: 1.5px solid #DDD;
-      color: var(--text-light);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 750;
+      transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .segment-btn.active,
+    .filter-btn.active {
+      color: #fff;
+      background: var(--primary);
+      box-shadow: 0 8px 18px rgba(47, 125, 114, 0.2);
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 6px;
+      scrollbar-width: thin;
+    }
+
+    .filter-btn {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .exercise-list {
+      display: grid;
+      gap: 8px;
+      max-height: calc(100vh - 284px);
+      min-height: 380px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .exercise-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 20px;
+      align-items: center;
+      gap: 10px;
+      min-height: 74px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--text);
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .exercise-row:hover {
+      transform: translateY(-1px);
+      border-color: rgba(47, 125, 114, 0.35);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .exercise-row.active {
+      border-color: var(--primary);
+      background: #eef8f5;
+      box-shadow: 0 10px 26px rgba(47, 125, 114, 0.12);
+    }
+
+    .exercise-row.done {
+      border-color: rgba(120, 153, 102, 0.42);
+    }
+
+    .exercise-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #f2f7f5;
+      color: var(--primary);
+    }
+
+    .exercise-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .exercise-row.active .exercise-icon {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .exercise-main {
+      min-width: 0;
+    }
+
+    .exercise-main strong {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .exercise-main span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .done-mark {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: transparent;
+      background: #e9efec;
+    }
+
+    .exercise-row.done .done-mark {
+      color: #fff;
+      background: var(--sage);
+    }
+
+    .done-mark svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .trainer {
+      min-height: 692px;
+      overflow: hidden;
+    }
+
+    .trainer-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(120deg, rgba(47, 125, 114, 0.09), rgba(217, 112, 98, 0.08)),
+        var(--surface);
+    }
+
+    .trainer-kicker {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: rgba(47, 125, 114, 0.1);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pill.coral {
+      color: #9e493e;
+      background: rgba(217, 112, 98, 0.13);
+    }
+
+    .trainer-title {
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .trainer-subtitle {
+      margin-top: 6px;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .status-box {
+      width: 132px;
+      min-height: 88px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      padding: 12px;
+      border: 1px solid rgba(47, 125, 114, 0.2);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .status-box strong {
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status-box span {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .trainer-body {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+      gap: 0;
+    }
+
+    .demo-zone {
+      min-height: 390px;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      border-right: 1px solid var(--line);
+      background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.95) 0%, rgba(247, 251, 248, 0.74) 58%, rgba(239, 247, 244, 0.78) 100%);
+    }
+
+    .demo-stage {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .phase-ring {
+      position: absolute;
+      inset: 0;
+      transform: rotate(-90deg);
+    }
+
+    .phase-ring circle {
+      fill: none;
+      stroke-width: 7;
+    }
+
+    .phase-track {
+      stroke: #e4efea;
+    }
+
+    .phase-progress {
+      stroke: var(--primary);
+      stroke-linecap: round;
+      stroke-dasharray: 880;
+      stroke-dashoffset: 880;
+      transition: stroke-dashoffset 0.3s linear, stroke 0.2s ease;
+    }
+
+    .phase-rest .phase-progress {
+      stroke: var(--amber);
+    }
+
+    .phase-done .phase-progress {
+      stroke: var(--sage);
+    }
+
+    .demo-face {
+      width: 210px;
+      height: 230px;
+      position: relative;
+      border: 2px solid #f0c9ac;
+      border-radius: 48% 48% 44% 44%;
+      background: linear-gradient(180deg, #ffe8cc 0%, #ffd9b2 100%);
+      box-shadow: 0 22px 46px rgba(109, 68, 38, 0.14);
+      transition: transform 0.25s ease;
+    }
+
+    .demo-face::before,
+    .demo-face::after {
+      content: "";
+      position: absolute;
+      top: 88px;
+      width: 24px;
+      height: 42px;
+      border-radius: 999px;
+      background: rgba(217, 112, 98, 0.18);
+      transition: all 0.24s ease;
+    }
+
+    .demo-face::before {
+      left: 20px;
+    }
+
+    .demo-face::after {
+      right: 20px;
+    }
+
+    .face-eye {
+      position: absolute;
+      top: 74px;
+      width: 17px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--ink);
+    }
+
+    .face-eye::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .face-eye.left {
+      left: 64px;
+    }
+
+    .face-eye.right {
+      right: 64px;
+    }
+
+    .face-nose {
+      position: absolute;
+      top: 111px;
+      left: 50%;
+      width: 10px;
+      height: 12px;
+      border: 2px solid rgba(36, 48, 54, 0.26);
+      border-top: 0;
+      border-left: 0;
+      border-radius: 0 0 8px 0;
+      transform: translateX(-50%) rotate(35deg);
+    }
+
+    .face-mouth {
+      position: absolute;
+      left: 50%;
+      top: 146px;
+      width: 72px;
+      height: 34px;
+      transform: translateX(-50%);
+      transition: all 0.24s ease;
+    }
+
+    .mouth-form {
+      position: absolute;
+      inset: 0;
+      transition: all 0.24s ease;
+    }
+
+    .mouth-pucker .mouth-form {
+      left: 50%;
+      top: 3px;
+      width: 42px;
+      height: 32px;
+      border: 8px solid #c86459;
+      border-radius: 50%;
+      background: #512b36;
+      transform: translateX(-50%);
+    }
+
+    .mouth-wide .mouth-form {
+      top: 6px;
+      left: 0;
+      right: 0;
+      height: 20px;
+      border-bottom: 8px solid #c86459;
+      border-radius: 0 0 80px 80px;
+    }
+
+    .mouth-open .mouth-form {
+      left: 50%;
+      top: 0;
+      width: 50px;
+      height: 58px;
+      border: 6px solid #c86459;
+      border-radius: 50%;
+      background: #3c2230;
+      transform: translateX(-50%);
+    }
+
+    .mouth-tongue .mouth-form {
+      left: 50%;
+      top: 0;
+      width: 54px;
+      height: 40px;
+      border: 6px solid #c86459;
+      border-radius: 0 0 999px 999px;
+      border-top: 0;
+      transform: translateX(-50%);
+    }
+
+    .mouth-tongue .mouth-form::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 19px;
+      width: 26px;
+      height: 44px;
+      border-radius: 999px;
+      background: #ef8b93;
+      transform: translateX(-50%);
+      box-shadow: inset 0 -10px 0 rgba(199, 82, 99, 0.18);
+    }
+
+    .mouth-cheek .mouth-form {
+      left: 50%;
+      top: 14px;
+      width: 40px;
+      height: 8px;
+      border-radius: 999px;
+      background: #c86459;
+      transform: translateX(-50%);
+    }
+
+    .demo-face.mouth-cheek::before,
+    .demo-face.mouth-cheek::after {
+      top: 104px;
+      width: 38px;
+      height: 48px;
+      border: 2px solid rgba(224, 159, 113, 0.28);
+      background: rgba(255, 206, 169, 0.82);
+      transform: scale(1.05);
+      box-shadow: inset 0 -8px 18px rgba(217, 112, 98, 0.12);
+    }
+
+    .mouth-chew .mouth-form {
+      left: 50%;
+      top: 3px;
+      width: 50px;
+      height: 46px;
+      border: 6px solid #c86459;
+      border-radius: 45% 45% 50% 50%;
+      background: #3c2230;
+      transform: translateX(-50%);
+      animation: chew 1.2s ease-in-out infinite;
+    }
+
+    .mouth-rest .mouth-form {
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      height: 4px;
+      border-radius: 999px;
+      background: #c86459;
+    }
+
+    .demo-face.action-lip-round-wide .mouth-form {
+      animation: lipRoundWide 1.9s ease-in-out infinite;
+    }
+
+    .demo-face.action-jaw-open .mouth-form {
+      animation: jawOpenClose 1.8s ease-in-out infinite;
+    }
+
+    .demo-face.action-tongue-side .mouth-form::after {
+      animation: tongueSide 1.9s ease-in-out infinite;
+    }
+
+    .demo-face.action-cheek-puff::before,
+    .demo-face.action-cheek-puff::after {
+      animation: cheekPuff 1.8s ease-in-out infinite;
+    }
+
+    .demo-face.action-cheek-puff .mouth-form {
+      animation: cheekSeal 1.8s ease-in-out infinite;
+    }
+
+    .demo-face.action-combo-flow .mouth-form {
+      animation: comboFlow 3.3s ease-in-out infinite;
+    }
+
+    .phase-rest .demo-face .mouth-form,
+    .phase-rest .demo-face .mouth-form::after,
+    .phase-rest .demo-face::before,
+    .phase-rest .demo-face::after,
+    .phase-done .demo-face .mouth-form,
+    .phase-done .demo-face .mouth-form::after,
+    .phase-done .demo-face::before,
+    .phase-done .demo-face::after {
+      animation-play-state: paused;
+    }
+
+    .is-running .demo-face {
+      animation: breathe 1.8s ease-in-out infinite;
+    }
+
+    .phase-rest .demo-face {
+      transform: scale(0.96);
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes chew {
+      0%, 100% { height: 40px; top: 4px; }
+      50% { height: 58px; top: -2px; }
+    }
+
+    @keyframes lipRoundWide {
+      0%, 100% {
+        left: 50%;
+        top: 2px;
+        width: 42px;
+        height: 32px;
+        border: 8px solid #c86459;
+        border-radius: 50%;
+        background: #512b36;
+        transform: translateX(-50%);
+      }
+      48%, 58% {
+        left: 0;
+        right: 0;
+        top: 8px;
+        width: 72px;
+        height: 18px;
+        border: 0;
+        border-bottom: 8px solid #c86459;
+        border-radius: 0 0 80px 80px;
+        background: transparent;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes jawOpenClose {
+      0%, 100% {
+        left: 50%;
+        top: 12px;
+        width: 42px;
+        height: 12px;
+        border: 0;
+        border-radius: 999px;
+        background: #c86459;
+        transform: translateX(-50%);
+      }
+      45%, 65% {
+        left: 50%;
+        top: -2px;
+        width: 52px;
+        height: 60px;
+        border: 6px solid #c86459;
+        border-radius: 50%;
+        background: #3c2230;
+        transform: translateX(-50%);
+      }
+    }
+
+    @keyframes tongueSide {
+      0%, 100% {
+        left: 50%;
+        transform: translateX(-50%) rotate(0deg);
+      }
+      25% {
+        left: 22%;
+        transform: translateX(-50%) rotate(-18deg);
+      }
+      50% {
+        left: 50%;
+        transform: translateX(-50%) rotate(0deg);
+      }
+      75% {
+        left: 78%;
+        transform: translateX(-50%) rotate(18deg);
+      }
+    }
+
+    @keyframes cheekPuff {
+      0%, 100% {
+        transform: scale(0.94);
+        background: rgba(255, 206, 169, 0.62);
+      }
+      45%, 65% {
+        transform: scale(1.42);
+        background: rgba(255, 193, 151, 0.92);
+      }
+    }
+
+    @keyframes cheekSeal {
+      0%, 100% {
+        width: 34px;
+        height: 6px;
+        top: 15px;
+      }
+      45%, 65% {
+        width: 24px;
+        height: 9px;
+        top: 14px;
+      }
+    }
+
+    @keyframes comboFlow {
+      0%, 24%, 100% {
+        left: 50%;
+        top: 2px;
+        width: 42px;
+        height: 32px;
+        border: 8px solid #c86459;
+        border-radius: 50%;
+        background: #512b36;
+        transform: translateX(-50%);
+      }
+      36%, 58% {
+        left: 50%;
+        top: -4px;
+        width: 52px;
+        height: 60px;
+        border: 6px solid #c86459;
+        border-radius: 50%;
+        background: #3c2230;
+        transform: translateX(-50%);
+      }
+      72%, 88% {
+        left: 0;
+        right: 0;
+        top: 8px;
+        width: 72px;
+        height: 18px;
+        border: 0;
+        border-bottom: 8px solid #c86459;
+        border-radius: 0 0 80px 80px;
+        background: transparent;
+        transform: translateX(0);
+      }
+    }
+
+    .coach-zone {
+      padding: 22px;
+    }
+
+    .cue-box {
+      min-height: 116px;
+      padding: 18px;
+      border-left: 4px solid var(--coral);
+      background: #fff8f6;
+      border-radius: var(--radius);
+    }
+
+    .cue-box strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .cue-box p {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .metric {
+      min-height: 76px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-soft);
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
       font-size: 12px;
       font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
     }
-    .clear-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-      background: rgba(255,138,117,0.05);
-    }
-    .records-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 14px;
-      max-height: 200px;
-      overflow-y: auto;
-      padding-right: 8px;
-    }
-    .records-grid::-webkit-scrollbar {
-      width: 6px;
-    }
-    .records-grid::-webkit-scrollbar-track {
-      background: #F5F5F5;
-      border-radius: 3px;
-    }
-    .records-grid::-webkit-scrollbar-thumb {
-      background: #FFE0D8;
-      border-radius: 3px;
-    }
-    .record-item {
-      background: linear-gradient(135deg, #FFFBFA 0%, #FFF8F6 100%);
-      border-radius: var(--radius-sm);
-      padding: 16px 12px;
-      text-align: center;
-      border: 1px solid rgba(255,138,117,0.06);
-      transition: all 0.3s;
-    }
-    .record-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    }
-    .record-item .icon { margin-bottom: 8px; }
-    .record-item .icon svg { width: 32px; height: 32px; }
-    .record-item .name { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
-    .record-item .time { font-size: 11px; color: var(--text-light); font-weight: 600; }
-    .no-records {
-      text-align: center;
-      padding: 32px;
-      color: var(--text-light);
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .no-records svg { width: 48px; height: 48px; opacity: 0.4; margin-bottom: 12px; }
 
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: 40px;
-      color: var(--text-light);
+    .rep-track {
+      margin-top: 8px;
+    }
+
+    .track-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
       font-size: 13px;
-      font-weight: 600;
-      position: relative;
-      z-index: 1;
+      font-weight: 750;
+      margin-bottom: 8px;
     }
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: #FFE0D8; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #FFD0C8; }
+    .track {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e5eee9;
+    }
+
+    .track-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), var(--sage));
+      transition: width 0.25s ease;
+    }
+
+    .control-row {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 10px;
+      padding: 18px 20px 20px;
+      border-top: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 850;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.46;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: var(--primary);
+      box-shadow: 0 12px 26px rgba(47, 125, 114, 0.22);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      color: var(--primary-dark);
+      background: #edf7f4;
+      border-color: rgba(47, 125, 114, 0.22);
+    }
+
+    .btn-plain {
+      color: var(--text);
+      background: #fff;
+      border-color: var(--line);
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .coach-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .side-section {
+      display: grid;
+      gap: 10px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .side-section:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .steps,
+    .watch-list,
+    .records-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .steps li,
+    .watch-list li {
+      list-style: none;
+      position: relative;
+      padding: 10px 12px 10px 34px;
+      border-radius: var(--radius);
+      background: var(--surface-soft);
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .steps li::before {
+      content: attr(data-step);
+      position: absolute;
+      left: 10px;
+      top: 11px;
+      width: 17px;
+      height: 17px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--primary);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .watch-list li::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 17px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .safety-note {
+      padding: 12px;
+      border: 1px solid rgba(185, 130, 39, 0.24);
+      border-radius: var(--radius);
+      color: #72531d;
+      background: #fff8e8;
+      font-size: 13px;
+    }
+
+    .records-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .clear-btn {
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .clear-btn:hover {
+      color: #9e493e;
+      border-color: rgba(217, 112, 98, 0.5);
+    }
+
+    .record-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .record-item:last-child {
+      border-bottom: 0;
+    }
+
+    .record-item strong {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--ink);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .record-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .record-time {
+      align-self: center;
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .empty {
+      min-height: 76px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 40;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: min(420px, calc(100vw - 32px));
+      padding: 0 18px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--ink);
+      box-shadow: var(--shadow);
+      font-size: 14px;
+      font-weight: 750;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 12px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .footer {
+      padding: 26px 0 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .app-head {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .daily-strip {
+        grid-template-columns: repeat(3, minmax(104px, 1fr));
+      }
+
+      .workspace {
+        grid-template-columns: 280px minmax(0, 1fr);
+      }
+
+      .coach-panel {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .side-section {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .app {
+        padding: 92px 16px 32px;
+      }
+
+      .nav-inner {
+        padding: 0 16px;
+      }
+
+      .nav-logo span {
+        max-width: 150px;
+      }
+
+      .nav-back {
+        min-height: 38px;
+        padding: 0 13px;
+        font-size: 13px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .workspace,
+      .coach-panel,
+      .trainer-body {
+        grid-template-columns: 1fr;
+      }
+
+      .exercise-list {
+        max-height: none;
+        min-height: 0;
+      }
+
+      .demo-zone {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .trainer {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      :root {
+        --nav-height: 66px;
+      }
+
+      .nav-logo img {
+        width: 34px;
+        height: 34px;
+      }
+
+      .nav-logo {
+        font-size: 15px;
+      }
+
+      .nav-back span {
+        display: none;
+      }
+
+      .app-head p {
+        font-size: 14px;
+      }
+
+      .daily-strip,
+      .metric-grid,
+      .control-row,
+      .trainer-top {
+        grid-template-columns: 1fr;
+      }
+
+      .daily-stat {
+        min-height: 64px;
+      }
+
+      .trainer-title {
+        font-size: 24px;
+      }
+
+      .status-box {
+        width: 100%;
+        min-height: 74px;
+      }
+
+      .demo-zone {
+        min-height: 320px;
+        padding: 16px;
+      }
+
+      .demo-face {
+        width: 178px;
+        height: 198px;
+      }
+
+      .face-eye.left {
+        left: 52px;
+      }
+
+      .face-eye.right {
+        right: 52px;
+      }
+
+      .face-mouth {
+        top: 128px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
-
-<!-- Floating decorations -->
-<div class="decoration deco-1"></div>
-<div class="decoration deco-2"></div>
-<div class="decoration deco-3"></div>
-
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="nav-logo">
-      <img src="小螺号logo.svg" alt="小螺号">
-      <span>上海小螺号</span>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html" aria-label="返回首页">
+        <img src="小螺号logo.svg" alt="">
+        <span>上海小螺号能力开发中心</span>
+      </a>
+      <a href="常用工具.html" class="nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="m12 19-7-7 7-7"></path>
+        </svg>
+        <span>返回工具</span>
+      </a>
     </div>
-    <a href="常用工具.html" class="nav-back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
-      返回
-    </a>
-  </div>
-</nav>
+  </nav>
 
-<div class="main">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="header-card">
-      <div class="header-content">
-        <h1>口部训练</h1>
-        <p>每天练习，发音更清晰</p>
+  <main class="app">
+    <header class="app-head">
+      <div>
+        <div class="eyebrow">口部运动训练</div>
+        <h1>按动作目标完成一组训练</h1>
+        <p>每个动作都有保持时长、休息时长和目标组次。计时器只负责训练节奏，完成记录只在一项训练真正结束时保存。</p>
       </div>
-      <div class="header-face">
-        <div class="face">
-          <div class="eye eye-l"></div>
-          <div class="eye eye-r"></div>
-          <div class="mouth"></div>
+      <div class="daily-strip" aria-label="今日训练概览">
+        <div class="daily-stat">
+          <strong id="statDone">0/8</strong>
+          <span>今日完成</span>
+        </div>
+        <div class="daily-stat">
+          <strong id="statMinutes">0</strong>
+          <span>专注分钟</span>
+        </div>
+        <div class="daily-stat">
+          <strong id="statRecords">0</strong>
+          <span>训练记录</span>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="exercise-card">
-      <h3>选择练习</h3>
-      <div class="exercise-list" id="exerciseList"></div>
-    </div>
-  </div>
+    <div class="workspace">
+      <aside class="panel">
+        <div class="panel-title">
+          <span>训练动作</span>
+          <small id="listCount">8 项</small>
+        </div>
 
-  <!-- Main Stage -->
-  <div class="stage">
-    <div class="animation-card">
-      <div class="exercise-label" id="exerciseLabel">唇部运动</div>
-      <p class="exercise-desc-text" id="exerciseDesc">锻炼嘴唇的灵活性</p>
+        <div class="segmented" role="group" aria-label="训练强度">
+          <button class="segment-btn active" type="button" data-level="standard">标准</button>
+          <button class="segment-btn" type="button" data-level="gentle">轻柔</button>
+          <button class="segment-btn" type="button" data-level="strong">强化</button>
+        </div>
 
-      <!-- Cute Character -->
-      <div class="character-container" id="characterContainer">
-        <div class="character">
-          <div class="character-face">
-            <div class="ear ear-left"><div class="ear-inner"></div></div>
-            <div class="ear ear-right"><div class="ear-inner"></div></div>
-            <div class="eyes">
-              <div class="eye"></div>
-              <div class="eye"></div>
+        <div class="filter-bar" id="filterBar" aria-label="动作分类"></div>
+        <div class="exercise-list" id="exerciseList"></div>
+      </aside>
+
+      <section class="trainer" id="trainer">
+        <div class="trainer-top">
+          <div>
+            <div class="trainer-kicker">
+              <span class="pill" id="currentCategory">唇部控制</span>
+              <span class="pill coral" id="currentTarget">闭合与转换</span>
             </div>
-            <div class="blush blush-left"></div>
-            <div class="blush blush-right"></div>
-            <div class="mouth" id="mouthContainer">
-              <div class="mouth-shape mouth-closed"></div>
+            <h2 class="trainer-title" id="exerciseTitle">圆唇-展唇</h2>
+            <p class="trainer-subtitle" id="exerciseSummary">像吹蜡烛一样收圆嘴唇，再把嘴角向两侧轻轻拉开。</p>
+          </div>
+          <div class="status-box" aria-live="polite">
+            <strong id="countdown">准备</strong>
+            <span id="phaseLabel">等待开始</span>
+          </div>
+        </div>
+
+        <div class="trainer-body">
+          <div class="demo-zone" id="demoZone">
+            <div class="demo-stage">
+              <svg class="phase-ring" viewBox="0 0 320 320" aria-hidden="true">
+                <circle class="phase-track" cx="160" cy="160" r="140"></circle>
+                <circle class="phase-progress" id="phaseProgress" cx="160" cy="160" r="140"></circle>
+              </svg>
+              <div class="demo-face mouth-pucker" id="demoFace" aria-hidden="true">
+                <div class="face-eye left"></div>
+                <div class="face-eye right"></div>
+                <div class="face-nose"></div>
+                <div class="face-mouth"><div class="mouth-form"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coach-zone">
+            <div class="cue-box">
+              <strong>动作提示</strong>
+              <p id="exerciseCue">慢慢做，保持下巴稳定，动作过程中自然呼吸。</p>
+            </div>
+
+            <div class="metric-grid">
+              <div class="metric">
+                <strong id="holdMetric">4秒</strong>
+                <span>动作保持</span>
+              </div>
+              <div class="metric">
+                <strong id="restMetric">2秒</strong>
+                <span>组间休息</span>
+              </div>
+              <div class="metric">
+                <strong id="repMetric">0/6</strong>
+                <span>当前组次</span>
+              </div>
+            </div>
+
+            <div class="rep-track">
+              <div class="track-header">
+                <span id="trackText">准备开始第 1 组</span>
+                <span id="trackPercent">0%</span>
+              </div>
+              <div class="track" aria-hidden="true">
+                <div class="track-fill" id="trackFill"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Timer -->
-      <div class="timer-wrap">
-        <div class="timer-bg-circle"></div>
-        <svg class="timer-ring" viewBox="0 0 160 160">
-          <defs>
-            <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#FF9B85"/>
-              <stop offset="100%" stop-color="#7ED6A8"/>
-            </linearGradient>
-          </defs>
-          <circle class="timer-bg" cx="80" cy="80" r="70"/>
-          <circle class="timer-progress" id="timerProgress" cx="80" cy="80" r="70"/>
-        </svg>
-        <div class="timer-center">
-          <svg class="timer-icon" viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 6v6l4 2"/>
-          </svg>
-          <div class="timer-time" id="timerTime">00:00</div>
-          <div class="timer-label">练习时长</div>
+        <div class="control-row">
+          <button class="btn btn-primary" id="startBtn" type="button">
+            <svg id="startIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8 5.14v13.72c0 .78.86 1.25 1.52.83l10.78-6.86a.98.98 0 0 0 0-1.66L9.52 4.31A.98.98 0 0 0 8 5.14Z"></path>
+            </svg>
+            <span id="startText">开始训练</span>
+          </button>
+          <button class="btn btn-secondary" id="finishBtn" type="button" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m20 6-11 11-5-5"></path>
+            </svg>
+            完成本项
+          </button>
+          <button class="btn btn-plain" id="resetBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+              <path d="M3 4v6h6"></path>
+            </svg>
+            重置
+          </button>
         </div>
-      </div>
+      </section>
 
-      <!-- Controls -->
-      <div class="controls">
-        <button class="btn btn-primary" id="startBtn" onclick="toggleTimer()">
-          <svg id="btnIconPlay" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-          <svg id="btnIconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
-            <rect x="6" y="4" width="4" height="16"/>
-            <rect x="14" y="4" width="4" height="16"/>
-          </svg>
-          <span id="btnText">开始</span>
-        </button>
-        <button class="btn btn-secondary" onclick="nextExercise()">
-          下一组
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </button>
-      </div>
+      <aside class="panel coach-panel">
+        <section class="side-section">
+          <div class="section-title">
+            <span>动作步骤</span>
+          </div>
+          <ol class="steps" id="stepsList"></ol>
+        </section>
+
+        <section class="side-section">
+          <div class="section-title">
+            <span>观察重点</span>
+          </div>
+          <ul class="watch-list" id="watchList"></ul>
+          <div class="safety-note">如出现疼痛、明显紧张、头晕或抗拒，请立即停止，改为更轻柔的动作。</div>
+        </section>
+
+        <section class="side-section">
+          <div class="records-head">
+            <div class="section-title">
+              <span>今日记录</span>
+            </div>
+            <button class="clear-btn" id="clearBtn" type="button">清空</button>
+          </div>
+          <div class="records-list" id="recordsList"></div>
+        </section>
+      </aside>
     </div>
+  </main>
 
-    <!-- Progress -->
-    <div class="progress-card">
-      <div class="progress-header">
-        <span class="progress-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" stroke-linecap="round">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-            <polyline points="22 4 12 14.01 9 11.01"/>
-          </svg>
-          今日进度
-        </span>
-        <span class="progress-count" id="progressCount">0 / 8 组</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-      </div>
-      <div class="progress-dots" id="progressDots"></div>
-    </div>
+  <footer class="footer">© 2026 上海小螺号能力开发中心</footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <!-- Records -->
-    <div class="records-card">
-      <div class="records-header">
-        <h3>
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round">
-            <path d="M3 3v18h18"/>
-            <path d="M18 17V9M13 17V5M8 17v-3"/>
-          </svg>
-          练习记录
-        </h3>
-        <button class="clear-btn" onclick="clearRecords()">清空</button>
-      </div>
-      <div class="records-grid" id="recordsGrid">
-        <div class="no-records">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/>
-          </svg>
-          暂无记录，开始练习吧！
+  <script>
+    const EXERCISES = [
+      {
+        id: "lip-round-wide",
+        category: "唇部控制",
+        target: "闭合与转换",
+        title: "圆唇-展唇",
+        summary: "像吹蜡烛一样收圆嘴唇，再把嘴角向两侧轻轻拉开。",
+        cue: "动作要慢，嘴唇用力但不要咬牙，保持自然呼吸。",
+        hold: 4,
+        rest: 2,
+        reps: 6,
+        mouth: "pucker",
+        icon: "lips",
+        steps: ["坐直，肩膀和下巴放松。", "嘟嘴保持，再慢慢转成微笑。", "回到自然闭唇，休息后进入下一组。"],
+        watch: ["嘴角尽量对称。", "下巴不要前伸或抬高。", "动作不追求大，先追求稳。"]
+      },
+      {
+        id: "lip-close",
+        category: "唇部控制",
+        target: "闭唇力量",
+        title: "闭唇保持",
+        summary: "轻轻闭紧双唇，像含住一张薄纸一样稳定保持。",
+        cue: "只用嘴唇发力，不要用牙齿咬住嘴唇。",
+        hold: 5,
+        rest: 3,
+        reps: 5,
+        mouth: "rest",
+        icon: "shield",
+        steps: ["上下唇自然贴合。", "保持闭合，不鼓腮、不憋气。", "放松两秒后再继续。"],
+        watch: ["鼻呼吸是否顺畅。", "颈部和肩部不要跟着用力。", "嘴唇不要卷进牙齿里。"]
+      },
+      {
+        id: "jaw-open",
+        category: "下颌活动",
+        target: "张口控制",
+        title: "稳定张口",
+        summary: "缓慢张开嘴巴，到舒适范围后保持，再慢慢合上。",
+        cue: "像打小哈欠一样张开，下颌走直线，不要左右晃。",
+        hold: 4,
+        rest: 3,
+        reps: 6,
+        mouth: "open",
+        icon: "open",
+        steps: ["舌头自然放平，嘴唇放松。", "慢慢张口到舒适范围。", "保持后慢慢合上，不发出碰撞声。"],
+        watch: ["下巴是否偏向一侧。", "张口不要超过舒适范围。", "闭合时速度要慢。"]
+      },
+      {
+        id: "tongue-forward",
+        category: "舌部灵活",
+        target: "前伸与回收",
+        title: "舌头前伸",
+        summary: "舌头向前伸出，保持稳定后收回到口腔内。",
+        cue: "舌尖向前，不要用牙齿夹住舌头。",
+        hold: 4,
+        rest: 2,
+        reps: 6,
+        mouth: "tongue",
+        icon: "tongue",
+        steps: ["嘴巴自然张开。", "舌头向前伸出到舒适位置。", "保持后收回，轻轻闭嘴休息。"],
+        watch: ["舌尖是否能保持在中线。", "嘴角不要过度拉扯。", "不要屏住呼吸。"]
+      },
+      {
+        id: "tongue-side",
+        category: "舌部灵活",
+        target: "左右移动",
+        title: "舌尖左右点",
+        summary: "舌尖依次触碰左、右嘴角，帮助建立方向控制。",
+        cue: "每次移动都先回到中间，再去另一侧。",
+        hold: 3,
+        rest: 2,
+        reps: 8,
+        mouth: "tongue",
+        icon: "arrows",
+        steps: ["张口，舌尖伸出一点。", "舌尖触碰左嘴角，回中间。", "舌尖触碰右嘴角，回中间。"],
+        watch: ["头不要跟着转。", "舌头移动路线要清楚。", "动作慢一点更有效。"]
+      },
+      {
+        id: "cheek-puff",
+        category: "颊部力量",
+        target: "口腔压力",
+        title: "鼓腮保持",
+        summary: "双颊轻轻鼓起并保持，训练口腔闭合和气压控制。",
+        cue: "像含一小口空气，嘴唇闭住，脸颊轻鼓即可。",
+        hold: 5,
+        rest: 3,
+        reps: 5,
+        mouth: "cheek",
+        icon: "circle",
+        steps: ["闭唇，吸入少量空气。", "两侧脸颊轻轻鼓起。", "保持后慢慢放松，不要突然喷气。"],
+        watch: ["空气是否从嘴角漏出。", "两侧脸颊是否均匀。", "不要用过大的气压。"]
+      },
+      {
+        id: "chew-slow",
+        category: "协调训练",
+        target: "节律与咀嚼",
+        title: "慢速咀嚼",
+        summary: "模拟咀嚼节律，让下颌稳定地开合。",
+        cue: "慢慢开合，像咀嚼软食，动作小而有节奏。",
+        hold: 3,
+        rest: 2,
+        reps: 8,
+        mouth: "chew",
+        icon: "rhythm",
+        steps: ["嘴唇自然放松。", "下颌慢慢打开再合上。", "保持节律，左右两侧轮流感受。"],
+        watch: ["不要快速咬合。", "下颌不要左右甩动。", "面部表情保持放松。"]
+      },
+      {
+        id: "combo-flow",
+        category: "综合练习",
+        target: "动作串联",
+        title: "圆唇-张口-微笑",
+        summary: "把嘟嘴、张口、微笑串成一条慢动作路线。",
+        cue: "像做口部广播操，动作之间要有清楚的过渡。",
+        hold: 4,
+        rest: 3,
+        reps: 5,
+        mouth: "wide",
+        icon: "flow",
+        steps: ["先嘟嘴保持。", "慢慢张口保持。", "转成微笑，再回到自然闭唇。"],
+        watch: ["每个动作都要完整。", "转换时不要突然用力。", "孩子能否跟着节奏完成。"]
+      }
+    ];
+
+    const LEVELS = {
+      gentle: { label: "轻柔", holdDelta: -1, restDelta: 1, repDelta: -1 },
+      standard: { label: "标准", holdDelta: 0, restDelta: 0, repDelta: 0 },
+      strong: { label: "强化", holdDelta: 1, restDelta: 0, repDelta: 2 }
+    };
+
+    const ICONS = {
+      lips: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13c2.4-3 4.2-4 6-4 1.3 0 2 .8 2 .8s.7-.8 2-.8c1.8 0 3.6 1 6 4-2.3 2.2-4.8 3.4-8 3.4S6.3 15.2 4 13Z"></path><path d="M4 13h16"></path></svg>',
+      shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-3.8 7-10V5l-7-3-7 3v7c0 6.2 7 10 7 10Z"></path><path d="M9 12h6"></path></svg>',
+      open: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><ellipse cx="12" cy="14" rx="3.5" ry="4.5"></ellipse></svg>',
+      tongue: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10c.9 4 2.6 6 5 6s4.1-2 5-6"></path><path d="M12 16v5"></path><path d="M10 21c1.3 1 2.7 1 4 0"></path><path d="M8 7h.01M16 7h.01"></path></svg>',
+      arrows: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"></path><path d="m16 7 5 5-5 5"></path><path d="M3 12h18"></path></svg>',
+      circle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="13" r="3"></circle><circle cx="16" cy="13" r="3"></circle><path d="M9 8c1.6 1 4.4 1 6 0"></path></svg>',
+      rhythm: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8c3-4 11-4 14 0"></path><path d="M5 16c3 4 11 4 14 0"></path><path d="M9 12h6"></path></svg>',
+      flow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10a4 4 0 0 1 0 8H7"></path><path d="m9 11-4 4 4 4"></path><path d="M16 7l4 4-4 4"></path></svg>'
+    };
+
+    const STORAGE_RECORDS = "oralTrainerRecordsV2";
+    const STORAGE_DONE = "oralTrainerDoneV2";
+    const CIRCUMFERENCE = 2 * Math.PI * 140;
+
+    const state = {
+      currentId: EXERCISES[0].id,
+      filter: "全部",
+      level: "standard",
+      phase: "idle",
+      previousPhase: "idle",
+      secondsLeft: 0,
+      phaseTotal: 0,
+      repsDone: 0,
+      focusSeconds: 0,
+      elapsedSeconds: 0,
+      timer: null,
+      records: [],
+      done: new Set(),
+      toastTimer: null
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    const els = {
+      trainer: $("trainer"),
+      filterBar: $("filterBar"),
+      exerciseList: $("exerciseList"),
+      listCount: $("listCount"),
+      statDone: $("statDone"),
+      statMinutes: $("statMinutes"),
+      statRecords: $("statRecords"),
+      currentCategory: $("currentCategory"),
+      currentTarget: $("currentTarget"),
+      exerciseTitle: $("exerciseTitle"),
+      exerciseSummary: $("exerciseSummary"),
+      exerciseCue: $("exerciseCue"),
+      countdown: $("countdown"),
+      phaseLabel: $("phaseLabel"),
+      demoZone: $("demoZone"),
+      demoFace: $("demoFace"),
+      phaseProgress: $("phaseProgress"),
+      holdMetric: $("holdMetric"),
+      restMetric: $("restMetric"),
+      repMetric: $("repMetric"),
+      trackText: $("trackText"),
+      trackPercent: $("trackPercent"),
+      trackFill: $("trackFill"),
+      startBtn: $("startBtn"),
+      startText: $("startText"),
+      startIcon: $("startIcon"),
+      finishBtn: $("finishBtn"),
+      resetBtn: $("resetBtn"),
+      stepsList: $("stepsList"),
+      watchList: $("watchList"),
+      recordsList: $("recordsList"),
+      clearBtn: $("clearBtn"),
+      toast: $("toast")
+    };
+
+    function todayKey() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function currentExercise() {
+      return EXERCISES.find((exercise) => exercise.id === state.currentId) || EXERCISES[0];
+    }
+
+    function currentPlan() {
+      const exercise = currentExercise();
+      const level = LEVELS[state.level];
+      return {
+        hold: Math.max(2, exercise.hold + level.holdDelta),
+        rest: Math.max(1, exercise.rest + level.restDelta),
+        reps: Math.max(3, exercise.reps + level.repDelta),
+        levelLabel: level.label
+      };
+    }
+
+    function loadData() {
+      const today = todayKey();
+      try {
+        const records = JSON.parse(localStorage.getItem(STORAGE_RECORDS)) || [];
+        state.records = records.filter((record) => record.date === today);
+      } catch {
+        state.records = [];
+      }
+
+      try {
+        const doneStore = JSON.parse(localStorage.getItem(STORAGE_DONE)) || {};
+        state.done = new Set(doneStore[today] || []);
+      } catch {
+        state.done = new Set();
+      }
+    }
+
+    function saveData() {
+      const today = todayKey();
+      let allRecords = [];
+      try {
+        allRecords = JSON.parse(localStorage.getItem(STORAGE_RECORDS)) || [];
+      } catch {
+        allRecords = [];
+      }
+
+      const oldRecords = allRecords.filter((record) => record.date !== today);
+      localStorage.setItem(STORAGE_RECORDS, JSON.stringify([...oldRecords, ...state.records].slice(-80)));
+
+      let doneStore = {};
+      try {
+        doneStore = JSON.parse(localStorage.getItem(STORAGE_DONE)) || {};
+      } catch {
+        doneStore = {};
+      }
+      doneStore[today] = [...state.done];
+      localStorage.setItem(STORAGE_DONE, JSON.stringify(doneStore));
+    }
+
+    function filteredExercises() {
+      if (state.filter === "全部") return EXERCISES;
+      return EXERCISES.filter((exercise) => exercise.category === state.filter);
+    }
+
+    function renderFilters() {
+      const categories = ["全部", ...new Set(EXERCISES.map((exercise) => exercise.category))];
+      els.filterBar.innerHTML = categories.map((category) => `
+        <button class="filter-btn ${category === state.filter ? "active" : ""}" type="button" data-filter="${category}">${category}</button>
+      `).join("");
+    }
+
+    function renderExerciseList() {
+      const list = filteredExercises();
+      els.listCount.textContent = `${list.length} 项`;
+      els.exerciseList.innerHTML = list.map((exercise) => `
+        <button class="exercise-row ${exercise.id === state.currentId ? "active" : ""} ${state.done.has(exercise.id) ? "done" : ""}" type="button" data-id="${exercise.id}">
+          <span class="exercise-icon">${ICONS[exercise.icon]}</span>
+          <span class="exercise-main">
+            <strong>${exercise.title}</strong>
+            <span>${exercise.target}</span>
+          </span>
+          <span class="done-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"></path></svg>
+          </span>
+        </button>
+      `).join("");
+    }
+
+    function renderTrainer() {
+      const exercise = currentExercise();
+      const plan = currentPlan();
+
+      els.currentCategory.textContent = exercise.category;
+      els.currentTarget.textContent = `${plan.levelLabel} · ${exercise.target}`;
+      els.exerciseTitle.textContent = exercise.title;
+      els.exerciseSummary.textContent = exercise.summary;
+      els.exerciseCue.textContent = exercise.cue;
+      els.holdMetric.textContent = `${plan.hold}秒`;
+      els.restMetric.textContent = `${plan.rest}秒`;
+      els.repMetric.textContent = `${state.repsDone}/${plan.reps}`;
+      const demoClass = `demo-face mouth-${exercise.mouth} action-${exercise.id}`;
+      if (els.demoFace.className !== demoClass) {
+        els.demoFace.className = demoClass;
+      }
+
+      els.stepsList.innerHTML = exercise.steps.map((step, index) => (
+        `<li data-step="${index + 1}">${step}</li>`
+      )).join("");
+      els.watchList.innerHTML = exercise.watch.map((item) => `<li>${item}</li>`).join("");
+
+      renderPhase();
+      renderProgress();
+      renderButtons();
+    }
+
+    function renderPhase() {
+      const labelMap = {
+        idle: ["准备", "等待开始"],
+        active: [String(state.secondsLeft), "动作保持"],
+        rest: [String(state.secondsLeft), "短暂休息"],
+        paused: [String(state.secondsLeft), "已暂停"],
+        done: ["完成", "本项已记录"]
+      };
+      const [countdown, label] = labelMap[state.phase] || labelMap.idle;
+      els.countdown.textContent = countdown;
+      els.phaseLabel.textContent = label;
+
+      els.demoZone.classList.toggle("is-running", state.phase === "active");
+      els.trainer.classList.toggle("is-running", state.phase === "active");
+      els.demoZone.classList.toggle("phase-rest", state.phase === "rest");
+      els.demoZone.classList.toggle("phase-done", state.phase === "done");
+    }
+
+    function renderProgress() {
+      const plan = currentPlan();
+      let currentPart = 0;
+      if (state.phase === "active" && state.phaseTotal > 0) {
+        currentPart = (state.phaseTotal - state.secondsLeft) / state.phaseTotal;
+      } else if (state.phase === "rest") {
+        currentPart = 1;
+      } else if (state.phase === "done") {
+        currentPart = 1;
+      }
+
+      const progress = Math.min(1, (state.repsDone + currentPart) / plan.reps);
+      const percent = Math.round(progress * 100);
+      els.trackFill.style.width = `${percent}%`;
+      els.trackPercent.textContent = `${percent}%`;
+      els.repMetric.textContent = `${state.repsDone}/${plan.reps}`;
+
+      if (state.phase === "done") {
+        els.trackText.textContent = "本项训练已完成";
+      } else if (state.phase === "rest") {
+        els.trackText.textContent = `已完成 ${state.repsDone} 组，准备第 ${Math.min(state.repsDone + 1, plan.reps)} 组`;
+      } else if (state.repsDone === 0 && state.phase === "idle") {
+        els.trackText.textContent = "准备开始第 1 组";
+      } else {
+        els.trackText.textContent = `正在进行第 ${Math.min(state.repsDone + 1, plan.reps)} 组`;
+      }
+
+      let ringProgress = 0;
+      if (state.phaseTotal > 0 && ["active", "rest", "paused"].includes(state.phase)) {
+        ringProgress = (state.phaseTotal - state.secondsLeft) / state.phaseTotal;
+      } else if (state.phase === "done") {
+        ringProgress = 1;
+      }
+      els.phaseProgress.style.strokeDasharray = `${CIRCUMFERENCE}`;
+      els.phaseProgress.style.strokeDashoffset = `${CIRCUMFERENCE * (1 - ringProgress)}`;
+    }
+
+    function renderButtons() {
+      const isRunning = state.timer !== null;
+      const canFinish = state.repsDone > 0 || state.focusSeconds > 0 || state.phase === "done";
+      els.finishBtn.disabled = !canFinish || state.phase === "done";
+
+      if (isRunning) {
+        els.startText.textContent = "暂停";
+        els.startIcon.innerHTML = '<path d="M7 5h3v14H7zM14 5h3v14h-3z"></path>';
+      } else if (state.phase === "paused") {
+        els.startText.textContent = "继续";
+        els.startIcon.innerHTML = '<path d="M8 5.14v13.72c0 .78.86 1.25 1.52.83l10.78-6.86a.98.98 0 0 0 0-1.66L9.52 4.31A.98.98 0 0 0 8 5.14Z"></path>';
+      } else if (state.phase === "done") {
+        els.startText.textContent = "再练一次";
+        els.startIcon.innerHTML = '<path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v6h6"></path>';
+      } else {
+        els.startText.textContent = "开始训练";
+        els.startIcon.innerHTML = '<path d="M8 5.14v13.72c0 .78.86 1.25 1.52.83l10.78-6.86a.98.98 0 0 0 0-1.66L9.52 4.31A.98.98 0 0 0 8 5.14Z"></path>';
+      }
+    }
+
+    function renderRecords() {
+      const focusSeconds = state.records.reduce((total, record) => total + record.focusSeconds, 0);
+      els.statDone.textContent = `${state.done.size}/${EXERCISES.length}`;
+      els.statMinutes.textContent = String(Math.round(focusSeconds / 60));
+      els.statRecords.textContent = String(state.records.length);
+
+      if (state.records.length === 0) {
+        els.recordsList.innerHTML = '<div class="empty">完成一项后会在这里显示</div>';
+        return;
+      }
+
+      els.recordsList.innerHTML = state.records.slice().reverse().slice(0, 7).map((record) => `
+        <div class="record-item">
+          <div>
+            <strong>${record.title}</strong>
+            <span>${record.level} · ${record.reps} 组 · ${record.timeText}</span>
+          </div>
+          <div class="record-time">${formatSeconds(record.focusSeconds)}</div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+      `).join("");
+    }
 
-<footer class="footer">
-  © 2026 上海小螺号能力开发中心
-</footer>
+    function renderAll() {
+      renderFilters();
+      renderExerciseList();
+      renderTrainer();
+      renderRecords();
+    }
 
-<script>
-const EXERCISES = [
-  { 
-    id: 'lip', 
-    name: '唇部运动', 
-    desc: '锻炼嘴唇的灵活性', 
-    mouth: 'closed',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-      <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-      <circle cx="9" cy="9" r="1" fill="#FF9B85"/>
-      <circle cx="15" cy="9" r="1" fill="#FF9B85"/>
-    </svg>`
-  },
-  { 
-    id: 'tongue', 
-    name: '舌头伸展', 
-    desc: '增强舌头活动范围', 
-    mouth: 'tongue',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-      <path d="M8 14c0 0 1 3 4 3s4-3 4-3"/>
-      <path d="M12 17v3M12 20c-1 1-2 2-2 2"/>
-    </svg>`
-  },
-  { 
-    id: 'open', 
-    name: '嘴巴张开', 
-    desc: '提高下颌活动度', 
-    mouth: 'open',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <ellipse cx="12" cy="14" rx="4" ry="5"/>
-      <circle cx="9" cy="9" r="1" fill="#FF9B85"/>
-      <circle cx="15" cy="9" r="1" fill="#FF9B85"/>
-    </svg>`
-  },
-  { 
-    id: 'smile', 
-    name: '微笑练习', 
-    desc: '锻炼面部肌肉', 
-    mouth: 'smile',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-      <path d="M9 9c.5-1 1.5-1.5 3-1.5s2.5.5 3 1.5"/>
-      <circle cx="9" cy="9" r="1" fill="#FF9B85"/>
-      <circle cx="15" cy="9" r="1" fill="#FF9B85"/>
-    </svg>`
-  },
-  { 
-    id: 'face', 
-    name: '鬼脸练习', 
-    desc: '全面活动面部肌肉', 
-    mouth: 'puff',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <path d="M8 9h.01M16 9h.01"/>
-      <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-      <path d="M6 7l2 2M18 7l-2 2"/>
-    </svg>`
-  },
-  { 
-    id: 'chew', 
-    name: '咀嚼模拟', 
-    desc: '模拟咀嚼运动', 
-    mouth: 'open',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <path d="M12 6v4M12 14v4"/>
-      <ellipse cx="12" cy="12" rx="3" ry="4"/>
-      <path d="M8 10h2M14 10h2M8 14h2M14 14h2"/>
-    </svg>`
-  },
-  { 
-    id: 'puff', 
-    name: '鼓腮练习', 
-    desc: '增强口腔压力', 
-    mouth: 'puff',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <circle cx="8" cy="14" r="2.5"/>
-      <circle cx="16" cy="14" r="2.5"/>
-      <path d="M9 10s1.5 1 3 1 3-1 3-1"/>
-    </svg>`
-  },
-  { 
-    id: 'combined', 
-    name: '综合练习', 
-    desc: '综合所有口部动作', 
-    mouth: 'smile',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#FF9B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-      <path d="M2 17l10 5 10-5"/>
-      <path d="M2 12l10 5 10-5"/>
-    </svg>`
-  }
-];
+    function resetSession(keepPhaseDone = false) {
+      clearTimer();
+      state.phase = keepPhaseDone ? "done" : "idle";
+      state.previousPhase = "idle";
+      state.secondsLeft = 0;
+      state.phaseTotal = 0;
+      state.repsDone = 0;
+      state.focusSeconds = 0;
+      state.elapsedSeconds = 0;
+      renderTrainer();
+    }
 
-const MOUTH_HTML = {
-  closed: '<div class="mouth-shape mouth-closed"></div>',
-  open: '<div class="mouth-shape mouth-open"></div>',
-  smile: '<div class="mouth-shape mouth-smile"></div>',
-  tongue: '<div class="mouth-shape mouth-tongue"></div>',
-  puff: '<div class="mouth-shape mouth-puff"></div>'
-};
+    function startOrPause() {
+      if (state.timer) {
+        pauseSession();
+        return;
+      }
 
-let currentIndex = 0;
-let isRunning = false;
-let seconds = 0;
-let timerInterval = null;
-let records = [];
-let completed = new Set();
+      if (state.phase === "done") {
+        resetSession(false);
+      }
 
-function loadData() {
-  try {
-    records = JSON.parse(localStorage.getItem('oralRecords')) || [];
-  } catch { records = []; }
-  try {
-    const saved = localStorage.getItem('oralCompleted');
-    completed = saved ? new Set(JSON.parse(saved)) : new Set();
-  } catch { completed = new Set(); }
-  
-  const today = new Date().toDateString();
-  if (localStorage.getItem('oralDate') !== today) {
-    completed = new Set();
-    localStorage.setItem('oralDate', today);
-    localStorage.setItem('oralCompleted', '[]');
-  }
-}
+      if (state.phase === "paused") {
+        state.phase = state.previousPhase;
+      } else if (state.phase === "idle") {
+        beginPhase("active");
+      }
 
-function saveData() {
-  localStorage.setItem('oralRecords', JSON.stringify(records));
-  localStorage.setItem('oralCompleted', JSON.stringify([...completed]));
-}
+      state.timer = window.setInterval(tick, 1000);
+      renderTrainer();
+    }
 
-function renderExerciseList() {
-  const list = document.getElementById('exerciseList');
-  list.innerHTML = EXERCISES.map((ex, i) => `
-    <div class="exercise-item ${i === currentIndex ? 'active' : ''} ${completed.has(i) ? 'done' : ''}" onclick="selectExercise(${i})">
-      <div class="icon-wrap">${ex.icon}</div>
-      <div class="info">
-        <div class="name">${ex.name}</div>
-        <div class="desc">${ex.desc}</div>
-      </div>
-      <div class="check">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </div>
-    </div>
-  `).join('');
-}
+    function pauseSession() {
+      clearTimer();
+      state.previousPhase = state.phase === "paused" ? state.previousPhase : state.phase;
+      state.phase = "paused";
+      renderTrainer();
+    }
 
-function renderProgress() {
-  document.getElementById('progressCount').textContent = `${completed.size} / ${EXERCISES.length} 组`;
-  document.getElementById('progressFill').style.width = `${(completed.size / EXERCISES.length) * 100}%`;
-  
-  document.getElementById('progressDots').innerHTML = EXERCISES.map((ex, i) => {
-    let cls = 'p-dot';
-    if (completed.has(i)) cls += ' done';
-    else if (i === currentIndex) cls += ' current';
-    return `<div class="${cls}">${ex.icon.replace(/width="[^"]*"/g, 'width="20"').replace(/height="[^"]*"/g, 'height="20"')}</div>`;
-  }).join('');
-}
+    function beginPhase(phase) {
+      const plan = currentPlan();
+      state.phase = phase;
+      state.phaseTotal = phase === "active" ? plan.hold : plan.rest;
+      state.secondsLeft = state.phaseTotal;
+    }
 
-function renderRecords() {
-  const grid = document.getElementById('recordsGrid');
-  if (records.length === 0) {
-    grid.innerHTML = `
-      <div class="no-records">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/>
-        </svg>
-        暂无记录，开始练习吧！
-      </div>`;
-    return;
-  }
-  grid.innerHTML = records.slice(0, 16).map(r => `
-    <div class="record-item">
-      <div class="icon">${r.icon}</div>
-      <div class="name">${r.name}</div>
-      <div class="time">${r.duration}</div>
-    </div>
-  `).join('');
-}
+    function tick() {
+      if (!["active", "rest"].includes(state.phase)) return;
 
-function updateStage() {
-  const ex = EXERCISES[currentIndex];
-  document.getElementById('exerciseLabel').textContent = ex.name;
-  document.getElementById('exerciseDesc').textContent = ex.desc;
-  
-  const mouthContainer = document.getElementById('mouthContainer');
-  const charContainer = document.getElementById('characterContainer');
-  
-  mouthContainer.innerHTML = MOUTH_HTML[ex.mouth];
-  
-  // Add cheek puff class for puff exercises
-  if (ex.mouth === 'puff') {
-    charContainer.classList.add('cheek-puff');
-  } else {
-    charContainer.classList.remove('cheek-puff');
-  }
-  
-  stopTimer();
-  seconds = 0;
-  updateTimerDisplay();
-  renderExerciseList();
-  renderProgress();
-}
+      state.elapsedSeconds += 1;
+      if (state.phase === "active") {
+        state.focusSeconds += 1;
+      }
 
-function selectExercise(i) {
-  if (isRunning) stopTimer();
-  currentIndex = i;
-  updateStage();
-}
+      state.secondsLeft -= 1;
 
-function nextExercise() {
-  stopTimer();
-  if (seconds > 3) saveRecord();
-  currentIndex = (currentIndex + 1) % EXERCISES.length;
-  updateStage();
-}
+      if (state.secondsLeft <= 0) {
+        if (state.phase === "active") {
+          state.repsDone += 1;
+          const plan = currentPlan();
+          if (state.repsDone >= plan.reps) {
+            finishSession(true);
+            return;
+          }
+          beginPhase("rest");
+        } else {
+          beginPhase("active");
+        }
+      }
 
-function toggleTimer() {
-  isRunning ? stopTimer() : startTimer();
-}
+      renderTrainer();
+    }
 
-function startTimer() {
-  isRunning = true;
-  const btn = document.getElementById('startBtn');
-  btn.classList.add('running');
-  document.getElementById('btnIconPlay').style.display = 'none';
-  document.getElementById('btnIconPause').style.display = 'block';
-  document.getElementById('btnText').textContent = '暂停';
-  
-  timerInterval = setInterval(() => {
-    seconds++;
-    updateTimerDisplay();
-  }, 1000);
-}
+    function finishSession(autoFinished = false) {
+      const plan = currentPlan();
+      const exercise = currentExercise();
+      clearTimer();
 
-function stopTimer() {
-  isRunning = false;
-  const btn = document.getElementById('startBtn');
-  btn.classList.remove('running');
-  document.getElementById('btnIconPlay').style.display = 'block';
-  document.getElementById('btnIconPause').style.display = 'none';
-  document.getElementById('btnText').textContent = seconds > 0 ? '继续' : '开始';
-  
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-  
-  if (seconds > 5) {
-    saveRecord();
-  }
-}
+      if (state.phase === "done") {
+        renderTrainer();
+        return;
+      }
 
-function saveRecord() {
-  const ex = EXERCISES[currentIndex];
-  records.unshift({
-    name: ex.name,
-    icon: ex.icon,
-    duration: formatTime(seconds)
-  });
-  if (records.length > 30) records.pop();
-  
-  completed.add(currentIndex);
-  saveData();
-  renderExerciseList();
-  renderProgress();
-  renderRecords();
-}
+      if (state.repsDone === 0 && state.focusSeconds === 0) {
+        showToast("先完成至少一组，再记录本项");
+        renderTrainer();
+        return;
+      }
 
-function updateTimerDisplay() {
-  document.getElementById('timerTime').textContent = formatTime(seconds);
-  const max = 300;
-  const progress = Math.min(seconds / max, 1);
-  const circumference = 2 * Math.PI * 70; // 440
-  const offset = circumference * (1 - progress);
-  document.getElementById('timerProgress').style.strokeDashoffset = offset;
-}
+      const reps = autoFinished ? plan.reps : Math.max(1, state.repsDone);
+      const record = {
+        id: exercise.id,
+        title: exercise.title,
+        level: plan.levelLabel,
+        reps,
+        focusSeconds: Math.max(state.focusSeconds, reps * plan.hold),
+        elapsedSeconds: Math.max(state.elapsedSeconds, reps * (plan.hold + plan.rest)),
+        date: todayKey(),
+        timeText: new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })
+      };
 
-function formatTime(s) {
-  const m = Math.floor(s / 60);
-  const sec = s % 60;
-  return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-}
+      state.done.add(exercise.id);
+      state.records.push(record);
+      if (state.records.length > 30) {
+        state.records = state.records.slice(-30);
+      }
+      saveData();
 
-function clearRecords() {
-  if (confirm('确定清空所有记录？')) {
-    records = [];
-    completed = new Set();
-    localStorage.removeItem('oralRecords');
-    localStorage.removeItem('oralCompleted');
-    localStorage.removeItem('oralDate');
-    renderRecords();
-    renderProgress();
-    renderExerciseList();
-  }
-}
+      state.phase = "done";
+      state.secondsLeft = 0;
+      state.phaseTotal = 0;
+      state.repsDone = reps;
+      showToast(autoFinished ? "目标组次完成，已记录" : "已记录本项训练");
+      renderAll();
+    }
 
-// Init
-loadData();
-updateStage();
-renderRecords();
-</script>
+    function clearTimer() {
+      if (state.timer) {
+        window.clearInterval(state.timer);
+        state.timer = null;
+      }
+    }
+
+    function selectExercise(id) {
+      if (id === state.currentId) return;
+      clearTimer();
+      state.currentId = id;
+      state.phase = "idle";
+      state.previousPhase = "idle";
+      state.secondsLeft = 0;
+      state.phaseTotal = 0;
+      state.repsDone = 0;
+      state.focusSeconds = 0;
+      state.elapsedSeconds = 0;
+      renderAll();
+    }
+
+    function setLevel(level) {
+      if (!LEVELS[level] || level === state.level) return;
+      state.level = level;
+      document.querySelectorAll(".segment-btn").forEach((button) => {
+        button.classList.toggle("active", button.dataset.level === level);
+      });
+      resetSession(false);
+    }
+
+    function setFilter(filter) {
+      state.filter = filter;
+      const list = filteredExercises();
+      if (!list.some((exercise) => exercise.id === state.currentId)) {
+        selectExercise(list[0].id);
+      } else {
+        renderAll();
+      }
+    }
+
+    function clearRecords() {
+      if (!window.confirm("确定清空今日训练记录？")) return;
+      state.records = [];
+      state.done = new Set();
+      saveData();
+      resetSession(false);
+      showToast("今日记录已清空");
+    }
+
+    function formatSeconds(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      if (mins === 0) return `${secs}秒`;
+      return `${mins}分${String(secs).padStart(2, "0")}秒`;
+    }
+
+    function showToast(message) {
+      window.clearTimeout(state.toastTimer);
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      state.toastTimer = window.setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 1800);
+    }
+
+    els.exerciseList.addEventListener("click", (event) => {
+      const button = event.target.closest(".exercise-row");
+      if (!button) return;
+      selectExercise(button.dataset.id);
+    });
+
+    els.filterBar.addEventListener("click", (event) => {
+      const button = event.target.closest(".filter-btn");
+      if (!button) return;
+      setFilter(button.dataset.filter);
+    });
+
+    document.querySelectorAll(".segment-btn").forEach((button) => {
+      button.addEventListener("click", () => setLevel(button.dataset.level));
+    });
+
+    els.startBtn.addEventListener("click", startOrPause);
+    els.finishBtn.addEventListener("click", () => finishSession(false));
+    els.resetBtn.addEventListener("click", () => resetSession(false));
+    els.clearBtn.addEventListener("click", clearRecords);
+
+    loadData();
+    renderAll();
+  </script>
 </body>
 </html>

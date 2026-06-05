@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="../小螺号logo.svg" type="image/svg+xml">
+    <title>小螺号 - 声母g构音词汇练习</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #fff8e1 0%, #ffe0b2 100%);
+            min-height: 100vh;
+            display: flex;
+        }
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+        .sidebar .logo-area {
+            text-align: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+            margin-bottom: 16px;
+        }
+        .sidebar .logo { font-size: 40px; margin-bottom: 4px; }
+        .sidebar .brand { font-size: 18px; font-weight: bold; }
+        .sidebar .sub-brand { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+        .nav-section { margin: 14px 0; }
+        .nav-section-title {
+            padding: 8px 20px;
+            font-size: 12px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .nav-item {
+            padding: 11px 20px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 15px;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-item:hover {
+            background: rgba(255,255,255,0.12);
+            border-left-color: #ffeb3b;
+        }
+        .nav-item.active {
+            background: rgba(255,255,255,0.2);
+            border-left-color: #ffeb3b;
+            font-weight: bold;
+        }
+        .nav-item .nav-emoji { font-size: 18px; }
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 30px 40px;
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        .header h1 {
+            font-size: 32px;
+            color: #e65100;
+            margin-bottom: 6px;
+        }
+        .header .subtitle { font-size: 16px; color: #888; }
+        .header .phoneme-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            padding: 10px 36px;
+            border-radius: 30px;
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 12px;
+            box-shadow: 0 4px 15px rgba(255,152,0,0.3);
+        }
+        .section-title {
+            text-align: center;
+            font-size: 20px;
+            color: #e65100;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+            min-height: 380px;
+            align-items: center;
+        }
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 50px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-width: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff9800, #f57c00);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 48px rgba(255, 152, 0, 0.18);
+        }
+        .card:active { transform: scale(0.97); }
+        .card .emoji { font-size: 72px; margin-bottom: 14px; display: block; }
+        .card .word {
+            font-size: 56px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .card .pinyin {
+            font-size: 24px;
+            color: #f57c00;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        .card .play-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .card .play-btn:hover {
+            background: linear-gradient(135deg, #f57c00, #e65100);
+            transform: scale(1.05);
+        }
+        .card .play-btn.playing { animation: pulse 1s infinite; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 28px;
+        }
+        .pagination button {
+            background: white;
+            border: 2px solid #ff9800;
+            color: #ff9800;
+            padding: 10px 26px;
+            border-radius: 24px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .pagination button:hover:not(:disabled) {
+            background: #ff9800;
+            color: white;
+        }
+        .pagination button:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        .pagination .page-info {
+            font-size: 15px;
+            color: #666;
+            min-width: 80px;
+            text-align: center;
+        }
+        .progress-bar {
+            width: 100%;
+            max-width: 600px;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 20px auto 0;
+            overflow: hidden;
+        }
+        .progress-bar .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff9800, #f57c00);
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        .card.sentence-card { min-width: 400px; }
+        .card.sentence-card .word { font-size: 32px; }
+        .card.sentence-card .pinyin { font-size: 18px; }
+        @media (max-width: 900px) {
+            .sidebar { width: 60px; overflow: hidden; }
+            .sidebar .logo-area { padding: 10px 5px; }
+            .sidebar .brand, .sidebar .sub-brand, .nav-section-title { display: none; }
+            .sidebar .logo { font-size: 28px; }
+            .nav-item { padding: 12px 0; justify-content: center; }
+            .nav-item .nav-emoji { margin: 0; font-size: 22px; }
+            .nav-item span:not(.nav-emoji) { display: none; }
+            .main-content { margin-left: 60px; padding: 16px; }
+            .cards-container { gap: 16px; }
+            .card { min-width: 240px; padding: 28px; }
+            .card .emoji { font-size: 52px; }
+            .card .word { font-size: 40px; }
+            .card .pinyin { font-size: 20px; }
+            .card.sentence-card { min-width: 260px; }
+            .card.sentence-card .word { font-size: 24px; }
+        }
+    </style>
+    <link rel="stylesheet" href="articulation-style.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo-area">
+            <div class="logo" aria-label="小螺号"></div>
+            <div class="brand">小螺号</div>
+            <div class="sub-brand">g 练习</div>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">练习内容</div>
+            <div class="nav-item active" onclick="switchSection('danzi')"><span class="nav-emoji">📝</span><span>单字练习</span></div>
+            <div class="nav-item" onclick="switchSection('shuang')"><span class="nav-emoji">📖</span><span>双音节词</span></div>
+            <div class="nav-item" onclick="switchSection('san')"><span class="nav-emoji">📚</span><span>三音节词</span></div>
+            <div class="nav-item" onclick="switchSection('duanju')"><span class="nav-emoji">💬</span><span>短句练习</span></div>
+        </div>
+        <div class="nav-section">
+            <div class="nav-section-title">单字速览</div>
+            <div class="nav-item" onclick="jumpToChar(&quot;嘎&quot;)"><span class="nav-emoji">🦆</span><span>嘎</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;盖&quot;)"><span class="nav-emoji">🧢</span><span>盖</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;甘&quot;)"><span class="nav-emoji">🍬</span><span>甘</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;刚&quot;)"><span class="nav-emoji">⏰</span><span>刚</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;高&quot;)"><span class="nav-emoji">📏</span><span>高</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;给&quot;)"><span class="nav-emoji">🤲</span><span>给</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;根&quot;)"><span class="nav-emoji">🌱</span><span>根</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;更&quot;)"><span class="nav-emoji">🔄</span><span>更</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;哥&quot;)"><span class="nav-emoji">👦</span><span>哥</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;工&quot;)"><span class="nav-emoji">🔧</span><span>工</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;狗&quot;)"><span class="nav-emoji">🐕</span><span>狗</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;姑&quot;)"><span class="nav-emoji">👧</span><span>姑</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;瓜&quot;)"><span class="nav-emoji">🍉</span><span>瓜</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;怪&quot;)"><span class="nav-emoji">👾</span><span>怪</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;关&quot;)"><span class="nav-emoji">🚪</span><span>关</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;光&quot;)"><span class="nav-emoji">💡</span><span>光</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;归&quot;)"><span class="nav-emoji">🏠</span><span>归</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;滚&quot;)"><span class="nav-emoji">⚽</span><span>滚</span></div>
+            <div class="nav-item" onclick="jumpToChar(&quot;国&quot;)"><span class="nav-emoji">🇨🇳</span><span>国</span></div>
+        </div>
+    </nav>
+    <div class="main-content">
+        <div class="header">
+            <h1>小螺号构音训练</h1>
+            <p class="subtitle">声母构音词汇练习</p>
+            <div class="phoneme-badge">g</div>
+        </div>
+        <div class="section-title" id="section-title">单字练习</div>
+        <div class="cards-container" id="cards-container"></div>
+        <div class="pagination">
+            <button onclick="prevPage()" id="prev-btn">⬅ 上一页</button>
+            <span class="page-info" id="page-info">1 / 8</span>
+            <button onclick="nextPage()" id="next-btn">下一页 ➡</button>
+        </div>
+        <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    </div>
+    <script>
+        const sections = {
+          "danzi": {
+                    "title": "单字练习",
+                    "items": [
+                              {
+                                        "word": "嘎",
+                                        "pinyin": "gā",
+                                        "emoji": "🦆"
+                              },
+                              {
+                                        "word": "盖",
+                                        "pinyin": "gài",
+                                        "emoji": "🧢"
+                              },
+                              {
+                                        "word": "甘",
+                                        "pinyin": "gān",
+                                        "emoji": "🍬"
+                              },
+                              {
+                                        "word": "刚",
+                                        "pinyin": "gāng",
+                                        "emoji": "⏰"
+                              },
+                              {
+                                        "word": "高",
+                                        "pinyin": "gāo",
+                                        "emoji": "📏"
+                              },
+                              {
+                                        "word": "给",
+                                        "pinyin": "gěi",
+                                        "emoji": "🤲"
+                              },
+                              {
+                                        "word": "根",
+                                        "pinyin": "gēn",
+                                        "emoji": "🌱"
+                              },
+                              {
+                                        "word": "更",
+                                        "pinyin": "gèng",
+                                        "emoji": "🔄"
+                              },
+                              {
+                                        "word": "哥",
+                                        "pinyin": "gē",
+                                        "emoji": "👦"
+                              },
+                              {
+                                        "word": "工",
+                                        "pinyin": "gōng",
+                                        "emoji": "🔧"
+                              },
+                              {
+                                        "word": "狗",
+                                        "pinyin": "gǒu",
+                                        "emoji": "🐕"
+                              },
+                              {
+                                        "word": "姑",
+                                        "pinyin": "gū",
+                                        "emoji": "👧"
+                              },
+                              {
+                                        "word": "瓜",
+                                        "pinyin": "guā",
+                                        "emoji": "🍉"
+                              },
+                              {
+                                        "word": "怪",
+                                        "pinyin": "guài",
+                                        "emoji": "👾"
+                              },
+                              {
+                                        "word": "关",
+                                        "pinyin": "guān",
+                                        "emoji": "🚪"
+                              },
+                              {
+                                        "word": "光",
+                                        "pinyin": "guāng",
+                                        "emoji": "💡"
+                              },
+                              {
+                                        "word": "归",
+                                        "pinyin": "guī",
+                                        "emoji": "🏠"
+                              },
+                              {
+                                        "word": "滚",
+                                        "pinyin": "gǔn",
+                                        "emoji": "⚽"
+                              },
+                              {
+                                        "word": "国",
+                                        "pinyin": "guó",
+                                        "emoji": "🇨🇳"
+                              }
+                    ]
+          },
+          "shuang": {
+                    "title": "双音节词练习",
+                    "items": [
+                              {
+                                        "word": "盖子",
+                                        "pinyin": "gài zi",
+                                        "emoji": "🧢"
+                              },
+                              {
+                                        "word": "干净",
+                                        "pinyin": "gān jìng",
+                                        "emoji": "✨"
+                              },
+                              {
+                                        "word": "刚才",
+                                        "pinyin": "gāng cái",
+                                        "emoji": "⏰"
+                              },
+                              {
+                                        "word": "钢笔",
+                                        "pinyin": "gāng bǐ",
+                                        "emoji": "✒️"
+                              },
+                              {
+                                        "word": "高兴",
+                                        "pinyin": "gāo xìng",
+                                        "emoji": "😄"
+                              },
+                              {
+                                        "word": "告诉",
+                                        "pinyin": "gào su",
+                                        "emoji": "📢"
+                              },
+                              {
+                                        "word": "哥哥",
+                                        "pinyin": "gē ge",
+                                        "emoji": "👦"
+                              },
+                              {
+                                        "word": "唱歌",
+                                        "pinyin": "chàng gē",
+                                        "emoji": "🎤"
+                              },
+                              {
+                                        "word": "工作",
+                                        "pinyin": "gōng zuò",
+                                        "emoji": "💼"
+                              },
+                              {
+                                        "word": "公园",
+                                        "pinyin": "gōng yuán",
+                                        "emoji": "🌳"
+                              },
+                              {
+                                        "word": "小狗",
+                                        "pinyin": "xiǎo gǒu",
+                                        "emoji": "🐕"
+                              },
+                              {
+                                        "word": "西瓜",
+                                        "pinyin": "xī guā",
+                                        "emoji": "🍉"
+                              }
+                    ]
+          },
+          "san": {
+                    "title": "三音节词练习",
+                    "items": [
+                              {
+                                        "word": "哥哥好",
+                                        "pinyin": "gē ge hǎo",
+                                        "emoji": "👦"
+                              },
+                              {
+                                        "word": "高个子",
+                                        "pinyin": "gāo gè zi",
+                                        "emoji": "📏"
+                              },
+                              {
+                                        "word": "公鸡叫",
+                                        "pinyin": "gōng jī jiào",
+                                        "emoji": "🐓"
+                              },
+                              {
+                                        "word": "狗尾巴",
+                                        "pinyin": "gǒu wěi ba",
+                                        "emoji": "🐕"
+                              },
+                              {
+                                        "word": "姑娘家",
+                                        "pinyin": "gū niang jiā",
+                                        "emoji": "👧"
+                              },
+                              {
+                                        "word": "呱呱叫",
+                                        "pinyin": "guā guā jiào",
+                                        "emoji": "🐸"
+                              },
+                              {
+                                        "word": "乖宝宝",
+                                        "pinyin": "guāi bǎo bao",
+                                        "emoji": "👶"
+                              },
+                              {
+                                        "word": "鬼精灵",
+                                        "pinyin": "guǐ jīng líng",
+                                        "emoji": "🧚"
+                              }
+                    ]
+          },
+          "duanju": {
+                    "title": "短句练习",
+                    "items": [
+                              {
+                                        "word": "哥哥唱歌。",
+                                        "pinyin": "Gē ge chàng gē.",
+                                        "emoji": "👦🎵"
+                              },
+                              {
+                                        "word": "小狗跑了。",
+                                        "pinyin": "Xiǎo gǒu pǎo le.",
+                                        "emoji": "🐕💨"
+                              },
+                              {
+                                        "word": "高高的大树。",
+                                        "pinyin": "Gāo gāo de dà shù.",
+                                        "emoji": "🌳📏"
+                              },
+                              {
+                                        "word": "公鸡叫了。",
+                                        "pinyin": "Gōng jī jiào le.",
+                                        "emoji": "🐓🔔"
+                              },
+                              {
+                                        "word": "公园里有花。",
+                                        "pinyin": "Gōng yuán lǐ yǒu huā.",
+                                        "emoji": "🌳🌸"
+                              },
+                              {
+                                        "word": "西瓜甜甜的。",
+                                        "pinyin": "Xī guā tián tián de.",
+                                        "emoji": "🍉😋"
+                              },
+                              {
+                                        "word": "桂花开了。",
+                                        "pinyin": "Guì huā kāi le.",
+                                        "emoji": "🌸🌼"
+                              },
+                              {
+                                        "word": "跟着老师走。",
+                                        "pinyin": "Gēn zhe lǎo shī zǒu.",
+                                        "emoji": "👣👨‍🏫"
+                              }
+                    ]
+          }
+};
+        let currentSection = 'danzi', currentPage = 1;
+        const itemsPerPage = 2;
+        function getTotalPages() {
+            return Math.ceil(sections[currentSection].items.length / itemsPerPage);
+        }
+        function switchSection(section) {
+            currentSection = section; currentPage = 1;
+            const navItems = document.querySelectorAll('.logo-area + .nav-section .nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            const idx = ['danzi','shuang','san','duanju'].indexOf(section);
+            if (idx >= 0 && navItems[idx]) navItems[idx].classList.add('active');
+            render();
+        }
+        function render() {
+            const section = sections[currentSection];
+            const totalPages = getTotalPages();
+            const start = (currentPage - 1) * itemsPerPage;
+            const pageItems = section.items.slice(start, start + itemsPerPage);
+            document.getElementById('section-title').textContent = section.title;
+            const container = document.getElementById('cards-container');
+            const isSentence = currentSection === 'duanju';
+            container.innerHTML = pageItems.map(item => `
+                <div class="card ${isSentence ? 'sentence-card' : ''}" onclick="speak('${item.word}', this)">
+                    <span class="emoji">${item.emoji}</span>
+                    <div class="word">${item.word}</div>
+                    <div class="pinyin">${item.pinyin}</div>
+                    <button class="play-btn" onclick="event.stopPropagation(); speak('${item.word}', this.closest('.card'))">🔊 点击朗读</button>
+                </div>
+            `).join('');
+            document.getElementById('page-info').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prev-btn').disabled = currentPage <= 1;
+            document.getElementById('next-btn').disabled = currentPage >= totalPages;
+            document.getElementById('progress').style.width = (currentPage / totalPages * 100) + '%';
+        }
+        function prevPage() { if (currentPage > 1) { currentPage--; render(); } }
+        function nextPage() { if (currentPage < getTotalPages()) { currentPage++; render(); } }
+        function speak(text, cardEl) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'zh-CN'; utterance.rate = 0.7; utterance.pitch = 1.1;
+                if (cardEl) {
+                    const btn = cardEl.querySelector('.play-btn');
+                    if (btn) {
+                        btn.classList.add('playing'); btn.innerHTML = '🔊 正在朗读...';
+                        utterance.onend = () => { btn.classList.remove('playing'); btn.innerHTML = '🔊 点击朗读'; };
+                        utterance.onerror = () => { btn.classList.remove('playing'); btn.innerHTML = '🔊 点击朗读'; };
+                    }
+                }
+                window.speechSynthesis.speak(utterance);
+            } else { alert('您的浏览器不支持语音朗读功能，请使用Chrome或Edge浏览器。'); }
+        }
+        function jumpToChar(char) {
+            currentSection = 'danzi';
+            const items = sections.danzi.items;
+            const idx = items.findIndex(item => item.word === char);
+            if (idx >= 0) {
+                currentPage = Math.floor(idx / itemsPerPage) + 1;
+                const navItems = document.querySelectorAll('.logo-area + .nav-section .nav-item');
+                navItems.forEach(item => item.classList.remove('active'));
+                if (navItems[0]) navItems[0].classList.add('active');
+                render();
+                speak(char);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevPage();
+            else if (e.key === 'ArrowRight') nextPage();
+            else if (e.key === '1') switchSection('danzi');
+            else if (e.key === '2') switchSection('shuang');
+            else if (e.key === '3') switchSection('san');
+            else if (e.key === '4') switchSection('duanju');
+        });
+        let touchStartX = 0, touchEndX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+        document.addEventListener('touchend', (e) => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); });
+        function handleSwipe() {
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) diff > 0 ? nextPage() : prevPage();
+        }
+        render();
+    </script>
+    <script src="articulation-speech.js"></script>
+</body>
+</html>

@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="小螺号logo.svg" type="image/svg+xml">
     <title>上海小螺号能力开发中心 - 注意力训练系统</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -1063,7 +1067,7 @@
     <!-- 头部导航 -->
     <header class="header">
         <div class="logo">
-            <div class="logo-icon"><img src="logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;"></div>
+            <div class="logo-icon"><img src="小螺号logo.svg" alt="小螺号" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;"></div>
             <div class="logo-text">
                 <h1>上海小螺号能力开发中心</h1>
                 <p>注意力训练系统 V2.0</p>
@@ -1100,7 +1104,7 @@
                 <h2>👋 <span id="studentNameDisplay">张三</span>，欢迎来到上海小螺号能力开发中心注意力训练系统</h2>
                 <p>选择一个训练项目开始今天的注意力训练吧</p>
             </div>
-            
+
             <div class="training-grid">
                 <div class="training-card" onclick="showPage('schulte')">
                     <div class="training-badge">热门</div>
@@ -1261,7 +1265,7 @@
                             <button class="audio-btn" onclick="clearAudioInput()">🗑️</button>
                         </div>
                         <div id="userInput" style="font-size: 32px; margin-bottom: 20px; min-height: 50px; color: var(--primary-color);">
-                            
+
                         </div>
                         <div class="number-pad" id="numberPad">
                             <button class="number-btn" onclick="inputNumber(1)">1</button>
@@ -1529,7 +1533,7 @@
                             <h3>🎯 智能推荐计划</h3>
                             <div id="recommendedPlans" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;"></div>
                         </div>
-                        
+
                         <div class="report-card" style="margin-bottom: 25px;">
                             <h3>✏️ 自定义训练计划</h3>
                             <div style="margin-top: 20px;">
@@ -1555,7 +1559,7 @@
                                 <button class="btn-primary" onclick="createCustomPlan()">创建计划</button>
                             </div>
                         </div>
-                        
+
                         <div class="report-card">
                             <h3>📋 我的训练计划</h3>
                             <div id="myPlans" style="margin-top: 20px;"></div>
@@ -1777,7 +1781,7 @@
         function renderStudents() {
             const grid = document.getElementById('studentGrid');
             grid.innerHTML = '';
-            
+
             students.forEach(student => {
                 const card = document.createElement('div');
                 card.className = 'student-card';
@@ -1798,7 +1802,7 @@
                 });
                 grid.appendChild(card);
             });
-            
+
             const addCard = document.createElement('div');
             addCard.className = 'student-card add-student-card';
             addCard.innerHTML = `
@@ -1851,12 +1855,12 @@
         function addNewStudent() {
             const name = prompt('请输入学员姓名：');
             if (!name) return;
-            
+
             const age = prompt('请输入学员年龄：');
             if (!age) return;
-            
+
             const grade = prompt('请输入年级（如：一年级）：') || '学前班';
-            
+
             const newStudent = {
                 id: Date.now(),
                 name: name,
@@ -1864,7 +1868,7 @@
                 grade: grade,
                 avatar: ['🧒', '👧', '👦', '👶', '👨', '👩'][students.length % 6]
             };
-            
+
             students.push(newStudent);
             localStorage.setItem('students', JSON.stringify(students));
             renderStudents();
@@ -1883,7 +1887,7 @@
             schulteLevel = level;
             document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             const grid = document.getElementById('schulteGrid');
             grid.className = `schulte-grid size-${level}`;
             resetSchulte();
@@ -1895,15 +1899,15 @@
             document.getElementById('nextNumber').textContent = '1';
             document.getElementById('schulteTime').textContent = '0.0s';
             document.getElementById('schulteErrors').textContent = '0';
-            
+
             const grid = document.getElementById('schulteGrid');
             grid.innerHTML = '';
-            
+
             // 生成随机数字
             const total = schulteLevel * schulteLevel;
             schulteNumbers = Array.from({length: total}, (_, i) => i + 1);
             shuffleArray(schulteNumbers);
-            
+
             schulteNumbers.forEach(num => {
                 const cell = document.createElement('div');
                 cell.className = 'schulte-cell';
@@ -1924,12 +1928,12 @@
 
         function clickSchulteCell(cell, num) {
             if (!schulteStartTime) return;
-            
+
             if (num === currentNumber) {
                 cell.classList.add('correct');
                 currentNumber++;
                 document.getElementById('nextNumber').textContent = currentNumber;
-                
+
                 if (currentNumber > schulteLevel * schulteLevel) {
                     // 完成
                     clearInterval(schulteTimer);
@@ -1960,40 +1964,40 @@
             diffPositions = [];
             document.getElementById('foundCount').textContent = '0';
             document.getElementById('diffTime').textContent = '0';
-            
+
             // 清除旧标记
             document.querySelectorAll('.diff-marker').forEach(m => m.remove());
-            
+
             const canvas1 = document.getElementById('canvas1');
             const canvas2 = document.getElementById('canvas2');
             const ctx1 = canvas1.getContext('2d');
             const ctx2 = canvas2.getContext('2d');
-            
+
             // 绘制基础场景
             drawScene(ctx1, ctx2);
-            
+
             // 添加5个不同之处
             for (let i = 0; i < 5; i++) {
                 const x = 50 + Math.random() * 300;
                 const y = 50 + Math.random() * 250;
                 diffPositions.push({ x, y, found: false });
-                
+
                 // 在图片A添加一个元素，图片B没有
                 ctx1.fillStyle = ['#E74C3C', '#3498DB', '#27AE60', '#F1C40F', '#9B59B6'][i];
                 ctx1.beginPath();
                 ctx1.arc(x, y, 15, 0, Math.PI * 2);
                 ctx1.fill();
             }
-            
+
             document.getElementById('totalDiff').textContent = '5';
-            
+
             // 添加点击事件
             canvas1.onclick = (e) => checkDifference(e, canvas1);
-            
+
             // 开始计时
             diffStartTime = Date.now();
             diffTimer = setInterval(() => {
-                document.getElementById('diffTime').textContent = 
+                document.getElementById('diffTime').textContent =
                     Math.floor((Date.now() - diffStartTime) / 1000);
             }, 1000);
         }
@@ -2003,17 +2007,17 @@
             [ctx1, ctx2].forEach(ctx => {
                 ctx.fillStyle = '#87CEEB';
                 ctx.fillRect(0, 0, 400, 350);
-                
+
                 // 太阳
                 ctx.fillStyle = '#FFD700';
                 ctx.beginPath();
                 ctx.arc(350, 50, 30, 0, Math.PI * 2);
                 ctx.fill();
-                
+
                 // 草地
                 ctx.fillStyle = '#228B22';
                 ctx.fillRect(0, 280, 400, 70);
-                
+
                 // 房子
                 ctx.fillStyle = '#8B4513';
                 ctx.fillRect(150, 200, 100, 80);
@@ -2023,7 +2027,7 @@
                 ctx.lineTo(200, 150);
                 ctx.lineTo(260, 200);
                 ctx.fill();
-                
+
                 // 树
                 ctx.fillStyle = '#228B22';
                 ctx.beginPath();
@@ -2031,7 +2035,7 @@
                 ctx.fill();
                 ctx.fillStyle = '#8B4513';
                 ctx.fillRect(75, 260, 10, 30);
-                
+
                 // 云
                 ctx.fillStyle = 'white';
                 ctx.beginPath();
@@ -2046,7 +2050,7 @@
             const rect = canvas.getBoundingClientRect();
             const x = (e.clientX - rect.left) * (canvas.width / rect.width);
             const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-            
+
             diffPositions.forEach((pos, index) => {
                 if (!pos.found) {
                     const distance = Math.sqrt((x - pos.x) ** 2 + (y - pos.y) ** 2);
@@ -2054,14 +2058,14 @@
                         pos.found = true;
                         foundDiffs.push(index);
                         document.getElementById('foundCount').textContent = foundDiffs.length;
-                        
+
                         // 添加标记
                         const marker = document.createElement('div');
                         marker.className = 'diff-marker';
                         marker.style.left = (pos.x / canvas.width * 100) + '%';
                         marker.style.top = (pos.y / canvas.height * 100 + 12) + '%';
                         document.getElementById('diffImage1').appendChild(marker);
-                        
+
                         if (foundDiffs.length === 5) {
                             clearInterval(diffTimer);
                             const time = Math.floor((Date.now() - diffStartTime) / 1000);
@@ -2098,24 +2102,24 @@
             for (let i = 0; i < audioLevel; i++) {
                 audioSequence.push(Math.floor(Math.random() * 10));
             }
-            
+
             audioUserInput = '';
             document.getElementById('userInput').textContent = '';
             document.getElementById('sequenceDisplay').textContent = '请听...';
-            
+
             // 播放序列
             let index = 0;
             const interval = setInterval(() => {
                 if (index < audioSequence.length) {
                     document.getElementById('sequenceDisplay').textContent = audioSequence[index];
                     speakNumber(audioSequence[index]);
-                    
+
                     setTimeout(() => {
                         if (index < audioSequence.length - 1) {
                             document.getElementById('sequenceDisplay').textContent = '...';
                         }
                     }, 500);
-                    
+
                     index++;
                 } else {
                     clearInterval(interval);
@@ -2146,13 +2150,13 @@
 
         function submitAudioAnswer() {
             if (audioUserInput.length !== audioLevel) return;
-            
+
             const correct = audioUserInput === audioSequence.join('');
-            
+
             if (correct) {
                 audioCorrectCount++;
                 document.getElementById('audioCorrect').textContent = audioCorrectCount;
-                
+
                 if (audioCorrectCount % 3 === 0 && audioLevel < audioBaseLevel + 3) {
                     audioLevel++;
                     if (audioLevel > audioMaxLevel) {
@@ -2161,19 +2165,19 @@
                     }
                     document.getElementById('audioLevel').textContent = audioLevel;
                 }
-                
+
                 document.getElementById('sequenceDisplay').textContent = '✓ 正确！';
                 document.getElementById('sequenceDisplay').style.color = 'var(--success-color)';
             } else {
                 document.getElementById('sequenceDisplay').textContent = '✗ 错误！正确答案：' + audioSequence.join('');
                 document.getElementById('sequenceDisplay').style.color = 'var(--danger-color)';
-                
+
                 if (audioLevel > audioBaseLevel) {
                     audioLevel--;
                     document.getElementById('audioLevel').textContent = audioLevel;
                 }
             }
-            
+
             setTimeout(() => {
                 document.getElementById('sequenceDisplay').style.color = '';
                 document.getElementById('sequenceDisplay').textContent = '点击播放按钮开始';
@@ -2193,7 +2197,7 @@
         function initVisualMemory() {
             const grid = document.getElementById('memoryGrid');
             grid.innerHTML = '';
-            
+
             for (let i = 0; i < 16; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'memory-cell';
@@ -2207,18 +2211,18 @@
             initVisualMemory();
             selectedCells = [];
             highlightedCells = [];
-            
+
             // 随机选择方块
             const indices = Array.from({length: 16}, (_, i) => i);
             shuffleArray(indices);
             highlightedCells = indices.slice(0, visualBlocks);
-            
+
             // 显示高亮
             isShowingPattern = true;
             highlightedCells.forEach(index => {
                 document.querySelector(`[data-index="${index}"]`).classList.add('highlight');
             });
-            
+
             // 隐藏高亮
             setTimeout(() => {
                 document.querySelectorAll('.memory-cell').forEach(cell => {
@@ -2231,25 +2235,25 @@
         function selectMemoryCell(cell, index) {
             if (isShowingPattern) return;
             if (selectedCells.includes(index)) return;
-            
+
             selectedCells.push(index);
             cell.classList.add('selected');
-            
+
             if (selectedCells.length === highlightedCells.length) {
                 // 检查答案
                 const correct = highlightedCells.every(h => selectedCells.includes(h));
-                
+
                 document.querySelectorAll('.memory-cell').forEach(c => {
                     const idx = parseInt(c.dataset.index);
                     if (highlightedCells.includes(idx)) {
                         c.classList.add(correct ? 'correct' : 'wrong');
                     }
                 });
-                
+
                 if (correct) {
                     visualStreak++;
                     document.getElementById('visualStreak').textContent = visualStreak;
-                    
+
                     if (visualStreak % 2 === 0) {
                         visualBlocks++;
                         document.getElementById('visualBlocks').textContent = visualBlocks;
@@ -2262,7 +2266,7 @@
                         document.getElementById('visualBlocks').textContent = visualBlocks;
                     }
                 }
-                
+
                 setTimeout(() => {
                     startVisualMemory();
                 }, 1500);
@@ -2302,44 +2306,44 @@
                 });
                 return;
             }
-            
+
             stroopQuestion++;
             document.getElementById('stroopQuestion').textContent = stroopQuestion + '/20';
-            
+
             // 随机选择文字和颜色
             const wordColor = stroopColors[Math.floor(Math.random() * stroopColors.length)];
             let displayColor = stroopColors[Math.floor(Math.random() * stroopColors.length)];
-            
+
             // 确保一定概率不一致
             if (Math.random() > 0.4) {
                 while (displayColor.color === wordColor.color) {
                     displayColor = stroopColors[Math.floor(Math.random() * stroopColors.length)];
                 }
             }
-            
+
             currentStroopColor = displayColor.color;
-            
+
             const word = document.getElementById('stroopWord');
             word.textContent = wordColor.name;
             word.style.color = displayColor.css;
-            
+
             stroopStartTime = Date.now();
         }
 
         function selectColor(color) {
             if (!stroopStartTime) return;
-            
+
             const reactionTime = Date.now() - stroopStartTime;
             stroopTimes.push(reactionTime);
-            
+
             if (color === currentStroopColor) {
                 stroopCorrect++;
                 document.getElementById('stroopCorrect').textContent = stroopCorrect;
             }
-            
+
             const avgTime = Math.round(stroopTimes.reduce((a, b) => a + b, 0) / stroopTimes.length);
             document.getElementById('stroopRT').textContent = avgTime + 'ms';
-            
+
             nextStroopQuestion();
         }
 
@@ -2351,13 +2355,13 @@
 
         function handleReaction() {
             const box = document.getElementById('reactionBox');
-            
+
             if (reactionState === 'idle') {
                 // 开始等待
                 reactionState = 'waiting';
                 box.className = 'reaction-box waiting';
                 box.textContent = '等待绿色...';
-                
+
                 // 随机时间后变绿
                 const delay = 2000 + Math.random() * 3000;
                 reactionTimeout = setTimeout(() => {
@@ -2366,27 +2370,27 @@
                     box.textContent = '点击！';
                     reactionStartTime = Date.now();
                 }, delay);
-                
+
             } else if (reactionState === 'waiting') {
                 // 太早点击
                 clearTimeout(reactionTimeout);
                 box.className = 'reaction-box result';
                 box.textContent = '太早了！点击重试';
                 reactionState = 'idle';
-                
+
             } else if (reactionState === 'ready') {
                 // 记录反应时间
                 const time = Date.now() - reactionStartTime;
                 reactionTimes.push(time);
-                
+
                 document.getElementById('lastReaction').textContent = time + 'ms';
-                
+
                 const best = Math.min(...reactionTimes);
                 document.getElementById('bestReaction').textContent = best + 'ms';
-                
+
                 const avg = Math.round(reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length);
                 document.getElementById('avgReaction').textContent = avg + 'ms';
-                
+
                 box.className = 'reaction-box result';
                 box.textContent = time + 'ms - 点击继续';
                 reactionState = 'idle';
@@ -2406,12 +2410,12 @@
             trackingTimeLeft = 30;
             document.getElementById('trackingHits').textContent = '0';
             document.getElementById('trackingTime').textContent = '30s';
-            
+
             const target = document.getElementById('trackingTarget');
             target.style.display = 'block';
-            
+
             moveTrackingTarget();
-            
+
             trackingTimer = setInterval(() => {
                 trackingTimeLeft--;
                 document.getElementById('trackingTime').textContent = trackingTimeLeft + 's';
@@ -2423,23 +2427,23 @@
 
         function moveTrackingTarget() {
             if (!trackingActive) return;
-            
+
             const area = document.getElementById('trackingArea');
             const target = document.getElementById('trackingTarget');
-            
+
             const maxX = area.offsetWidth - target.offsetWidth;
             const maxY = area.offsetHeight - target.offsetHeight;
-            
+
             target.style.left = Math.random() * maxX + 'px';
             target.style.top = Math.random() * maxY + 'px';
-            
+
             target.onclick = () => {
                 if (trackingActive) {
                     trackingHits++;
                     document.getElementById('trackingHits').textContent = trackingHits;
                 }
             };
-            
+
             trackingMoveInterval = setTimeout(() => moveTrackingTarget(), 1500);
         }
 
@@ -2486,13 +2490,13 @@
                 showResultModal('nback', { correct: nbackCorrect, total: 20, accuracy: accuracy });
                 return;
             }
-            
+
             nbackQuestion++;
             document.getElementById('nbackQuestion').textContent = nbackQuestion + '/20';
-            
+
             const letter = nbackLetters[Math.floor(Math.random() * nbackLetters.length)];
             nbackSequence.push(letter);
-            
+
             document.getElementById('nbackDisplay').textContent = letter;
         }
 
@@ -2503,19 +2507,19 @@
                 }
                 return;
             }
-            
+
             const current = nbackSequence[nbackSequence.length - 1];
             const compare = nbackSequence[nbackSequence.length - 1 - nbackLevel];
             const actualSame = current === compare;
-            
+
             if (isSame === actualSame) {
                 nbackCorrect++;
                 document.getElementById('nbackCorrect').textContent = nbackCorrect;
             }
-            
+
             const accuracy = (nbackCorrect / (nbackQuestion - nbackLevel) * 100).toFixed(1);
             document.getElementById('nbackAccuracy').textContent = accuracy + '%';
-            
+
             setTimeout(() => nextNBack(), 500);
         }
 
@@ -2533,25 +2537,25 @@
             document.getElementById('focusElapsed').textContent = '0s';
             document.getElementById('focusResponses').textContent = '0';
             document.getElementById('focusBtn').disabled = false;
-            
+
             const display = document.getElementById('focusDisplay');
             display.style.color = '#ccc';
-            
+
             focusTimer = setInterval(() => {
                 focusElapsed++;
                 document.getElementById('focusElapsed').textContent = focusElapsed + 's';
-                
+
                 if (focusElapsed >= 300) {
                     endFocusTraining();
                 }
             }, 1000);
-            
+
             scheduleFocusTarget();
         }
 
         function scheduleFocusTarget() {
             if (!focusActive) return;
-            
+
             const delay = 3000 + Math.random() * 7000;
             focusTargetTime = setTimeout(() => {
                 if (focusActive) {
@@ -2568,7 +2572,7 @@
 
         function focusResponse() {
             if (!focusActive) return;
-            
+
             const display = document.getElementById('focusDisplay');
             if (display.style.color === 'rgb(231, 76, 60)') {
                 focusResponses++;
@@ -2599,9 +2603,9 @@
             const title = document.getElementById('modalTitle');
             const message = document.getElementById('modalMessage');
             const stats = document.getElementById('modalStats');
-            
+
             let score = 0;
-            
+
             switch(type) {
                 case 'schulte':
                     icon.textContent = '🎯';
@@ -2623,7 +2627,7 @@
                         </div>
                     `;
                     break;
-                    
+
                 case 'difference':
                     icon.textContent = '🔍';
                     title.textContent = '找不同完成！';
@@ -2640,7 +2644,7 @@
                         </div>
                     `;
                     break;
-                    
+
                 case 'stroop':
                     icon.textContent = '🎨';
                     title.textContent = 'Stroop测试完成！';
@@ -2657,7 +2661,7 @@
                         </div>
                     `;
                     break;
-                    
+
                 case 'tracking':
                     icon.textContent = '🎯';
                     title.textContent = '视觉追踪完成！';
@@ -2673,7 +2677,7 @@
                         </div>
                     `;
                     break;
-                    
+
                 case 'nback':
                     icon.textContent = '🧠';
                     title.textContent = 'N-Back训练完成！';
@@ -2689,7 +2693,7 @@
                         </div>
                     `;
                     break;
-                    
+
                 case 'focus':
                     icon.textContent = '🔴';
                     title.textContent = '持续注意训练完成！';
@@ -2706,10 +2710,10 @@
                     `;
                     break;
             }
-            
+
             // 保存训练记录
             saveTrainingRecord(type, score);
-            
+
             modal.classList.add('active');
         }
 
@@ -2720,7 +2724,7 @@
 
         function restartTraining() {
             document.getElementById('resultModal').classList.remove('active');
-            
+
             switch(currentPage) {
                 case 'schulte':
                     startSchulte();
@@ -2741,12 +2745,12 @@
                 score: score,
                 studentId: currentStudent?.id
             };
-            
+
             if (!trainingData[type]) {
                 trainingData[type] = [];
             }
             trainingData[type].push(record);
-            
+
             // 保存到本地存储
             localStorage.setItem('trainingData', JSON.stringify(trainingData));
         }
@@ -2864,7 +2868,7 @@
             ];
 
             container.innerHTML = plans.map(plan => `
-                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; padding: 20px; cursor: pointer; transition: all 0.3s;" 
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; padding: 20px; cursor: pointer; transition: all 0.3s;"
                      onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.15)'"
                      onmouseout="this.style.transform=''; this.style.boxShadow=''"
                      onclick='adoptPlan("${plan.name}", ${plan.duration}, ${JSON.stringify(plan.trainings)})'>
@@ -2943,10 +2947,10 @@
 
             trainingPlans.push(plan);
             localStorage.setItem('trainingPlans', JSON.stringify(trainingPlans));
-            
+
             document.getElementById('planName').value = '';
             document.querySelectorAll('.training-checkbox').forEach(cb => cb.checked = false);
-            
+
             renderMyPlans();
             alert('训练计划创建成功！');
         }
@@ -3009,16 +3013,16 @@
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
             loadStudents();
-            
+
             // 从本地存储加载数据
             const savedData = localStorage.getItem('trainingData');
             if (savedData) {
                 trainingData = JSON.parse(savedData);
             }
-            
+
             // 初始化舒尔特方格
             resetSchulte();
-            
+
             // 初始化视觉记忆
             initVisualMemory();
         });

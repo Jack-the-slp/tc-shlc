@@ -1,13 +1,285 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="../小螺号logo.svg" type="image/svg+xml">
     <meta name="description" content="TC-AAC 辅助沟通系统 - 特殊需求儿童沟通辅助工具" />
     <meta name="theme-color" content="#FF8C42" />
     <title>TC-AAC 辅助沟通系统</title>
-    <script type="module" crossorigin src="/aac/assets/index-GEOW96wg.js"></script>
-    <link rel="stylesheet" crossorigin href="/aac/assets/index-g1ZyvRBm.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-g1ZyvRBm.css">
+    <style>
+      :root {
+        --aac-nav-height: 74px;
+        --aac-sheet-gap: 10px;
+      }
+
+      html,
+      body,
+      #root {
+        min-height: 100%;
+      }
+
+      body {
+        overflow-x: hidden;
+        overscroll-behavior-y: contain;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button,
+      [role="button"] {
+        touch-action: manipulation;
+      }
+
+      .min-touch {
+        min-height: 48px;
+        min-width: 48px;
+        touch-action: manipulation;
+      }
+
+      @media (max-width: 760px) {
+        #root > .min-h-screen {
+          min-height: 100dvh !important;
+          padding-bottom: calc(var(--aac-nav-height) + env(safe-area-inset-bottom)) !important;
+        }
+
+        #root header {
+          padding: 0.65rem 0.75rem !important;
+        }
+
+        #root header .gap-3 {
+          gap: 0.5rem !important;
+        }
+
+        #root header .w-10.h-10 {
+          width: 2.25rem !important;
+          height: 2.25rem !important;
+          font-size: 1.35rem !important;
+        }
+
+        #root header h1 {
+          max-width: 72vw;
+          font-size: 1rem !important;
+          line-height: 1.25 !important;
+        }
+
+        #root .max-w-7xl,
+        #root .max-w-4xl {
+          max-width: 100% !important;
+        }
+
+        #root .max-w-7xl.p-4,
+        #root .max-w-4xl.p-4 {
+          padding: 0.75rem !important;
+        }
+
+        #root .pb-48 {
+          padding-bottom: calc(15rem + var(--aac-nav-height)) !important;
+        }
+
+        #root .safe-area-bottom {
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 45;
+          padding: 0.45rem 0.55rem calc(0.45rem + env(safe-area-inset-bottom)) !important;
+          box-shadow: 0 -10px 28px rgba(31, 41, 55, 0.12);
+        }
+
+        #root .safe-area-bottom .max-w-md {
+          max-width: 100% !important;
+        }
+
+        #root .safe-area-bottom button {
+          flex: 1 1 0;
+          min-width: 0 !important;
+          min-height: 56px !important;
+          padding: 0.45rem 0.25rem !important;
+          border-radius: 14px !important;
+        }
+
+        #root .safe-area-bottom .text-2xl {
+          font-size: 1.35rem !important;
+          line-height: 1 !important;
+        }
+
+        #root .safe-area-bottom .text-xs {
+          font-size: 0.75rem !important;
+          line-height: 1.1 !important;
+        }
+
+        #root .touch-scroll {
+          -ms-overflow-style: none;
+          margin-inline: -0.25rem;
+          padding-inline: 0.25rem;
+          scrollbar-width: none;
+          overscroll-behavior-x: contain;
+          scroll-snap-type: x proximity;
+        }
+
+        #root .touch-scroll::-webkit-scrollbar {
+          display: none;
+        }
+
+        #root .touch-scroll > * {
+          scroll-snap-align: start;
+        }
+
+        #root .min-w-\[64px\] {
+          min-width: 4.75rem !important;
+        }
+
+        #root .bg-card.rounded-2xl.p-4.shadow-soft:has(.symbol-tile) {
+          padding: 0.7rem !important;
+          border-radius: 20px !important;
+        }
+
+        #root .grid:has(> .symbol-tile) {
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          gap: 0.55rem !important;
+        }
+
+        #root .symbol-tile {
+          min-height: 88px !important;
+          padding: 0.55rem 0.4rem !important;
+          border-radius: 16px !important;
+          box-shadow: 0 2px 8px rgba(31, 41, 55, 0.08) !important;
+        }
+
+        #root .symbol-tile .text-4xl {
+          font-size: 2.35rem !important;
+          line-height: 1 !important;
+        }
+
+        #root .symbol-tile .text-sm {
+          font-size: 0.86rem !important;
+          line-height: 1.2 !important;
+          overflow-wrap: anywhere;
+        }
+
+        #root .bg-gradient-to-r.from-primary\/10.to-secondary\/10 {
+          margin-bottom: 0.65rem !important;
+          padding: 0.6rem !important;
+          border-radius: 16px !important;
+        }
+
+        #root .bg-gradient-to-r.from-primary\/10.to-secondary\/10 .h-14 {
+          height: 3rem !important;
+          min-width: 3.25rem !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] {
+          left: 0.75rem !important;
+          right: 0.75rem !important;
+          bottom: calc(var(--aac-nav-height) + var(--aac-sheet-gap) + env(safe-area-inset-bottom)) !important;
+          width: auto !important;
+          max-width: none !important;
+          border-radius: 20px !important;
+          box-shadow: 0 14px 38px rgba(31, 41, 55, 0.22) !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"]:has(> .flex-1.overflow-hidden.relative) {
+          height: min(38dvh, 320px) !important;
+          min-height: 230px !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] > .bg-gray-100 {
+          padding: 0.45rem 0.65rem !important;
+          cursor: default !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] > .bg-gray-100 > span {
+          font-size: 0;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] > .bg-gray-100 > span::after {
+          content: "当前句子";
+          color: #6b7280;
+          font-size: 0.82rem;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] > .bg-gray-100 button {
+          width: 2rem !important;
+          height: 2rem !important;
+          font-size: 0.85rem !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .bg-card.rounded-2xl.p-4.shadow-soft.flex.flex-col {
+          height: 100% !important;
+          padding: 0.65rem !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .min-h-\[100px\] {
+          min-height: 64px !important;
+          padding: 0.55rem !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .max-h-32 {
+          max-height: 4.25rem !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .mt-4 {
+          margin-top: 0.55rem !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .gap-3 {
+          gap: 0.45rem !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .btn-press {
+          flex: 1 1 0;
+          min-width: 0;
+          padding: 0.45rem 0.3rem !important;
+          border-radius: 14px !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .btn-press .text-3xl {
+          font-size: 1.35rem !important;
+          line-height: 1 !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .btn-press .text-sm {
+          font-size: 0.75rem !important;
+          line-height: 1.1 !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .min-w-\[60px\] {
+          min-width: 48px !important;
+          padding: 0.35rem !important;
+        }
+
+        #root div[style*="position: fixed"][style*="z-index: 50"] .min-w-\[60px\] .text-3xl {
+          font-size: 1.45rem !important;
+          line-height: 1 !important;
+        }
+      }
+
+      @media (max-width: 340px) {
+        :root {
+          --aac-nav-height: 70px;
+        }
+
+        #root .grid:has(> .symbol-tile) {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+
+        #root .symbol-tile {
+          min-height: 84px !important;
+        }
+
+        #root header h1 {
+          max-width: 66vw;
+          font-size: 0.92rem !important;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-GEOW96wg.js"></script>
   </head>
   <body>
     <div id="root"></div>
