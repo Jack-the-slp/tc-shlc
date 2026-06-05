@@ -146,9 +146,10 @@ main {
 h1 {
   max-width: 760px;
   margin-top: 12px;
-  font-size: clamp(38px, 6vw, 72px);
-  line-height: 1.05;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.08;
   letter-spacing: 0;
+  text-wrap: balance;
 }
 .summary {
   max-width: 760px;
@@ -157,30 +158,53 @@ h1 {
   font-size: 17px;
   line-height: 1.9;
 }
-.info-grid {
+.insight-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 30px;
 }
-.info-card {
-  min-height: 128px;
+.insight-card {
+  min-height: 148px;
   padding: 18px;
   border-radius: 8px;
   border: 1px solid rgba(30,28,26,0.08);
   background: rgba(255,255,255,0.74);
 }
-.info-card strong {
+.insight-card strong {
   display: block;
   color: var(--ink);
   font-size: 14px;
 }
-.info-card span {
+.insight-card span {
   display: block;
   margin-top: 8px;
   color: var(--body);
   font-size: 14px;
   line-height: 1.75;
+}
+.insight-card ul {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  list-style: none;
+}
+.insight-card li {
+  position: relative;
+  padding-left: 16px;
+  color: var(--body);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.insight-card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--service-accent, var(--gold));
 }
 .service-tabs {
   display: grid;
@@ -495,7 +519,7 @@ textarea:focus {
   .process-panel {
     padding: 20px;
   }
-  .info-grid,
+  .insight-grid,
   .field-grid,
   .payment-grid {
     grid-template-columns: 1fr;
@@ -516,7 +540,7 @@ textarea:focus {
     </a>
     <div class="nav-actions">
       <a href="index.html#services">返回服务</a>
-      <a class="primary" href="#order">下单付款</a>
+      <a class="primary" href="#order">预约下单</a>
     </div>
   </div>
 </header>
@@ -525,46 +549,46 @@ textarea:focus {
   <div class="container">
     <section class="hero" aria-labelledby="serviceTitle">
       <article class="detail-panel" id="detailPanel">
-        <div class="kicker" id="serviceKicker">儿童家庭 · 个别化训练</div>
+        <div class="kicker" id="serviceKicker">儿童家庭 · 老师直接带练</div>
         <h1 id="serviceTitle">一对一康复训练</h1>
         <p class="summary" id="serviceSummary">
-          老师直接看孩子表现，制定训练目标，课堂带练并随时调整。
+          当孩子不是缺练习材料，而是需要有人看见当前表现、判断目标顺序、当场示范怎么练，一对一训练会更合适。
         </p>
-        <div class="info-grid" aria-label="服务详情">
-          <div class="info-card">
-            <strong>面向</strong>
-            <span id="serviceAudience">儿童家庭</span>
+        <div class="insight-grid" aria-label="服务详情">
+          <div class="insight-card">
+            <strong>现在最常见的卡点</strong>
+            <ul id="servicePain"></ul>
           </div>
-          <div class="info-card">
-            <strong>形式</strong>
-            <span id="serviceFormat">线上或线下个别化训练</span>
+          <div class="insight-card">
+            <strong>我们怎么帮你推进</strong>
+            <ul id="serviceSolution"></ul>
           </div>
-          <div class="info-card">
-            <strong>适合</strong>
-            <span id="serviceFit">孩子需要老师直接带练，比如发音不清、语言表达落后、听觉康复后需要语言训练。</span>
+          <div class="insight-card">
+            <strong>你会得到什么</strong>
+            <ul id="serviceOutcome"></ul>
           </div>
-          <div class="info-card">
-            <strong>付费逻辑</strong>
-            <span id="servicePayment">按课时、按阶段训练包购买。</span>
+          <div class="insight-card">
+            <strong>适合谁来下单</strong>
+            <span id="serviceFit">适合需要老师直接带练、目标需要随孩子表现调整的儿童家庭。</span>
           </div>
         </div>
       </article>
 
       <aside class="service-tabs" aria-label="切换服务">
         <button class="service-tab active" type="button" data-service="oneToOne" style="--tab-accent:#B8860B;">
-          <b>01</b><span><strong>一对一康复训练</strong><span>儿童家庭 · 训练包</span></span>
+          <b>01</b><span><strong>一对一康复训练</strong><span>发音 / 表达直接带练</span></span>
         </button>
         <button class="service-tab" type="button" data-service="parentCamp" style="--tab-accent:#7A9E7E;">
-          <b>02</b><span><strong>家长伴学营</strong><span>家长 · 月度服务</span></span>
+          <b>02</b><span><strong>家长伴学营</strong><span>把家庭练习真正落地</span></span>
         </button>
         <button class="service-tab" type="button" data-service="therapistCamp" style="--tab-accent:#C4786C;">
-          <b>03</b><span><strong>康复师成长营</strong><span>康复师 · 营期报名</span></span>
+          <b>03</b><span><strong>康复师成长营</strong><span>建立训练判断框架</span></span>
         </button>
         <button class="service-tab" type="button" data-service="caseService" style="--tab-accent:#4F79A8;">
-          <b>04</b><span><strong>康复师案例服务</strong><span>真实个案 · 案例督导</span></span>
+          <b>04</b><span><strong>康复师案例服务</strong><span>拆真实个案卡点</span></span>
         </button>
         <button class="service-tab" type="button" data-service="supportPlan" style="--tab-accent:#B8860B;">
-          <b>05</b><span><strong>阶段陪伴服务</strong><span>训练陪跑 · 先咨询</span></span>
+          <b>05</b><span><strong>阶段陪伴服务</strong><span>先理清目标和路径</span></span>
         </button>
       </aside>
     </section>
@@ -572,8 +596,8 @@ textarea:focus {
     <section class="order-section" id="order" aria-labelledby="orderTitle">
       <article class="order-panel">
         <div class="order-head">
-          <h2 id="orderTitle">订单确认</h2>
-          <p>提交后我们会收到订单信息。扫码付款时请备注订单号，或付款后扫码添加微信确认。</p>
+          <h2 id="orderTitle">预约与下单</h2>
+          <p>先留下你的情况和服务选择。已确认购买的用户可扫码付款并备注订单号，老师会通过微信核对安排。</p>
           <div class="order-id-row">
             <span class="order-id" id="orderId">XLH-000000</span>
             <button class="copy-order-btn" type="button" id="copyOrderBtn">复制订单号</button>
@@ -593,13 +617,14 @@ textarea:focus {
             <input type="text" name="name" placeholder="姓名 / 宝宝昵称" required>
             <input type="tel" name="phone" placeholder="联系电话" required>
             <select name="service_period" id="servicePeriodSelect" required>
+              <option value="先咨询确认">先咨询确认</option>
               <option value="阶段训练包">阶段训练包</option>
-              <option value="单次咨询">单次咨询</option>
-              <option value="月度服务">月度服务</option>
-              <option value="营期报名">营期报名</option>
+              <option value="家庭伴学">家庭伴学</option>
+              <option value="成长营报名">成长营报名</option>
+              <option value="案例督导">案例督导</option>
             </select>
-            <input type="text" name="paid_amount" placeholder="付款金额 / 已确认金额" required>
-            <textarea name="case_note" placeholder="简单写一下孩子情况、康复师个案卡点，或你想购买的服务周期"></textarea>
+            <input type="text" name="paid_amount" placeholder="付款金额（未付款可填待确认）" required>
+            <textarea name="case_note" placeholder="写下你最想解决的问题：孩子表现、家庭练习卡点、康复师个案难点，或希望老师重点看的地方"></textarea>
           </div>
           <div class="pay-box">
             <div class="pay-tabs" role="group" aria-label="选择付款方式">
@@ -622,29 +647,29 @@ textarea:focus {
               </div>
             </div>
           </div>
-          <button class="submit-btn" type="submit">提交订单信息</button>
-          <p class="note">目前为人工核对收款：订单提交不代表自动开通服务，我们确认付款和服务安排后会联系你。</p>
+          <button class="submit-btn" type="submit">提交预约信息</button>
+          <p class="note">目前为人工核对安排：提交后我们会结合你的情况确认服务方式、时间和下一步训练重点。</p>
         </form>
       </article>
 
       <aside class="order-panel process-panel">
-        <h2>下单流程</h2>
+        <h2>从问题到安排</h2>
         <div class="process-list">
           <div class="process-item">
-            <strong>1. 选择服务</strong>
-            <span>确认服务对象、形式和适合场景。</span>
+            <strong>1. 选一个最接近的服务</strong>
+            <span>不用完全确定，先按当前最明显的卡点选择。</span>
           </div>
           <div class="process-item">
-            <strong>2. 扫码付款</strong>
-            <span>微信或支付宝付款，备注姓名和订单号。</span>
+            <strong>2. 写清楚当前问题</strong>
+            <span>孩子表现、家庭练习、个案推进，都可以直接写。</span>
           </div>
           <div class="process-item">
-            <strong>3. 提交信息</strong>
-            <span>留下联系方式和简要情况，方便人工核对。</span>
+            <strong>3. 老师核对服务安排</strong>
+            <span>确认适合的服务方式、训练重点和沟通时间。</span>
           </div>
           <div class="process-item">
-            <strong>4. 微信确认</strong>
-            <span>添加老师微信，确认服务时间和训练安排。</span>
+            <strong>4. 扫码付款并微信确认</strong>
+            <span>已确认购买后付款，备注订单号，方便快速核对。</span>
           </div>
         </div>
       </aside>
@@ -659,58 +684,118 @@ textarea:focus {
   var serviceData = {
     oneToOne: {
       accent: '#B8860B',
-      kicker: '儿童家庭 · 个别化训练',
+      kicker: '儿童家庭 · 老师直接带练',
       title: '一对一康复训练',
-      summary: '老师直接看孩子表现，制定训练目标，课堂带练并随时调整。适合发音不清、语言表达落后、听觉康复后需要语言训练的孩子。',
-      audience: '儿童家庭',
-      format: '线上或线下个别化训练',
-      fit: '孩子需要老师直接带练，比如发音不清、语言表达落后、听觉康复后需要语言训练。',
-      payment: '按课时、按阶段训练包购买。',
+      summary: '当孩子不是缺练习材料，而是需要有人看见当前表现、判断目标顺序、当场示范怎么练，一对一训练会更合适。',
+      pain: [
+        '发音不清，家长知道有问题，但不知道先练哪个音。',
+        '语言表达落后，课堂能跟一点，回家就不知道怎么延续。',
+        '听觉康复后，孩子能听到声音，但还没有转成清楚表达。'
+      ],
+      solution: [
+        '老师观察孩子当下表现，先确定阶段目标。',
+        '课堂直接带练，及时调整提示方式和练习难度。',
+        '每次训练后给家长可执行的家庭练习重点。'
+      ],
+      outcome: [
+        '更清楚的训练方向和目标顺序。',
+        '孩子当场练习、当场反馈。',
+        '家长知道课后怎么配合，不再只靠感觉练。'
+      ],
+      fit: '适合需要老师直接带练、目标需要随孩子表现调整的儿童家庭。',
       period: '阶段训练包'
     },
     parentCamp: {
       accent: '#7A9E7E',
-      kicker: '儿童家长 · 家庭康复指导',
+      kicker: '儿童家长 · 家庭练习落地',
       title: '家长伴学营',
-      summary: '把专业训练目标翻译成家长每天能执行的家庭练习，帮助家长知道在家怎么练、怎么观察、怎么泛化。',
-      audience: '儿童家长',
-      format: '家庭康复指导、月度答疑和练习反馈',
-      fit: '孩子已有训练，但家长不知道在家怎么练、怎么观察、怎么把课堂目标泛化到生活。',
-      payment: '最适合做月度持续服务。',
-      period: '月度服务'
+      summary: '很多家庭不是不愿意练，而是不知道每天练什么、练到什么程度、怎么把课堂目标放进生活里。',
+      pain: [
+        '孩子在机构能配合，回家练习就断掉。',
+        '家长不知道怎么观察孩子有没有进步。',
+        '训练目标听得懂，但不知道怎样变成每天能做的小练习。'
+      ],
+      solution: [
+        '把专业目标拆成家庭可执行的日常练习。',
+        '告诉家长观察什么、记录什么、什么时候调整。',
+        '围绕家庭场景做反馈，让训练不只停留在课堂。'
+      ],
+      outcome: [
+        '每天知道练什么、怎么练。',
+        '家长能看懂孩子的细小变化。',
+        '课堂目标更容易泛化到吃饭、游戏、沟通等生活场景。'
+      ],
+      fit: '适合孩子已有训练或评估，但家庭执行、观察和泛化遇到困难的家长。',
+      period: '家庭伴学'
     },
     therapistCamp: {
       accent: '#C4786C',
       kicker: '康复师 · 系统学习',
       title: '康复师成长营',
-      summary: '不是卖资料，而是帮助康复师建立判断框架，系统梳理构音、语言、听觉康复训练逻辑。',
-      audience: '康复师、机构青年老师',
-      format: '系统学习、理论搭建、案例讨论',
-      fit: '新入行或想系统梳理构音、语言、听觉康复训练逻辑的康复师。',
-      payment: '按营期报名，比如 4 周、8 周、12 周。',
-      period: '营期报名'
+      summary: '成长营重点不是堆资料，而是帮助康复师建立判断框架：为什么选这个目标，为什么这样推进，遇到变化怎么调整。',
+      pain: [
+        '会做活动，但目标选择和顺序不够稳定。',
+        '面对构音、语言、听觉问题时，判断依据不够清楚。',
+        '案例看得多，但很难沉淀成自己的训练框架。'
+      ],
+      solution: [
+        '用系统课程梳理构音、语言、听觉训练主线。',
+        '通过案例讨论训练目标判断和临床推理。',
+        '把经验变成可复用的观察、分析和决策方法。'
+      ],
+      outcome: [
+        '更完整的训练判断框架。',
+        '看案例时知道先看什么、后判断什么。',
+        '和家长、机构沟通时更有逻辑和底气。'
+      ],
+      fit: '适合新入行康复师、机构青年老师，或想系统梳理训练逻辑的从业者。',
+      period: '成长营报名'
     },
     caseService: {
       accent: '#4F79A8',
       kicker: '康复师 · 真实个案督导',
       title: '康复师案例服务',
-      summary: '围绕真实个案解决具体临床卡点，拆解目标选择、训练推进、家长沟通和复盘路径。',
-      audience: '康复师',
-      format: '真实案例拆解、日常指导、复盘',
-      fit: '已经有个案，但目标选择、训练推进、家长沟通遇到卡点的康复师。',
-      payment: '按次咨询或月度案例督导。',
-      period: '单次咨询'
+      summary: '当你手里已经有个案，但目标卡住、训练推不动、家长沟通反复时，需要的不是泛泛建议，而是围绕真实个案拆具体路径。',
+      pain: [
+        '个案目标很多，不知道先抓哪个。',
+        '训练做了一段时间，进步不明显，不知道问题在哪里。',
+        '家长配合度、解释沟通、阶段复盘都遇到压力。'
+      ],
+      solution: [
+        '围绕真实个案拆解现有表现和目标优先级。',
+        '一起梳理接下来 2 到 4 周的训练推进策略。',
+        '补上家长沟通、记录复盘和阶段调整的关键点。'
+      ],
+      outcome: [
+        '更明确的目标选择和推进顺序。',
+        '可直接落地的下一阶段训练建议。',
+        '减少“我知道有问题但不知道怎么改”的卡顿。'
+      ],
+      fit: '适合已经有个案，但目标选择、训练推进、家长沟通遇到卡点的康复师。',
+      period: '案例督导'
     },
     supportPlan: {
       accent: '#B8860B',
-      kicker: '评估后 · 阶段陪伴服务',
+      kicker: '评估后 · 先理清路径',
       title: '阶段陪伴服务',
-      summary: '用于承接评估后的训练陪跑，先明确阶段目标，再选择课时包、伴学营或案例督导。',
-      audience: '儿童家庭、康复师',
-      format: '阶段目标梳理、持续指导、训练陪跑',
-      fit: '还不确定买哪种服务，或者需要先把训练目标和服务周期理清楚。',
-      payment: '先咨询确认，再选择训练包、月度服务或营期。',
-      period: '月度服务'
+      summary: '如果你还不确定该选哪种服务，先把当前问题、阶段目标和优先顺序理清楚，再决定后续训练安排。',
+      pain: [
+        '看过评估或训练建议，但不知道下一步先做什么。',
+        '孩子问题不止一个，家长担心选错方向。',
+        '康复师或家庭需要一个阶段性的陪跑和复盘节奏。'
+      ],
+      solution: [
+        '先梳理当前表现和最优先目标。',
+        '根据目标选择合适的训练、伴学或督导方式。',
+        '在阶段内持续看反馈，必要时调整推进节奏。'
+      ],
+      outcome: [
+        '一条更清楚的阶段训练路径。',
+        '知道先做什么、暂时不急着做什么。',
+        '后续服务选择更稳，不靠盲目试错。'
+      ],
+      fit: '适合还不确定买哪种服务，或需要先把训练目标、服务方式和时间安排理清楚的家庭或康复师。',
+      period: '先咨询确认'
     }
   };
 
@@ -719,16 +804,27 @@ textarea:focus {
     if (el) el.textContent = text;
   }
 
+  function setList(id, items) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    (items || []).forEach(function(text) {
+      var li = document.createElement('li');
+      li.textContent = text;
+      el.appendChild(li);
+    });
+  }
+
   function selectService(key, updateUrl) {
     var item = serviceData[key] || serviceData.oneToOne;
     document.documentElement.style.setProperty('--service-accent', item.accent);
     setText('serviceKicker', item.kicker);
     setText('serviceTitle', item.title);
     setText('serviceSummary', item.summary);
-    setText('serviceAudience', item.audience);
-    setText('serviceFormat', item.format);
+    setList('servicePain', item.pain);
+    setList('serviceSolution', item.solution);
+    setList('serviceOutcome', item.outcome);
     setText('serviceFit', item.fit);
-    setText('servicePayment', item.payment);
     setText('selectedServiceName', item.title);
     setText('paymentTitle', '微信扫码付款');
     document.title = item.title + ' - 服务详情与下单 - 上海小螺号能力开发中心';
